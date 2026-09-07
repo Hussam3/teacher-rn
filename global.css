@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ملء الشاشة: بدون هذا ينكمش #root لارتفاع 0 فيختفي محتوى الشاشات */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  overflow: hidden;
+}

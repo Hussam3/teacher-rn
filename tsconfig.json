@@ -1,0 +1,21 @@
+{
+  "extends": "@react-native/typescript-config",
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*", "nativewind-env.d.ts", "index.js"],
+  "exclude": [
+    "**/node_modules",
+    "**/Pods",
+    "**/build",
+    "web",
+    "src/web",
+    "supabase",
+    "supabase/**/*"
+  ]
+}

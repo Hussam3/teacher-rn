@@ -1,0 +1,23 @@
+{
+    "java.jdt.ls.java.home": "C:\\Program Files\\Android\\Android Studio\\jbr",
+    "gradle.java.home": "C:\\Program Files\\Android\\Android Studio\\jbr",
+    "java.configuration.updateBuildConfiguration": "disabled",
+    "java.autobuild.enabled": false,
+    "java.import.gradle.enabled": false,
+    "java.import.maven.enabled": false,
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.project.importExclusions": [
+        "**/node_modules/**",
+        "**/.gradle/**",
+        "**/build/**"
+    ],
+    "files.watcherExclude": {
+        "**/android/**/build/**": true,
+        "**/android/.gradle/**": true,
+        "**/node_modules/**": true
+    },
+    "search.exclude": {
+        "**/android/**/build": true,
+        "**/android/.gradle": true
+    }
+}

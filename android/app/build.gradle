@@ -1,0 +1,211 @@
+apply plugin: "com.android.application"
+apply plugin: "com.facebook.react"
+
+/**
+ * This is the configuration block to customize your React Native Android app.
+ * By default you don't need to apply any configuration, just uncomment the lines you need.
+ */
+react {
+    /* Folders */
+    //   The root of your project, i.e. where "package.json" lives. Default is '../..'
+    // root = file("../../")
+    //   The folder where the react-native NPM package is. Default is ../../node_modules/react-native
+    // reactNativeDir = file("../../node_modules/react-native")
+    //   The folder where the react-native Codegen package is. Default is ../../node_modules/@react-native/codegen
+    // codegenDir = file("../../node_modules/@react-native/codegen")
+    //   The cli.js file which is the React Native CLI entrypoint. Default is ../../node_modules/react-native/cli.js
+    // cliFile = file("../../node_modules/react-native/cli.js")
+
+    /* Variants */
+    //   The list of variants to that are debuggable. For those we're going to
+    //   skip the bundling of the JS bundle and the assets. Default is "debug", "debugOptimized".
+    //   If you add flavors like lite, prod, etc. you'll have to list your debuggableVariants.
+    // debuggableVariants = ["liteDebug", "liteDebugOptimized", "prodDebug", "prodDebugOptimized"]
+
+    /* Bundling */
+    nodeExecutableAndArgs = ["node", "--max-old-space-size=4096"]
+    //
+    //   The command to run when bundling. By default is 'bundle'
+    // bundleCommand = "ram-bundle"
+    //
+    //   The path to the CLI configuration file. Default is empty.
+    // bundleConfig = file(../rn-cli.config.js)
+    //
+    //   The name of the generated asset file containing your JS bundle
+    // bundleAssetName = "MyApplication.android.bundle"
+    //
+    //   The entry file for bundle generation. Default is 'index.android.js' or 'index.js'
+    // entryFile = file("../js/MyApplication.android.js")
+    //
+    //   A list of extra flags to pass to the 'bundle' commands.
+    //   See https://github.com/react-native-community/cli/blob/main/docs/commands.md#bundle
+    // extraPackagerArgs = []
+
+    /* Hermes Commands */
+    //   The hermes compiler command to run. By default it is 'hermesc'
+    // hermesCommand = "$rootDir/my-custom-hermesc/bin/hermesc"
+    //
+    //   The list of flags to pass to the Hermes compiler. By default is "-O", "-output-source-map"
+    // hermesFlags = ["-O", "-output-source-map"]
+
+    /* Autolinking */
+    autolinkLibrariesWithApp()
+}
+
+/**
+ * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
+ */
+def enableProguardInReleaseBuilds = false
+
+// Release credentials stay on the developer machine. A release build must never
+// silently fall back to the public Android debug certificate.
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('keystore.properties')
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.withInputStream { stream -> keystoreProperties.load(stream) }
+}
+
+def firstNonBlank = { Object... values ->
+    values.find { value -> value != null && value.toString().trim() }?.toString()
+}
+def releaseStoreFile = firstNonBlank(
+    keystoreProperties.getProperty('storeFile'),
+    project.findProperty('MYAPP_UPLOAD_STORE_FILE'),
+)
+def releaseStorePassword = firstNonBlank(
+    keystoreProperties.getProperty('storePassword'),
+    project.findProperty('MYAPP_UPLOAD_STORE_PASSWORD'),
+)
+def releaseKeyAlias = firstNonBlank(
+    keystoreProperties.getProperty('keyAlias'),
+    project.findProperty('MYAPP_UPLOAD_KEY_ALIAS'),
+)
+def releaseKeyPassword = firstNonBlank(
+    keystoreProperties.getProperty('keyPassword'),
+    project.findProperty('MYAPP_UPLOAD_KEY_PASSWORD'),
+)
+def hasReleaseSigning = [
+    releaseStoreFile,
+    releaseStorePassword,
+    releaseKeyAlias,
+    releaseKeyPassword,
+].every { value -> value != null && value.trim() }
+
+// OTA is intentionally opt-in for direct distribution only. Play builds use the
+// JavaScript bundle packaged inside the AAB.
+def enableOta = project.findProperty('enableOta')?.toString()?.toBoolean() ?: false
+
+/**
+ * The preferred build flavor of JavaScriptCore (JSC)
+ *
+ * For example, to use the international variant, you can use:
+ * `def jscFlavor = io.github.react-native-community:jsc-android-intl:2026004.+`
+ *
+ * The international variant includes ICU i18n library and necessary data
+ * allowing to use e.g. `Date.toLocaleString` and `String.localeCompare` that
+ * give correct results when using with locales other than en-US. Note that
+ * this variant is about 6MiB larger per architecture than default.
+ */
+def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
+
+android {
+    ndkVersion rootProject.ext.ndkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk rootProject.ext.compileSdkVersion
+
+    namespace "com.teacherbag"
+    defaultConfig {
+        applicationId "com.teacherbag"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 8
+        versionName "1.0.8"
+        buildConfigField "boolean", "ENABLE_OTA", enableOta.toString()
+        buildConfigField "boolean", "IS_LICENSE_ADMIN", "false"
+        manifestPlaceholders = [authRedirectScheme: 'teacherbag']
+    }
+    buildFeatures {
+        buildConfig true
+    }
+    externalNativeBuild {
+        cmake {
+            version "3.31.6"
+        }
+    }
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+        release {
+            if (hasReleaseSigning) {
+                storeFile file(releaseStoreFile)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+        // تطبيق مستقل للمالك، يشارك البنية الأصلية فقط ولا يحمّل تحديثات OTA.
+        admin {
+            initWith release
+            applicationIdSuffix ".admin"
+            matchingFallbacks = ['release']
+            buildConfigField "boolean", "ENABLE_OTA", "false"
+            buildConfigField "boolean", "IS_LICENSE_ADMIN", "true"
+            manifestPlaceholders.authRedirectScheme = 'teacherbagadmin'
+            manifestPlaceholders.usesCleartextTraffic = 'false'
+        }
+    }
+}
+
+dependencies {
+    // The version of react-native is set by the React Native Gradle Plugin
+    implementation("com.facebook.react:react-android")
+
+    if (hermesEnabled.toBoolean()) {
+        implementation("com.facebook.react:hermes-android")
+    } else {
+        implementation jscFlavor
+    }
+}
+
+// استبعاد مكتبة الدعم القديمة (com.android.support) لتفادي تعارض الفئات مع AndroidX
+configurations.configureEach {
+    exclude group: 'com.android.support'
+}
+
+gradle.taskGraph.whenReady { graph ->
+    def isReleaseArtifactTask = graph.allTasks.any { task ->
+        task.path in [
+            ':app:assembleRelease',
+            ':app:bundleRelease',
+            ':app:packageRelease',
+            ':app:signReleaseBundle',
+            ':app:assembleAdmin',
+            ':app:bundleAdmin',
+            ':app:packageAdmin',
+            ':app:signAdminBundle',
+        ]
+    }
+    if (isReleaseArtifactTask && !hasReleaseSigning) {
+        throw new GradleException(
+            'Release signing is not configured. Copy android/keystore.properties.example to android/keystore.properties and fill in the upload-key values.',
+        )
+    }
+}

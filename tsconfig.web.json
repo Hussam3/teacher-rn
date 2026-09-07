@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "resolveJsonModule": true,
+    "noEmit": true
+  },
+  "include": ["web", "src/web", "src/assets.d.ts", "src/app", "src/shared", "src/services", "src/features", "src/data"],
+  "exclude": ["node_modules", "**/build", "android", "ios", "__tests__"]
+}

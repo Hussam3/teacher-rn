@@ -1,0 +1,5354 @@
+{
+  "meta": {
+    "title": "فهرس المناهج الدراسية العراقية الشامل الموحد",
+    "version": "1.0.0",
+    "generatedAt": "2026-08-26T22:13:20.581Z",
+    "country": "العراق - وزارة التربية",
+    "summary": {
+      "totalBooksScanned": 124,
+      "canonicalBooks": 95,
+      "alternativeBooks": 29,
+      "totalPages": 13294,
+      "totalCharacters": 12887586,
+      "approximateWords": 2343198
+    }
+  },
+  "stages": {
+    "المتوسطة": {
+      "الثالث المتوسط": {
+        "الاجتماعيات": {
+          "fileName": "كتاب الاجتماعيات الثالث المتوسط.json",
+          "subject": "الاجتماعيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 160,
+          "nonEmptyPages": 159,
+          "textLength": 202305,
+          "chaptersCount": 1,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "التربية الإسلامية": {
+          "fileName": "كتاب الاسلامية الثالث المتوسط.json",
+          "subject": "التربية الإسلامية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 156,
+          "nonEmptyPages": 156,
+          "textLength": 166836,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الفيزياء": {
+          "fileName": "كتاب الفيزياء الثالث المتوسط.json",
+          "subject": "الفيزياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 176,
+          "nonEmptyPages": 176,
+          "textLength": 169212,
+          "chaptersCount": 14,
+          "questionSectionsCount": 9,
+          "editionNotes": ""
+        },
+        "الكيمياء": {
+          "fileName": "كتاب الكيمياء الثالث المتوسط.json",
+          "subject": "الكيمياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 152,
+          "nonEmptyPages": 115,
+          "textLength": 135797,
+          "chaptersCount": 9,
+          "questionSectionsCount": 6,
+          "editionNotes": ""
+        },
+        "اللغة الإنجليزية": {
+          "fileName": "كتاب_الانكليزي_الطالب_الثالث_المتوسط.json",
+          "subject": "اللغة الإنجليزية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 120,
+          "nonEmptyPages": 14,
+          "textLength": 20046,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة الإنجليزية [كتاب النشاط / التمرينات]": {
+          "fileName": "كتاب_الانكليزي_النشاط_الثالث_المتوسط.json",
+          "subject": "اللغة الإنجليزية",
+          "part": "كامل",
+          "bookType": "كتاب النشاط / التمرينات",
+          "totalPages": 124,
+          "nonEmptyPages": 18,
+          "textLength": 18395,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة العربية": {
+          "fileName": "كتاب_اللغة_العربية_الصف_الثالث_متوسط2026.json",
+          "subject": "اللغة العربية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 129,
+          "nonEmptyPages": 120,
+          "textLength": 188122,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": "طبعة 2026 مع التقليص الجديد"
+        }
+      },
+      "الثاني المتوسط": {
+        "الاجتماعيات": {
+          "fileName": "كتاب الاجتماعيات الثاني المتوسط.json",
+          "subject": "الاجتماعيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 140,
+          "nonEmptyPages": 140,
+          "textLength": 157612,
+          "chaptersCount": 6,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الأحياء": {
+          "fileName": "كتاب الاحياء الثاني المتوسط.json",
+          "subject": "الأحياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 92,
+          "nonEmptyPages": 91,
+          "textLength": 125853,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "التربية الإسلامية": {
+          "fileName": "كتاب الاسلامية الثاني المتوسط.json",
+          "subject": "التربية الإسلامية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 120,
+          "nonEmptyPages": 106,
+          "textLength": 111613,
+          "chaptersCount": 4,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الحاسوب": {
+          "fileName": "كتاب الحاسوب الثاني المتوسط.json",
+          "subject": "الحاسوب",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 144,
+          "nonEmptyPages": 143,
+          "textLength": 132374,
+          "chaptersCount": 6,
+          "questionSectionsCount": 1,
+          "editionNotes": ""
+        },
+        "الرياضيات": {
+          "fileName": "كتاب الرياضيات الثاني المتوسط.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 196,
+          "nonEmptyPages": 196,
+          "textLength": 245916,
+          "chaptersCount": 0,
+          "questionSectionsCount": 7,
+          "editionNotes": ""
+        },
+        "الفيزياء": {
+          "fileName": "كتاب الفيزياء الثاني المتوسط.json",
+          "subject": "الفيزياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 88,
+          "nonEmptyPages": 83,
+          "textLength": 102269,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الكيمياء": {
+          "fileName": "كتاب الكيمياء الثاني المتوسط.json",
+          "subject": "الكيمياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 96,
+          "nonEmptyPages": 96,
+          "textLength": 118065,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "التربية الأخلاقية": {
+          "fileName": "كتاب_التربية_الاخلاقية_الثاني_المتوسط.json",
+          "subject": "التربية الأخلاقية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 128,
+          "nonEmptyPages": 128,
+          "textLength": 256376,
+          "chaptersCount": 1,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة الفرنسية": {
+          "fileName": "كتاب_الطالب_الفرنسي_الثاني_متوسط_المنهج_الجديد.json",
+          "subject": "اللغة الفرنسية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 108,
+          "nonEmptyPages": 107,
+          "textLength": 74560,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": "المنهج الجديد"
+        },
+        "اللغة العربية (الجزء الأول)": {
+          "fileName": "كتاب_العربي_الثاني_المتوسط_الجزء_الاول.json",
+          "subject": "اللغة العربية",
+          "part": "الجزء الأول",
+          "bookType": "كتاب الطالب",
+          "totalPages": 136,
+          "nonEmptyPages": 129,
+          "textLength": 166944,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة العربية (الجزء الثاني)": {
+          "fileName": "كتاب_العربي_الثاني_المتوسط_الجزء_الثاني.json",
+          "subject": "اللغة العربية",
+          "part": "الجزء الثاني",
+          "bookType": "كتاب الطالب",
+          "totalPages": 136,
+          "nonEmptyPages": 132,
+          "textLength": 126480,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        }
+      },
+      "الأول المتوسط": {
+        "الاجتماعيات": {
+          "fileName": "كتاب الاجتماعيات اول متوسط.json",
+          "subject": "الاجتماعيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 132,
+          "nonEmptyPages": 132,
+          "textLength": 144467,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الأحياء": {
+          "fileName": "كتاب الاحياء اول متوسط.json",
+          "subject": "الأحياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 96,
+          "nonEmptyPages": 95,
+          "textLength": 117568,
+          "chaptersCount": 2,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "التربية الإسلامية": {
+          "fileName": "كتاب الاسلامية اول متوسط.json",
+          "subject": "التربية الإسلامية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 140,
+          "nonEmptyPages": 86,
+          "textLength": 55424,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "التربية الأخلاقية": {
+          "fileName": "كتاب التربية الاخلاقية اول متوسط.json",
+          "subject": "التربية الأخلاقية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 136,
+          "nonEmptyPages": 135,
+          "textLength": 174669,
+          "chaptersCount": 3,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الحاسوب": {
+          "fileName": "كتاب الحاسوب اول متوسط.json",
+          "subject": "الحاسوب",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 144,
+          "nonEmptyPages": 111,
+          "textLength": 130529,
+          "chaptersCount": 2,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الرياضيات": {
+          "fileName": "كتاب الرياضيات اول متوسط.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 196,
+          "nonEmptyPages": 195,
+          "textLength": 224412,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الفيزياء": {
+          "fileName": "كتاب الفيزياء اول متوسط.json",
+          "subject": "الفيزياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 88,
+          "nonEmptyPages": 88,
+          "textLength": 104769,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الكيمياء": {
+          "fileName": "كتاب الكيمياء اول متوسط.json",
+          "subject": "الكيمياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 88,
+          "nonEmptyPages": 88,
+          "textLength": 101489,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة العربية (الجزء الأول)": {
+          "fileName": "كتاب_العربي_اول_متوسط_الجزء_الاول.json",
+          "subject": "اللغة العربية",
+          "part": "الجزء الأول",
+          "bookType": "كتاب الطالب",
+          "totalPages": 152,
+          "nonEmptyPages": 151,
+          "textLength": 180407,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة العربية (الجزء الثاني)": {
+          "fileName": "كتاب_العربي_اول_متوسط_الجزء_الثاني.json",
+          "subject": "اللغة العربية",
+          "part": "الجزء الثاني",
+          "bookType": "كتاب الطالب",
+          "totalPages": 132,
+          "nonEmptyPages": 131,
+          "textLength": 113676,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        }
+      },
+      "المرحلة المتوسطة (شامل)": {
+        "اللغة الفرنسية": {
+          "fileName": "كتاب_الفرنسي_المرحلة_المتوسطة_المنهج_الجديد.json",
+          "subject": "اللغة الفرنسية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 164,
+          "nonEmptyPages": 163,
+          "textLength": 331000,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": "المنهج الجديد"
+        }
+      }
+    },
+    "الإعدادية": {
+      "الخامس الإعدادي": {
+        "الأحياء": {
+          "fileName": "كتاب الاحياء الخامس الاعدادي.json",
+          "subject": "الأحياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 232,
+          "nonEmptyPages": 232,
+          "textLength": 303834,
+          "chaptersCount": 58,
+          "questionSectionsCount": 7,
+          "editionNotes": ""
+        },
+        "التربية الإسلامية": {
+          "fileName": "كتاب الاسلامية الخامس الاعدادي (2).json",
+          "subject": "التربية الإسلامية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 156,
+          "nonEmptyPages": 142,
+          "textLength": 139640,
+          "chaptersCount": 1,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الحاسوب": {
+          "fileName": "كتاب الحاسوب الخامس الاعدادي.json",
+          "subject": "الحاسوب",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 144,
+          "nonEmptyPages": 136,
+          "textLength": 165511,
+          "chaptersCount": 2,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الرياضيات": {
+          "fileName": "كتاب الرياضيات الخامس الاعدادي.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 258,
+          "nonEmptyPages": 192,
+          "textLength": 1745,
+          "chaptersCount": 1,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة الفرنسية": {
+          "fileName": "كتاب الفرنسي الخامس الاعدادي.json",
+          "subject": "اللغة الفرنسية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 64,
+          "nonEmptyPages": 58,
+          "textLength": 1663,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة الكردية": {
+          "fileName": "كتاب الكردي الخامس الاعدادي.json",
+          "subject": "اللغة الكردية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 209,
+          "nonEmptyPages": 207,
+          "textLength": 74856,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الكيمياء": {
+          "fileName": "كتاب الكيمياء الخامس الاعدادي.json",
+          "subject": "الكيمياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 220,
+          "nonEmptyPages": 205,
+          "textLength": 330683,
+          "chaptersCount": 1,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "علم الأرض": {
+          "fileName": "كتاب علم الارض الخامس الاعدادي.json",
+          "subject": "علم الأرض",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 132,
+          "nonEmptyPages": 132,
+          "textLength": 175071,
+          "chaptersCount": 5,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة العربية (الجزء الأول)": {
+          "fileName": "كتاب_العربي_الخامس_الاعدادي_الجزء_الاول.json",
+          "subject": "اللغة العربية",
+          "part": "الجزء الأول",
+          "bookType": "كتاب الطالب",
+          "totalPages": 140,
+          "nonEmptyPages": 140,
+          "textLength": 134316,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة العربية (الجزء الثاني)": {
+          "fileName": "كتاب_العربي_الخامس_الاعدادي_الجزء_الثاني.json",
+          "subject": "اللغة العربية",
+          "part": "الجزء الثاني",
+          "bookType": "كتاب الطالب",
+          "totalPages": 140,
+          "nonEmptyPages": 140,
+          "textLength": 144959,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        }
+      },
+      "الرابع العلمي": {
+        "الأحياء": {
+          "fileName": "كتاب الاحياء الرابع العلمي.json",
+          "subject": "الأحياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 192,
+          "nonEmptyPages": 189,
+          "textLength": 243670,
+          "chaptersCount": 8,
+          "questionSectionsCount": 8,
+          "editionNotes": ""
+        },
+        "الرياضيات": {
+          "fileName": "كتاب الرياضيات الرابع العلمي.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 156,
+          "nonEmptyPages": 116,
+          "textLength": 88035,
+          "chaptersCount": 5,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الفيزياء": {
+          "fileName": "كتاب الفيزياء الرابع العلمي.json",
+          "subject": "الفيزياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 188,
+          "nonEmptyPages": 188,
+          "textLength": 217566,
+          "chaptersCount": 16,
+          "questionSectionsCount": 28,
+          "editionNotes": ""
+        },
+        "الكيمياء": {
+          "fileName": "كتاب الكيمياء الرابع العلمي.json",
+          "subject": "الكيمياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 148,
+          "nonEmptyPages": 148,
+          "textLength": 183198,
+          "chaptersCount": 4,
+          "questionSectionsCount": 3,
+          "editionNotes": ""
+        }
+      },
+      "السادس العلمي": {
+        "الأحياء": {
+          "fileName": "كتاب الاحياء السادس العلمي.json",
+          "subject": "الأحياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 228,
+          "nonEmptyPages": 17,
+          "textLength": 1052,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الرياضيات": {
+          "fileName": "كتاب الرياضيات السادس العلمي.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 240,
+          "nonEmptyPages": 208,
+          "textLength": 39220,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الفيزياء": {
+          "fileName": "كتاب الفيزياء السادس العلمي.json",
+          "subject": "الفيزياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 284,
+          "nonEmptyPages": 82,
+          "textLength": 96199,
+          "chaptersCount": 3,
+          "questionSectionsCount": 2,
+          "editionNotes": ""
+        },
+        "الكيمياء": {
+          "fileName": "كتاب الكيمياء السادس العلمي.json",
+          "subject": "الكيمياء",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 288,
+          "nonEmptyPages": 288,
+          "textLength": 429922,
+          "chaptersCount": 10,
+          "questionSectionsCount": 7,
+          "editionNotes": ""
+        },
+        "الأحياء [كتاب مؤشر / ملخص]": {
+          "fileName": "كتاب_الاحياء_المؤشر_سالم_ال_منصور_السادس_العلمي_2025_الفصل_الاول.json",
+          "subject": "الأحياء",
+          "part": "كامل",
+          "bookType": "كتاب مؤشر / ملخص",
+          "totalPages": 62,
+          "nonEmptyPages": 3,
+          "textLength": 1132,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": "طبعة 2025"
+        }
+      },
+      "السادس الإعدادي": {
+        "الأدب الإنجليزي": {
+          "fileName": "كتاب الادب انكليزي سادس اعدادي.json",
+          "subject": "الأدب الإنجليزي",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 29,
+          "nonEmptyPages": 29,
+          "textLength": 61184,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "التربية الإسلامية": {
+          "fileName": "كتاب الاسلامية السادس الاعدادي (2).json",
+          "subject": "التربية الإسلامية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 164,
+          "nonEmptyPages": 161,
+          "textLength": 177280,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة الفرنسية": {
+          "fileName": "كتاب_الفرنسي_المنهج_الجديد_الرابع_والخامس_والسادس_الاعدادي.json",
+          "subject": "اللغة الفرنسية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 171,
+          "nonEmptyPages": 170,
+          "textLength": 492548,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": "المنهج الجديد"
+        },
+        "اللغة العربية (الجزء الأول)": {
+          "fileName": "كتاب_العربي_السادس_الاعدادي_الجزء_الاول (2).json",
+          "subject": "اللغة العربية",
+          "part": "الجزء الأول",
+          "bookType": "كتاب الطالب",
+          "totalPages": 164,
+          "nonEmptyPages": 163,
+          "textLength": 188445,
+          "chaptersCount": 1,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة العربية (الجزء الثاني)": {
+          "fileName": "كتاب_العربي_السادس_الاعدادي_الجزء_الثاني (2).json",
+          "subject": "اللغة العربية",
+          "part": "الجزء الثاني",
+          "bookType": "كتاب الطالب",
+          "totalPages": 112,
+          "nonEmptyPages": 111,
+          "textLength": 151919,
+          "chaptersCount": 4,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        }
+      },
+      "الرابع الإعدادي": {
+        "التربية الإسلامية": {
+          "fileName": "كتاب الاسلامية الرابع الاعدادي.json",
+          "subject": "التربية الإسلامية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 130,
+          "nonEmptyPages": 130,
+          "textLength": 149175,
+          "chaptersCount": 4,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الحاسوب": {
+          "fileName": "كتاب الحاسوب الرابع الاعدادي.json",
+          "subject": "الحاسوب",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 144,
+          "nonEmptyPages": 144,
+          "textLength": 161122,
+          "chaptersCount": 7,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة الكردية": {
+          "fileName": "كتاب الكردي الصف الرابع الاعدادي.json",
+          "subject": "اللغة الكردية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 174,
+          "nonEmptyPages": 174,
+          "textLength": 93787,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة العربية (الجزء الأول)": {
+          "fileName": "كتاب_العربي_الرابع_الاعدادي_الجزء_الاول.json",
+          "subject": "اللغة العربية",
+          "part": "الجزء الأول",
+          "bookType": "كتاب الطالب",
+          "totalPages": 140,
+          "nonEmptyPages": 138,
+          "textLength": 83964,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة العربية (الجزء الثاني)": {
+          "fileName": "كتاب_العربي_الرابع_الاعدادي_الجزء_الثاني.json",
+          "subject": "اللغة العربية",
+          "part": "الجزء الثاني",
+          "bookType": "كتاب الطالب",
+          "totalPages": 100,
+          "nonEmptyPages": 96,
+          "textLength": 48259,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "جرائم حزب البعث": {
+          "fileName": "كتاب_جرائم_حزب_البعث_الرابع_الاعدادي.json",
+          "subject": "جرائم حزب البعث",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 96,
+          "nonEmptyPages": 96,
+          "textLength": 108491,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        }
+      },
+      "السادس الأدبي": {
+        "الاقتصاد": {
+          "fileName": "كتاب الاقتصاد السادس الادبي.json",
+          "subject": "الاقتصاد",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 112,
+          "nonEmptyPages": 108,
+          "textLength": 145121,
+          "chaptersCount": 6,
+          "questionSectionsCount": 2,
+          "editionNotes": ""
+        },
+        "التاريخ": {
+          "fileName": "كتاب التاريخ السادس الادبي.json",
+          "subject": "التاريخ",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 204,
+          "nonEmptyPages": 204,
+          "textLength": 305722,
+          "chaptersCount": 5,
+          "questionSectionsCount": 1,
+          "editionNotes": ""
+        },
+        "الجغرافية": {
+          "fileName": "كتاب الجغرافية السادس الادبي.json",
+          "subject": "الجغرافية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 172,
+          "nonEmptyPages": 171,
+          "textLength": 296063,
+          "chaptersCount": 6,
+          "questionSectionsCount": 7,
+          "editionNotes": ""
+        },
+        "الرياضيات": {
+          "fileName": "كتاب الرياضيات السادس الادبي.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 140,
+          "nonEmptyPages": 122,
+          "textLength": 48955,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        }
+      },
+      "الخامس الأدبي": {
+        "التاريخ": {
+          "fileName": "كتاب التاريخ الخامس الادبي.json",
+          "subject": "التاريخ",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 112,
+          "nonEmptyPages": 112,
+          "textLength": 140266,
+          "chaptersCount": 6,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الجغرافية": {
+          "fileName": "كتاب الجغرافية الخامس الادبي.json",
+          "subject": "الجغرافية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 162,
+          "nonEmptyPages": 162,
+          "textLength": 215729,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الرياضيات": {
+          "fileName": "كتاب الرياضيات الخامس الادبي.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 128,
+          "nonEmptyPages": 78,
+          "textLength": 60955,
+          "chaptersCount": 2,
+          "questionSectionsCount": 1,
+          "editionNotes": ""
+        },
+        "الفلسفة وعلم النفس": {
+          "fileName": "كتاب_الفلسفة_وعلم_النفس_الخامس_الادبي.json",
+          "subject": "الفلسفة وعلم النفس",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 136,
+          "nonEmptyPages": 136,
+          "textLength": 198717,
+          "chaptersCount": 2,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        }
+      },
+      "الرابع الأدبي": {
+        "التاريخ": {
+          "fileName": "كتاب التاريخ الرابع الادبي.json",
+          "subject": "التاريخ",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 180,
+          "nonEmptyPages": 179,
+          "textLength": 244764,
+          "chaptersCount": 7,
+          "questionSectionsCount": 3,
+          "editionNotes": ""
+        },
+        "الجغرافية": {
+          "fileName": "كتاب الجغرافية الرابع الادبي.json",
+          "subject": "الجغرافية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 144,
+          "nonEmptyPages": 144,
+          "textLength": 151154,
+          "chaptersCount": 5,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الرياضيات": {
+          "fileName": "كتاب الرياضيات الرابع الادبي.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 112,
+          "nonEmptyPages": 64,
+          "textLength": 43846,
+          "chaptersCount": 1,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "علم الاجتماع": {
+          "fileName": "كتاب علم الاجتماع الرابع الادبي.json",
+          "subject": "علم الاجتماع",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 108,
+          "nonEmptyPages": 108,
+          "textLength": 139679,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        }
+      }
+    },
+    "الابتدائية": {
+      "الخامس الابتدائي": {
+        "التربية الإسلامية": {
+          "fileName": "كتاب الاسلامية الخامس الابتدائي.json",
+          "subject": "التربية الإسلامية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 96,
+          "nonEmptyPages": 96,
+          "textLength": 82999,
+          "chaptersCount": 1,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الرياضيات": {
+          "fileName": "كتاب الرياضيات الخامس الابتدائي.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 198,
+          "nonEmptyPages": 187,
+          "textLength": 180181,
+          "chaptersCount": 0,
+          "questionSectionsCount": 5,
+          "editionNotes": ""
+        },
+        "العلوم": {
+          "fileName": "كتاب العلوم الخامس الابتدائي.json",
+          "subject": "العلوم",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 200,
+          "nonEmptyPages": 200,
+          "textLength": 243610,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "القراءة العربية": {
+          "fileName": "كتاب القراءة الخامس الابتدائي.json",
+          "subject": "القراءة العربية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 162,
+          "nonEmptyPages": 4,
+          "textLength": 153,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الاجتماعيات": {
+          "fileName": "كتاب_الاجتماعيات_الخامس_الابتدائي.json",
+          "subject": "الاجتماعيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 104,
+          "nonEmptyPages": 104,
+          "textLength": 93727,
+          "chaptersCount": 6,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الرياضيات [كتاب النشاط / التمرينات]": {
+          "fileName": "كتاب_الرياضيات_التمرينات_الخامس_الابتدائي.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب النشاط / التمرينات",
+          "totalPages": 54,
+          "nonEmptyPages": 54,
+          "textLength": 29908,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "العلوم [كتاب النشاط / التمرينات]": {
+          "fileName": "كتاب_العلوم_النشاط_الخامس_الابتدائي.json",
+          "subject": "العلوم",
+          "part": "كامل",
+          "bookType": "كتاب النشاط / التمرينات",
+          "totalPages": 92,
+          "nonEmptyPages": 90,
+          "textLength": 97111,
+          "chaptersCount": 1,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        }
+      },
+      "الرابع الابتدائي": {
+        "التربية الإسلامية": {
+          "fileName": "كتاب الاسلامية الرابع الابتدائي.json",
+          "subject": "التربية الإسلامية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 72,
+          "nonEmptyPages": 53,
+          "textLength": 51849,
+          "chaptersCount": 3,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الرياضيات": {
+          "fileName": "كتاب الرياضيات الرابع الابتدائي.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 196,
+          "nonEmptyPages": 195,
+          "textLength": 170591,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "العلوم": {
+          "fileName": "كتاب العلوم الرابع الابتدائي.json",
+          "subject": "العلوم",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 216,
+          "nonEmptyPages": 216,
+          "textLength": 250256,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "قواعد اللغة العربية": {
+          "fileName": "كتاب القواعد الرابع الابتدائي.json",
+          "subject": "قواعد اللغة العربية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 80,
+          "nonEmptyPages": 8,
+          "textLength": 606,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الاجتماعيات": {
+          "fileName": "كتاب_الاجتماعيات_الرابع_الابتدائي.json",
+          "subject": "الاجتماعيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 64,
+          "nonEmptyPages": 20,
+          "textLength": 10601,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الرياضيات [كتاب النشاط / التمرينات]": {
+          "fileName": "كتاب_تمرينات_الرياضيات_الرابع_الابتدائي.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب النشاط / التمرينات",
+          "totalPages": 56,
+          "nonEmptyPages": 53,
+          "textLength": 36147,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "العلوم [كتاب النشاط / التمرينات]": {
+          "fileName": "كتاب_نشاط_العلوم_الرابع_الابتدائي.json",
+          "subject": "العلوم",
+          "part": "كامل",
+          "bookType": "كتاب النشاط / التمرينات",
+          "totalPages": 100,
+          "nonEmptyPages": 100,
+          "textLength": 105409,
+          "chaptersCount": 1,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        }
+      },
+      "السادس الابتدائي": {
+        "التربية الإسلامية": {
+          "fileName": "كتاب الاسلامية السادس الابتدائي.json",
+          "subject": "التربية الإسلامية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 92,
+          "nonEmptyPages": 91,
+          "textLength": 89852,
+          "chaptersCount": 3,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الرياضيات": {
+          "fileName": "كتاب الرياضيات السادس الابتدائي.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 200,
+          "nonEmptyPages": 198,
+          "textLength": 155496,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "العلوم": {
+          "fileName": "كتاب العلوم السادس الابتدائي.json",
+          "subject": "العلوم",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 208,
+          "nonEmptyPages": 208,
+          "textLength": 273642,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "القراءة العربية": {
+          "fileName": "كتاب القراءة السادس الابتدائي.json",
+          "subject": "القراءة العربية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 142,
+          "nonEmptyPages": 15,
+          "textLength": 550,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "قواعد اللغة العربية": {
+          "fileName": "كتاب القواعد السادس الابتدائي.json",
+          "subject": "قواعد اللغة العربية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 108,
+          "nonEmptyPages": 3,
+          "textLength": 199,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "الاجتماعيات": {
+          "fileName": "كتاب_الاجتماعيات_السادس_الابتدائي.json",
+          "subject": "الاجتماعيات",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 116,
+          "nonEmptyPages": 116,
+          "textLength": 109637,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "اللغة الإنجليزية": {
+          "fileName": "كتاب_الطالب_اربع_وحدات_سادس_ابتدائي_المنهج_الحديث.json",
+          "subject": "اللغة الإنجليزية",
+          "part": "كامل",
+          "bookType": "كتاب الطالب",
+          "totalPages": 52,
+          "nonEmptyPages": 52,
+          "textLength": 44607,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": "المنهج الجديد"
+        },
+        "اللغة الإنجليزية [كتاب النشاط / التمرينات]": {
+          "fileName": "كتاب_النشاط_اربع_وحدات_سادس_ابتدائي_المنهج_الحديث.json",
+          "subject": "اللغة الإنجليزية",
+          "part": "كامل",
+          "bookType": "كتاب النشاط / التمرينات",
+          "totalPages": 52,
+          "nonEmptyPages": 52,
+          "textLength": 49063,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": "المنهج الجديد"
+        },
+        "الرياضيات [كتاب النشاط / التمرينات]": {
+          "fileName": "كتاب_تمرينات_الرياضيات_السادس_الابتدائي.json",
+          "subject": "الرياضيات",
+          "part": "كامل",
+          "bookType": "كتاب النشاط / التمرينات",
+          "totalPages": 58,
+          "nonEmptyPages": 58,
+          "textLength": 36621,
+          "chaptersCount": 0,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        },
+        "العلوم [كتاب النشاط / التمرينات]": {
+          "fileName": "كتاب_نشاط_العلوم_السادس_الابتدائي.json",
+          "subject": "العلوم",
+          "part": "كامل",
+          "bookType": "كتاب النشاط / التمرينات",
+          "totalPages": 92,
+          "nonEmptyPages": 92,
+          "textLength": 98169,
+          "chaptersCount": 4,
+          "questionSectionsCount": 0,
+          "editionNotes": ""
+        }
+      }
+    }
+  },
+  "books": [
+    {
+      "id": "_⁨كتاب_الرياضيات_الثالث_المتوسط_2026_مع_التقليص_الجديد⁩",
+      "fileName": "_⁨كتاب_الرياضيات_الثالث_المتوسط_2026_مع_التقليص_الجديد⁩.json",
+      "title": "الرياضيات - الثالث المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثالث المتوسط",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "طبعة 2026 مع التقليص الجديد",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 12128,
+      "totalPages": 180,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "حلول_وترجمة_الوحدة_الاولى_المنهج_الجديد_كتاب_الطالب_وكتاب_النشاط",
+      "fileName": "حلول_وترجمة_الوحدة_الاولى_المنهج_الجديد_كتاب_الطالب_وكتاب_النشاط.json",
+      "title": "غير محدد - غير محدد [كتاب النشاط / التمرينات]",
+      "stage": "غير محدد",
+      "grade": "غير محدد",
+      "subject": "غير محدد",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "المنهج الجديد",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 2188,
+      "totalPages": 29,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاجتماعيات الثالث المتوسط",
+      "fileName": "كتاب الاجتماعيات الثالث المتوسط.json",
+      "title": "الاجتماعيات - الثالث المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثالث المتوسط",
+      "subject": "الاجتماعيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 366462,
+      "totalPages": 160,
+      "nonEmptyPages": 159,
+      "textLength": 202305,
+      "avgCharsPerPage": 1272,
+      "chaptersCount": 1,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 138,
+          "title": "الوحدة الثالثة القيم الوطنية و الجتماعية"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاجتماعيات الثاني المتوسط",
+      "fileName": "كتاب الاجتماعيات الثاني المتوسط.json",
+      "title": "الاجتماعيات - الثاني المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "الاجتماعيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 282642,
+      "totalPages": 140,
+      "nonEmptyPages": 140,
+      "textLength": 157612,
+      "avgCharsPerPage": 1126,
+      "chaptersCount": 6,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 39,
+          "title": ": الفصل الثاني ) العالم العربي (السكان والنشاط القتصادي"
+        },
+        {
+          "page": 70,
+          "title": "الباب الثاني/ تاريخ العالم العربي احوال شبه الجزيرة العربية قبل السالم - السالم احوال شبه الجزيرة العربية قبل"
+        },
+        {
+          "page": 88,
+          "title": "الفصل الرابع تاريخ مكة قبل السالم تاريخ مكة قبل السالم"
+        },
+        {
+          "page": 98,
+          "title": "الفصل الخامس - من السيرة النبوية الشريفة : الرسول محمد (ص) في مكة المكرمة"
+        },
+        {
+          "page": 118,
+          "title": "الفصل السادس من السيرة النبوية الشريفة: الرسول محمد (ص) في المدينة المنورة"
+        },
+        {
+          "page": 140,
+          "title": "69 ---- 39 الفصل الثاني / السكان والنشاط القتصالدي"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاجتماعيات اول متوسط",
+      "fileName": "كتاب الاجتماعيات اول متوسط.json",
+      "title": "الاجتماعيات - الأول المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "الاجتماعيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 262391,
+      "totalPages": 132,
+      "nonEmptyPages": 132,
+      "textLength": 144467,
+      "avgCharsPerPage": 1094,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاحياء الثاني المتوسط",
+      "fileName": "كتاب الاحياء الثاني المتوسط.json",
+      "title": "الأحياء - الثاني المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "الأحياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 226815,
+      "totalPages": 92,
+      "nonEmptyPages": 91,
+      "textLength": 125853,
+      "avgCharsPerPage": 1383,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاحياء الخامس الاعدادي",
+      "fileName": "كتاب الاحياء الخامس الاعدادي.json",
+      "title": "الأحياء - الخامس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "الأحياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 542709,
+      "totalPages": 232,
+      "nonEmptyPages": 232,
+      "textLength": 303834,
+      "avgCharsPerPage": 1310,
+      "chaptersCount": 58,
+      "questionSectionsCount": 7,
+      "chapters": [
+        {
+          "page": 55,
+          "title": "2 الفصل الثاني - الي ز ا غ ادل ال بت س وال تنف )Respiration & Gas Exchange("
+        },
+        {
+          "page": 58,
+          "title": "> الفصل الثاني/ التنفس والتبادل الغازي 58"
+        },
+        {
+          "page": 61,
+          "title": "61 الفصل الثاني/ التنفس والتبادل الغازي"
+        },
+        {
+          "page": 64,
+          "title": "> الفصل الثاني/ التنفس والتبادل الغازي 64"
+        },
+        {
+          "page": 67,
+          "title": "67 الفصل الثاني/ التنفس والتبادل الغازي"
+        },
+        {
+          "page": 70,
+          "title": "> الفصل الثاني/ التنفس والتبادل الغازي - 70"
+        },
+        {
+          "page": 73,
+          "title": "73 الفصل الثاني/ التنفس والتبادل الغازي"
+        },
+        {
+          "page": 76,
+          "title": "> الفصل الثاني/ التنفس والتبادل الغازي 76"
+        },
+        {
+          "page": 80,
+          "title": "> الفصل الثاني/ التنفس والتبادل الغازي 80"
+        },
+        {
+          "page": 83,
+          "title": "اسئلة الفصل الثاني"
+        },
+        {
+          "page": 86,
+          "title": "> لخراج االفصل الثالث/ 86"
+        },
+        {
+          "page": 89,
+          "title": "89 لخراج ا الفصل الثالث/"
+        },
+        {
+          "page": 92,
+          "title": "> لخراج االفصل الثالث/ 92"
+        },
+        {
+          "page": 95,
+          "title": "95 لخراج ا الفصل الثالث/"
+        },
+        {
+          "page": 98,
+          "title": "> لخراج االفصل الثالث/ 98"
+        },
+        {
+          "page": 101,
+          "title": "101 لخراج ا الفصل الثالث/"
+        },
+        {
+          "page": 104,
+          "title": "> لخراج االفصل الثالث/ - > ا 104"
+        },
+        {
+          "page": 107,
+          "title": "اسئلة الفصل الثالث"
+        },
+        {
+          "page": 110,
+          "title": "> الفصل الرابع / الحركة 110"
+        },
+        {
+          "page": 113,
+          "title": "113 الفصل الرابع / الحركة"
+        },
+        {
+          "page": 116,
+          "title": "> الفصل الرابع / الحركة 116"
+        },
+        {
+          "page": 119,
+          "title": "119 الفصل الرابع / الحركة"
+        },
+        {
+          "page": 122,
+          "title": "> الفصل الرابع / الحركة 122"
+        },
+        {
+          "page": 125,
+          "title": "الفصل الرابع / الحركة - 125"
+        },
+        {
+          "page": 128,
+          "title": "> الفصل الرابع / الحركة 128"
+        },
+        {
+          "page": 132,
+          "title": "الفصل الرابع / الحركة - 132"
+        },
+        {
+          "page": 135,
+          "title": "5 الفصل الخامس - )Transport( النقل"
+        },
+        {
+          "page": 138,
+          "title": "> الفصل الخامس/ النقل 138"
+        },
+        {
+          "page": 141,
+          "title": "141 الفصل الخامس/ النقل"
+        },
+        {
+          "page": 144,
+          "title": "> الفصل الخامس/ النقل 144"
+        },
+        {
+          "page": 147,
+          "title": "147 الفصل الخامس/ النقل"
+        },
+        {
+          "page": 150,
+          "title": "> الفصل الخامس/ النقل 150"
+        },
+        {
+          "page": 153,
+          "title": "153 الفصل الخامس/ النقل"
+        },
+        {
+          "page": 156,
+          "title": "> الفصل الخامس/ النقل 156"
+        },
+        {
+          "page": 159,
+          "title": "159 الفصل الخامس/ النقل"
+        },
+        {
+          "page": 163,
+          "title": "163 الفصل الخامس/ النقل"
+        },
+        {
+          "page": 167,
+          "title": "167 الفصل الخامس/ النقل"
+        },
+        {
+          "page": 170,
+          "title": "> الفصل الخامس/ النقل 170"
+        },
+        {
+          "page": 173,
+          "title": "173 الفصل الخامس/ النقل"
+        },
+        {
+          "page": 176,
+          "title": "اسئلة الفصل الخامس"
+        },
+        {
+          "page": 179,
+          "title": "6 الفصل السادس"
+        },
+        {
+          "page": 182,
+          "title": "> لحساسالفصل السادس/ التنسيق العصبي و ا 182"
+        },
+        {
+          "page": 185,
+          "title": "185 لحساسالفصل السادس/ التنسيق العصبي و ا"
+        },
+        {
+          "page": 188,
+          "title": "> لحساسالفصل السادس/ التنسيق العصبي و ا 188"
+        },
+        {
+          "page": 191,
+          "title": "191 لحساسالفصل السادس/ التنسيق العصبي و ا"
+        },
+        {
+          "page": 194,
+          "title": "> لحساسالفصل السادس/ التنسيق العصبي و ا 194"
+        },
+        {
+          "page": 197,
+          "title": "197 لحساسالفصل السادس/ التنسيق العصبي و ا"
+        },
+        {
+          "page": 200,
+          "title": "> لحساسالفصل السادس/ التنسيق العصبي و ا 200"
+        },
+        {
+          "page": 203,
+          "title": "203 لحساسالفصل السادس/ التنسيق العصبي و ا"
+        },
+        {
+          "page": 206,
+          "title": "> لحساسالفصل السادس/ التنسيق العصبي و ا 206"
+        },
+        {
+          "page": 210,
+          "title": "اسئلة الفصل السادس"
+        },
+        {
+          "page": 213,
+          "title": "213 لحساسالفصل السادس/ التنسيق العصبي و ا"
+        },
+        {
+          "page": 216,
+          "title": "> الفصل السابع / الهورمونات والغدد 216"
+        },
+        {
+          "page": 219,
+          "title": "219 الفصل السابع / الهورمونات والغدد"
+        },
+        {
+          "page": 222,
+          "title": "> الفصل السابع / الهورمونات والغدد 222"
+        },
+        {
+          "page": 225,
+          "title": "225 الفصل السابع / الهورمونات والغدد"
+        },
+        {
+          "page": 228,
+          "title": "> الفصل السابع / الهورمونات والغدد 228"
+        },
+        {
+          "page": 231,
+          "title": "اسئلة الفصل السابع - : اجب عن ماياأتي 1 �ص"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 53,
+          "title": "اسئلة الفصل األول"
+        },
+        {
+          "page": 83,
+          "title": "اسئلة الفصل الثاني"
+        },
+        {
+          "page": 107,
+          "title": "اسئلة الفصل الثالث"
+        },
+        {
+          "page": 133,
+          "title": "اسئلة الفصل الرابع"
+        },
+        {
+          "page": 176,
+          "title": "اسئلة الفصل الخامس"
+        },
+        {
+          "page": 210,
+          "title": "اسئلة الفصل السادس"
+        },
+        {
+          "page": 231,
+          "title": "اسئلة الفصل السابع"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الاحياء الرابع العلمي",
+      "fileName": "كتاب الاحياء الرابع العلمي.json",
+      "title": "الأحياء - الرابع العلمي",
+      "stage": "الإعدادية",
+      "grade": "الرابع العلمي",
+      "subject": "الأحياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 441710,
+      "totalPages": 192,
+      "nonEmptyPages": 189,
+      "textLength": 243670,
+      "avgCharsPerPage": 1289,
+      "chaptersCount": 8,
+      "questionSectionsCount": 8,
+      "chapters": [
+        {
+          "page": 26,
+          "title": "أسئلة الفصل الثاني"
+        },
+        {
+          "page": 44,
+          "title": "أسئلة الفصل الثالث - 44"
+        },
+        {
+          "page": 64,
+          "title": "أسئلة الفصل الرابع"
+        },
+        {
+          "page": 76,
+          "title": "أسئلة الفصل الخامس"
+        },
+        {
+          "page": 120,
+          "title": "أسئلة الفصل السادس"
+        },
+        {
+          "page": 140,
+          "title": "أسئلة الفصل السابع"
+        },
+        {
+          "page": 152,
+          "title": "أسئلة الفصل الثامن - / لماذا تظهر �شروط بيئة الياب�شة تنوعاً وا�شعاً؟1�ص"
+        },
+        {
+          "page": 170,
+          "title": "أسئلة الفصل التاسع"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 26,
+          "title": "أسئلة الفصل الثاني"
+        },
+        {
+          "page": 44,
+          "title": "أسئلة الفصل الثالث"
+        },
+        {
+          "page": 64,
+          "title": "أسئلة الفصل الرابع"
+        },
+        {
+          "page": 76,
+          "title": "أسئلة الفصل الخامس"
+        },
+        {
+          "page": 120,
+          "title": "أسئلة الفصل السادس"
+        },
+        {
+          "page": 140,
+          "title": "أسئلة الفصل السابع"
+        },
+        {
+          "page": 152,
+          "title": "أسئلة الفصل الثامن"
+        },
+        {
+          "page": 170,
+          "title": "أسئلة الفصل التاسع"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الاحياء السادس العلمي",
+      "fileName": "كتاب الاحياء السادس العلمي.json",
+      "title": "الأحياء - السادس العلمي",
+      "stage": "الإعدادية",
+      "grade": "السادس العلمي",
+      "subject": "الأحياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 16576,
+      "totalPages": 228,
+      "nonEmptyPages": 17,
+      "textLength": 1052,
+      "avgCharsPerPage": 62,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاحياء المنقح 2025",
+      "fileName": "كتاب الاحياء المنقح 2025.json",
+      "title": "الأحياء - السادس العلمي",
+      "stage": "الإعدادية",
+      "grade": "السادس العلمي",
+      "subject": "الأحياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "طبعة 2025",
+      "isCanonical": false,
+      "status": "alternative_edition",
+      "fileSizeBytes": 9330,
+      "totalPages": 140,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاحياء اول متوسط",
+      "fileName": "كتاب الاحياء اول متوسط.json",
+      "title": "الأحياء - الأول المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "الأحياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 204333,
+      "totalPages": 96,
+      "nonEmptyPages": 95,
+      "textLength": 117568,
+      "avgCharsPerPage": 1238,
+      "chaptersCount": 2,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 4,
+          "title": "3 الوحدة الثالثة"
+        },
+        {
+          "page": 25,
+          "title": "الوحدة 2"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الادب انكليزي سادس اعدادي",
+      "fileName": "كتاب الادب انكليزي سادس اعدادي.json",
+      "title": "الأدب الإنجليزي - السادس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "السادس الإعدادي",
+      "subject": "الأدب الإنجليزي",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 64682,
+      "totalPages": 29,
+      "nonEmptyPages": 29,
+      "textLength": 61184,
+      "avgCharsPerPage": 2110,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_تمارين_الادب_انكليزي_سادس_اعدادي",
+      "fileName": "كتاب_تمارين_الادب_انكليزي_سادس_اعدادي.json",
+      "title": "الأدب الإنجليزي - السادس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "السادس الإعدادي",
+      "subject": "الأدب الإنجليزي",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "alternative_edition",
+      "fileSizeBytes": 29992,
+      "totalPages": 24,
+      "nonEmptyPages": 24,
+      "textLength": 26999,
+      "avgCharsPerPage": 1125,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاسلامية الثالث المتوسط",
+      "fileName": "كتاب الاسلامية الثالث المتوسط.json",
+      "title": "التربية الإسلامية - الثالث المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثالث المتوسط",
+      "subject": "التربية الإسلامية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 299931,
+      "totalPages": 156,
+      "nonEmptyPages": 156,
+      "textLength": 166836,
+      "avgCharsPerPage": 1069,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاسلامية الثاني المتوسط",
+      "fileName": "كتاب الاسلامية الثاني المتوسط.json",
+      "title": "التربية الإسلامية - الثاني المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "التربية الإسلامية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 202755,
+      "totalPages": 120,
+      "nonEmptyPages": 106,
+      "textLength": 111613,
+      "avgCharsPerPage": 1053,
+      "chaptersCount": 4,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 30,
+          "title": "سورة القيامة لول الوحدة الثانية / الدرس ا أ )15 -1( آيات الحفظ"
+        },
+        {
+          "page": 53,
+          "title": "سورة المزمل لول الوحدة الثالثة / الدرس ا أ )10-1( آيات الحفظ من - ٱ ٻ ٻ"
+        },
+        {
+          "page": 78,
+          "title": "سورة الجمعة لول الوحدة الرابعة / الدرس ا أ )11-9( آيات الحفظ"
+        },
+        {
+          "page": 100,
+          "title": ")12 - 7( آيات الحفظ سورة الصف الوحدة الخامسة / الدرس الول أ - ٱ ٻ ٻ"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاسلامية الخامس الابتدائي",
+      "fileName": "كتاب الاسلامية الخامس الابتدائي.json",
+      "title": "التربية الإسلامية - الخامس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الخامس الابتدائي",
+      "subject": "التربية الإسلامية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 149357,
+      "totalPages": 96,
+      "nonEmptyPages": 96,
+      "textLength": 82999,
+      "avgCharsPerPage": 865,
+      "chaptersCount": 1,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 41,
+          "title": "الوحدة الثالثة - الدرس األول من سورة املعارج 28 - 19 : آيات احلفظ ٱ ٻ ٻ ٻ"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاسلامية الخامس الاعدادي (2)",
+      "fileName": "كتاب الاسلامية الخامس الاعدادي (2).json",
+      "title": "التربية الإسلامية - الخامس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "التربية الإسلامية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 251982,
+      "totalPages": 156,
+      "nonEmptyPages": 142,
+      "textLength": 139640,
+      "avgCharsPerPage": 983,
+      "chaptersCount": 1,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 90,
+          "title": "الوحدة الرابعة"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاسلامية الخامس الاعدادي",
+      "fileName": "كتاب الاسلامية الخامس الاعدادي.json",
+      "title": "التربية الإسلامية - الخامس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "التربية الإسلامية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "alternative_edition",
+      "fileSizeBytes": 242833,
+      "totalPages": 156,
+      "nonEmptyPages": 140,
+      "textLength": 134411,
+      "avgCharsPerPage": 960,
+      "chaptersCount": 1,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 90,
+          "title": "الوحدة الرابعة"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاسلامية الرابع الابتدائي",
+      "fileName": "كتاب الاسلامية الرابع الابتدائي.json",
+      "title": "التربية الإسلامية - الرابع الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الرابع الابتدائي",
+      "subject": "التربية الإسلامية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 94777,
+      "totalPages": 72,
+      "nonEmptyPages": 53,
+      "textLength": 51849,
+      "avgCharsPerPage": 978,
+      "chaptersCount": 3,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 17,
+          "title": "الوحدة الثانية"
+        },
+        {
+          "page": 29,
+          "title": "الوحدة الثالثة"
+        },
+        {
+          "page": 43,
+          "title": "الوحدة الرابعة"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاسلامية الرابع الاعدادي",
+      "fileName": "كتاب الاسلامية الرابع الاعدادي.json",
+      "title": "التربية الإسلامية - الرابع الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الرابع الإعدادي",
+      "subject": "التربية الإسلامية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 423584,
+      "totalPages": 130,
+      "nonEmptyPages": 130,
+      "textLength": 149175,
+      "avgCharsPerPage": 1148,
+      "chaptersCount": 4,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 34,
+          "title": "الوحدة الثانية"
+        },
+        {
+          "page": 57,
+          "title": "الوحدة الثالثة   - "
+        },
+        {
+          "page": 74,
+          "title": "الوحدة الرابعة   - "
+        },
+        {
+          "page": 104,
+          "title": "الوحدة الخامسة -   – "
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاسلامية السادس الابتدائي",
+      "fileName": "كتاب الاسلامية السادس الابتدائي.json",
+      "title": "التربية الإسلامية - السادس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "السادس الابتدائي",
+      "subject": "التربية الإسلامية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 160854,
+      "totalPages": 92,
+      "nonEmptyPages": 91,
+      "textLength": 89852,
+      "avgCharsPerPage": 987,
+      "chaptersCount": 3,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 45,
+          "title": "الوحدة الثالثة / الدرس الثاني: من العقيدة اإلسالمية والمعراج ُاإلسراء"
+        },
+        {
+          "page": 55,
+          "title": "الوحدة الثالثة / الدرس الخامس: من اآلداب اإلسالمية العفو و التسامح"
+        },
+        {
+          "page": 92,
+          "title": "25 الوحدة الثانية / الدر�سالول : �صورة النجم يام ا"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاسلامية السادس الاعدادي (2)",
+      "fileName": "كتاب الاسلامية السادس الاعدادي (2).json",
+      "title": "التربية الإسلامية - السادس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "السادس الإعدادي",
+      "subject": "التربية الإسلامية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 320391,
+      "totalPages": 164,
+      "nonEmptyPages": 161,
+      "textLength": 177280,
+      "avgCharsPerPage": 1101,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاسلامية السادس الاعدادي",
+      "fileName": "كتاب الاسلامية السادس الاعدادي.json",
+      "title": "التربية الإسلامية - السادس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "السادس الإعدادي",
+      "subject": "التربية الإسلامية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "alternative_edition",
+      "fileSizeBytes": 144944,
+      "totalPages": 164,
+      "nonEmptyPages": 64,
+      "textLength": 76608,
+      "avgCharsPerPage": 1197,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاسلامية اول متوسط",
+      "fileName": "كتاب الاسلامية اول متوسط.json",
+      "title": "التربية الإسلامية - الأول المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "التربية الإسلامية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 105846,
+      "totalPages": 140,
+      "nonEmptyPages": 86,
+      "textLength": 55424,
+      "avgCharsPerPage": 644,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الاقتصاد السادس الادبي",
+      "fileName": "كتاب الاقتصاد السادس الادبي.json",
+      "title": "الاقتصاد - السادس الأدبي",
+      "stage": "الإعدادية",
+      "grade": "السادس الأدبي",
+      "subject": "الاقتصاد",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 259868,
+      "totalPages": 112,
+      "nonEmptyPages": 108,
+      "textLength": 145121,
+      "avgCharsPerPage": 1344,
+      "chaptersCount": 6,
+      "questionSectionsCount": 2,
+      "chapters": [
+        {
+          "page": 5,
+          "title": "62 أسئلة الفصل الثالث - 63 المالية العامة والسياسة النقديةالرابع"
+        },
+        {
+          "page": 28,
+          "title": "الفصل الثاني - العرض والطلب وسلوك المستهلك"
+        },
+        {
+          "page": 47,
+          "title": "الفصل الثالث الدخل و الستهالك و الدخار"
+        },
+        {
+          "page": 63,
+          "title": "الفصل الرابع المالية العامة والسياسة النقدية"
+        },
+        {
+          "page": 79,
+          "title": "الفصل الخامس التخلف والتنمية القتصادية، والتنمية البشرية"
+        },
+        {
+          "page": 95,
+          "title": "الفصل السادس التجارة الخارجية والمنظمات القتصادية الدولية"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 4,
+          "title": "27-26 أسئلة الفصل األول"
+        },
+        {
+          "page": 5,
+          "title": "62 أسئلة الفصل الثالث"
+        }
+      ]
+    },
+    {
+      "id": "كتاب التاريخ الخامس الادبي",
+      "fileName": "كتاب التاريخ الخامس الادبي.json",
+      "title": "التاريخ - الخامس الأدبي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الأدبي",
+      "subject": "التاريخ",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 257999,
+      "totalPages": 112,
+      "nonEmptyPages": 112,
+      "textLength": 140266,
+      "avgCharsPerPage": 1252,
+      "chaptersCount": 6,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 35,
+          "title": "الفصل الثاني - خريطة الواليات املتحدة األمريكية"
+        },
+        {
+          "page": 46,
+          "title": "الفصل الثالث"
+        },
+        {
+          "page": 61,
+          "title": "الفصل الرابع"
+        },
+        {
+          "page": 75,
+          "title": "نشاط الفصل الرابع"
+        },
+        {
+          "page": 86,
+          "title": "الفصل السادس - الوحدات السياسية في أوربا حسب معاهدة ١ م9١9 فرساي"
+        },
+        {
+          "page": 98,
+          "title": "نشاط الفصل السادس"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب التاريخ الرابع الادبي",
+      "fileName": "كتاب التاريخ الرابع الادبي.json",
+      "title": "التاريخ - الرابع الأدبي",
+      "stage": "الإعدادية",
+      "grade": "الرابع الأدبي",
+      "subject": "التاريخ",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 447560,
+      "totalPages": 180,
+      "nonEmptyPages": 179,
+      "textLength": 244764,
+      "avgCharsPerPage": 1367,
+      "chaptersCount": 7,
+      "questionSectionsCount": 3,
+      "chapters": [
+        {
+          "page": 39,
+          "title": "الفصل الثالث"
+        },
+        {
+          "page": 62,
+          "title": "الفصل الرابع"
+        },
+        {
+          "page": 70,
+          "title": "الفصل الخامس - النظام القتصادي في الدولة العربية السالمية"
+        },
+        {
+          "page": 88,
+          "title": "الفصل السادس"
+        },
+        {
+          "page": 126,
+          "title": "الفصل السابع - الحياة الفكرية والعلمية عوامل ازدهار الحركة الفكرية:"
+        },
+        {
+          "page": 160,
+          "title": "اسئلة الفصل السابع - 160"
+        },
+        {
+          "page": 180,
+          "title": "18 - 18 اسئلة الفصل الول والنشاط"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 18,
+          "title": "اسئلة الفصل األول"
+        },
+        {
+          "page": 160,
+          "title": "اسئلة الفصل السابع"
+        },
+        {
+          "page": 180,
+          "title": "18 - 18 اسئلة الفصل الول والنشاط"
+        }
+      ]
+    },
+    {
+      "id": "كتاب التاريخ السادس الادبي",
+      "fileName": "كتاب التاريخ السادس الادبي.json",
+      "title": "التاريخ - السادس الأدبي",
+      "stage": "الإعدادية",
+      "grade": "السادس الأدبي",
+      "subject": "التاريخ",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 551768,
+      "totalPages": 204,
+      "nonEmptyPages": 204,
+      "textLength": 305722,
+      "avgCharsPerPage": 1499,
+      "chaptersCount": 5,
+      "questionSectionsCount": 1,
+      "chapters": [
+        {
+          "page": 51,
+          "title": "الفصل الثالث العراق اثناء وبعد الحرب العالمية لولى ا"
+        },
+        {
+          "page": 125,
+          "title": "الفصل الخامس م1958 العراق منذ الحرب العالمية الثانية حتى عام"
+        },
+        {
+          "page": 148,
+          "title": "اسئلة الفصل الخامس"
+        },
+        {
+          "page": 171,
+          "title": "الفصل السابع حركات التحرر العربي مقدمة"
+        },
+        {
+          "page": 204,
+          "title": "الفصل الثاني"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 148,
+          "title": "اسئلة الفصل الخامس"
+        }
+      ]
+    },
+    {
+      "id": "كتاب التربية الاخلاقية اول متوسط",
+      "fileName": "كتاب التربية الاخلاقية اول متوسط.json",
+      "title": "التربية الأخلاقية - الأول المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "التربية الأخلاقية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 287478,
+      "totalPages": 136,
+      "nonEmptyPages": 135,
+      "textLength": 174669,
+      "avgCharsPerPage": 1294,
+      "chaptersCount": 3,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 85,
+          "title": "الوحدة الرابعة - ثقافة الشمول املايل والرتشيد"
+        },
+        {
+          "page": 112,
+          "title": "الوحدة الخامسة - التكنولوجيا"
+        },
+        {
+          "page": 136,
+          "title": "الوحدة الثانية: التعامل مع الصحة الفردية والمجتمعية ١٣"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الجغرافية الخامس الادبي",
+      "fileName": "كتاب الجغرافية الخامس الادبي.json",
+      "title": "الجغرافية - الخامس الأدبي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الأدبي",
+      "subject": "الجغرافية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 402401,
+      "totalPages": 162,
+      "nonEmptyPages": 162,
+      "textLength": 215729,
+      "avgCharsPerPage": 1332,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الجغرافية الرابع الادبي",
+      "fileName": "كتاب الجغرافية الرابع الادبي.json",
+      "title": "الجغرافية - الرابع الأدبي",
+      "stage": "الإعدادية",
+      "grade": "الرابع الأدبي",
+      "subject": "الجغرافية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 251068,
+      "totalPages": 144,
+      "nonEmptyPages": 144,
+      "textLength": 151154,
+      "avgCharsPerPage": 1050,
+      "chaptersCount": 5,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 27,
+          "title": "2 الفصل الثاني - á«aGô¨÷G ‘ »ª∏©dG åëÑdG"
+        },
+        {
+          "page": 38,
+          "title": "الفصل الثالث - É¡°VôY ¥ôWh á«aGô¨÷G äÉfÉ«ÑdG QOÉ°üe"
+        },
+        {
+          "page": 74,
+          "title": "الجزء الثاني 4 الفصل الرابع - á«aGô¨÷G äÉ«æ≤àdGh §FGôÿG"
+        },
+        {
+          "page": 116,
+          "title": "الفصل الخامس - á« aGô ¨÷ G ∫ ƒ≤ M"
+        },
+        {
+          "page": 142,
+          "title": "25 - 24 䐬 䑅㐱 䅊 䐬مرحلة ا䐬لغرافية ا䑅لعا�㐱شة الفصل الثاني 䅊 䐬"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الجغرافية السادس الادبي",
+      "fileName": "كتاب الجغرافية السادس الادبي.json",
+      "title": "الجغرافية - السادس الأدبي",
+      "stage": "الإعدادية",
+      "grade": "السادس الأدبي",
+      "subject": "الجغرافية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 535993,
+      "totalPages": 172,
+      "nonEmptyPages": 171,
+      "textLength": 296063,
+      "avgCharsPerPage": 1731,
+      "chaptersCount": 6,
+      "questionSectionsCount": 7,
+      "chapters": [
+        {
+          "page": 32,
+          "title": "الفصل الثاني جغرافية المدن وجغرافية الريف - جغرافية المدن- ًأوال :تعريفها"
+        },
+        {
+          "page": 58,
+          "title": "أسئلة الفصل الثاني"
+        },
+        {
+          "page": 79,
+          "title": "أسئلة الفصل الثالث"
+        },
+        {
+          "page": 106,
+          "title": "أسئلة الفصل الرابع - : عرف المصطلحات اآلتية /1س"
+        },
+        {
+          "page": 137,
+          "title": "أسئلة الفصل الخامس"
+        },
+        {
+          "page": 169,
+          "title": "أسئلة الفصل السادس - -: عرف كل مما يأتي : 1س"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 31,
+          "title": "أسئلة الفصل األول"
+        },
+        {
+          "page": 58,
+          "title": "أسئلة الفصل الثاني"
+        },
+        {
+          "page": 79,
+          "title": "أسئلة الفصل الثالث"
+        },
+        {
+          "page": 106,
+          "title": "أسئلة الفصل الرابع"
+        },
+        {
+          "page": 137,
+          "title": "أسئلة الفصل الخامس"
+        },
+        {
+          "page": 169,
+          "title": "أسئلة الفصل السادس"
+        },
+        {
+          "page": 170,
+          "title": "دراسة تطبيقية لجغرافية السكان في العراق اسئلة الفصل األول"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الحاسوب الثاني المتوسط",
+      "fileName": "كتاب الحاسوب الثاني المتوسط.json",
+      "title": "الحاسوب - الثاني المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "الحاسوب",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 227850,
+      "totalPages": 144,
+      "nonEmptyPages": 143,
+      "textLength": 132374,
+      "avgCharsPerPage": 926,
+      "chaptersCount": 6,
+      "questionSectionsCount": 1,
+      "chapters": [
+        {
+          "page": 19,
+          "title": "الفصل الثاني / الذاكرة ووحدات التخزين في الحواسيب نشاط استهاللي"
+        },
+        {
+          "page": 29,
+          "title": "مراجعة الفصل الثاني"
+        },
+        {
+          "page": 45,
+          "title": ".Tabs الفصل الثاني / التبويبات .نشاط استهاللي"
+        },
+        {
+          "page": 91,
+          "title": "الفصل الثاني - جمل التحكم الشرطية"
+        },
+        {
+          "page": 127,
+          "title": "الفصل الثاني: البحث عن المعلومات في الشبكة العنكبوتية - مرتبط الى شبكة حاسوب شخصي-1 النترنت"
+        },
+        {
+          "page": 143,
+          "title": "مراجعة الفصل الثاني - :/ امأل الفراغات اآلتية1س"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 102,
+          "title": "Scratch الدرس الثالث: أمثلة محلولة بلغة"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الحاسوب الخامس الاعدادي",
+      "fileName": "كتاب الحاسوب الخامس الاعدادي.json",
+      "title": "الحاسوب - الخامس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "الحاسوب",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 275174,
+      "totalPages": 144,
+      "nonEmptyPages": 136,
+      "textLength": 165511,
+      "avgCharsPerPage": 1217,
+      "chaptersCount": 2,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 26,
+          "title": "الحاسوب / الخامس العدادي الوحدة الثانية"
+        },
+        {
+          "page": 114,
+          "title": "الحاسوب / الخامس العدادي الوحدة الرابعة - الخدمات اإللكترونية والحوسبة السحابية"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الحاسوب الخامس الاعدادي (2)",
+      "fileName": "كتاب الحاسوب الخامس الاعدادي (2).json",
+      "title": "الحاسوب - الخامس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "الحاسوب",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "alternative_edition",
+      "fileSizeBytes": 275162,
+      "totalPages": 144,
+      "nonEmptyPages": 134,
+      "textLength": 165499,
+      "avgCharsPerPage": 1235,
+      "chaptersCount": 2,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 26,
+          "title": "الحاسوب / الخامس العدادي الوحدة الثانية"
+        },
+        {
+          "page": 114,
+          "title": "الحاسوب / الخامس العدادي الوحدة الرابعة - الخدمات اإللكترونية والحوسبة السحابية"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الحاسوب الرابع الاعدادي",
+      "fileName": "كتاب الحاسوب الرابع الاعدادي.json",
+      "title": "الحاسوب - الرابع الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الرابع الإعدادي",
+      "subject": "الحاسوب",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 276058,
+      "totalPages": 144,
+      "nonEmptyPages": 144,
+      "textLength": 161122,
+      "avgCharsPerPage": 1119,
+      "chaptersCount": 7,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 4,
+          "title": "الوحدة الثانية"
+        },
+        {
+          "page": 32,
+          "title": "الوحدة الثانية - برمجيات الحاسوب Computer Software"
+        },
+        {
+          "page": 56,
+          "title": "Publisher الفصل الثاني: برنامج الناشر المكتبي - تصميم منشور دعائي لمهرجان مدرسي"
+        },
+        {
+          "page": 71,
+          "title": ":مراجعة املفردات واملفاهيم والفكرة الرئيسة مراجعة الفصل الثاني - 71"
+        },
+        {
+          "page": 103,
+          "title": "مراجعة الفصل الثاني مراجعة المفردات والمفاهيم والفكرة الرئيسة"
+        },
+        {
+          "page": 128,
+          "title": "الفصل الثاني: أمن المعلومات - كيف يمكن حماية الحاسوب الشخصي من الهجوم األلكتروني؟"
+        },
+        {
+          "page": 143,
+          "title": "مراجعة المفردات والمفاهيم والفكرة الرئيسة مراجعة الفصل الثاني - :امأل الفراغات اآلتية بما يناسبها -1:س"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الحاسوب اول متوسط",
+      "fileName": "كتاب الحاسوب اول متوسط.json",
+      "title": "الحاسوب - الأول المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "الحاسوب",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 226345,
+      "totalPages": 144,
+      "nonEmptyPages": 111,
+      "textLength": 130529,
+      "avgCharsPerPage": 1176,
+      "chaptersCount": 2,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 22,
+          "title": "الفصل الثاني الدرس األول/ البيانات والمعلومات"
+        },
+        {
+          "page": 80,
+          "title": "مراجعة الفصل الثاني"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الرياضيات الثاني المتوسط",
+      "fileName": "كتاب الرياضيات الثاني المتوسط.json",
+      "title": "الرياضيات - الثاني المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 372527,
+      "totalPages": 196,
+      "nonEmptyPages": 196,
+      "textLength": 245916,
+      "avgCharsPerPage": 1255,
+      "chaptersCount": 0,
+      "questionSectionsCount": 7,
+      "chapters": [],
+      "questionSections": [
+        {
+          "page": 26,
+          "title": "Chapter Test اختبار الفصل"
+        },
+        {
+          "page": 49,
+          "title": "Chapter Test اختبار الفصل"
+        },
+        {
+          "page": 72,
+          "title": "Chapter Test اختبار الفصل"
+        },
+        {
+          "page": 95,
+          "title": "Chapter Test الفصل ِ ُ اختبار"
+        },
+        {
+          "page": 122,
+          "title": "الفصل ِ ُ اختبار"
+        },
+        {
+          "page": 145,
+          "title": "ِ الفصل ُ اختبار"
+        },
+        {
+          "page": 174,
+          "title": "الفصل ِ ُ اختبار"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الرياضيات الخامس الابتدائي",
+      "fileName": "كتاب الرياضيات الخامس الابتدائي.json",
+      "title": "الرياضيات - الخامس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الخامس الابتدائي",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 396841,
+      "totalPages": 198,
+      "nonEmptyPages": 187,
+      "textLength": 180181,
+      "avgCharsPerPage": 964,
+      "chaptersCount": 0,
+      "questionSectionsCount": 5,
+      "chapters": [],
+      "questionSections": [
+        {
+          "page": 22,
+          "title": "اختبار الفصل"
+        },
+        {
+          "page": 41,
+          "title": "اختبار الفصل"
+        },
+        {
+          "page": 57,
+          "title": "اختبار الفصل"
+        },
+        {
+          "page": 77,
+          "title": "اختبار الفصل"
+        },
+        {
+          "page": 99,
+          "title": "اختبار الفصل"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الرياضيات الخامس الادبي",
+      "fileName": "كتاب الرياضيات الخامس الادبي.json",
+      "title": "الرياضيات - الخامس الأدبي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الأدبي",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 92643,
+      "totalPages": 128,
+      "nonEmptyPages": 78,
+      "textLength": 60955,
+      "avgCharsPerPage": 781,
+      "chaptersCount": 2,
+      "questionSectionsCount": 1,
+      "chapters": [
+        {
+          "page": 67,
+          "title": "الفصل الثالث CHAPTER 3 - املصفوفات واحملددات"
+        },
+        {
+          "page": 102,
+          "title": "الفصل الرابع CHAPTER 4 - [ مقدمة4-1]"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 65,
+          "title": "تمارين عامة على الفصل"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الرياضيات الخامس الاعدادي",
+      "fileName": "كتاب الرياضيات الخامس الاعدادي.json",
+      "title": "الرياضيات - الخامس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 19237,
+      "totalPages": 258,
+      "nonEmptyPages": 192,
+      "textLength": 1745,
+      "avgCharsPerPage": 9,
+      "chaptersCount": 1,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 4,
+          "title": "104-123 الفصل الخامس الغایة واالستمراریة"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الرياضيات الرابع الابتدائي",
+      "fileName": "كتاب الرياضيات الرابع الابتدائي.json",
+      "title": "الرياضيات - الرابع الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الرابع الابتدائي",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 278988,
+      "totalPages": 196,
+      "nonEmptyPages": 195,
+      "textLength": 170591,
+      "avgCharsPerPage": 875,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الرياضيات الرابع الادبي",
+      "fileName": "كتاب الرياضيات الرابع الادبي.json",
+      "title": "الرياضيات - الرابع الأدبي",
+      "stage": "الإعدادية",
+      "grade": "الرابع الأدبي",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 68974,
+      "totalPages": 112,
+      "nonEmptyPages": 64,
+      "textLength": 43846,
+      "avgCharsPerPage": 685,
+      "chaptersCount": 1,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 24,
+          "title": "R الفصل الثاني : املعادالت واملتراجحات في : �e Equations 2-1] [ املعادالت - : [ متهيد2-1-1]"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الرياضيات الرابع العلمي",
+      "fileName": "كتاب الرياضيات الرابع العلمي.json",
+      "title": "الرياضيات - الرابع العلمي",
+      "stage": "الإعدادية",
+      "grade": "الرابع العلمي",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 138961,
+      "totalPages": 156,
+      "nonEmptyPages": 116,
+      "textLength": 88035,
+      "avgCharsPerPage": 759,
+      "chaptersCount": 5,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 41,
+          "title": "Indices and Roots الفصل الثالث : األسس والجذور"
+        },
+        {
+          "page": 58,
+          "title": "حساب المثلثات : الفصل الرابع"
+        },
+        {
+          "page": 90,
+          "title": "Vectors الفصل الخامس : المتجهات - (( [ مفهوم المتجه ))الهندسي والجبري5�1�"
+        },
+        {
+          "page": 135,
+          "title": "Statistics اإلحصاء : الفصل السابع 7"
+        },
+        {
+          "page": 156,
+          "title": "21الفصل الثاني : المعادالت والمتباينات"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الرياضيات السادس الابتدائي",
+      "fileName": "كتاب الرياضيات السادس الابتدائي.json",
+      "title": "الرياضيات - السادس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "السادس الابتدائي",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 281796,
+      "totalPages": 200,
+      "nonEmptyPages": 198,
+      "textLength": 155496,
+      "avgCharsPerPage": 785,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الرياضيات السادس الادبي",
+      "fileName": "كتاب الرياضيات السادس الادبي.json",
+      "title": "الرياضيات - السادس الأدبي",
+      "stage": "الإعدادية",
+      "grade": "السادس الأدبي",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 79530,
+      "totalPages": 140,
+      "nonEmptyPages": 122,
+      "textLength": 48955,
+      "avgCharsPerPage": 401,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الرياضيات السادس العلمي",
+      "fileName": "كتاب الرياضيات السادس العلمي.json",
+      "title": "الرياضيات - السادس العلمي",
+      "stage": "الإعدادية",
+      "grade": "السادس العلمي",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 71050,
+      "totalPages": 240,
+      "nonEmptyPages": 208,
+      "textLength": 39220,
+      "avgCharsPerPage": 189,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الرياضيات اول متوسط",
+      "fileName": "كتاب الرياضيات اول متوسط.json",
+      "title": "الرياضيات - الأول المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 353213,
+      "totalPages": 196,
+      "nonEmptyPages": 195,
+      "textLength": 224412,
+      "avgCharsPerPage": 1151,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب العلوم الخامس الابتدائي",
+      "fileName": "كتاب العلوم الخامس الابتدائي.json",
+      "title": "العلوم - الخامس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الخامس الابتدائي",
+      "subject": "العلوم",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 440005,
+      "totalPages": 200,
+      "nonEmptyPages": 200,
+      "textLength": 243610,
+      "avgCharsPerPage": 1218,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب العلوم الرابع الابتدائي",
+      "fileName": "كتاب العلوم الرابع الابتدائي.json",
+      "title": "العلوم - الرابع الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الرابع الابتدائي",
+      "subject": "العلوم",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 363892,
+      "totalPages": 216,
+      "nonEmptyPages": 216,
+      "textLength": 250256,
+      "avgCharsPerPage": 1159,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب العلوم السادس الابتدائي",
+      "fileName": "كتاب العلوم السادس الابتدائي.json",
+      "title": "العلوم - السادس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "السادس الابتدائي",
+      "subject": "العلوم",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 499944,
+      "totalPages": 208,
+      "nonEmptyPages": 208,
+      "textLength": 273642,
+      "avgCharsPerPage": 1316,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الفرنسي الخامس الاعدادي",
+      "fileName": "كتاب الفرنسي الخامس الاعدادي.json",
+      "title": "اللغة الفرنسية - الخامس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "اللغة الفرنسية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 6568,
+      "totalPages": 64,
+      "nonEmptyPages": 58,
+      "textLength": 1663,
+      "avgCharsPerPage": 29,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الفرنسي_المنهج_الجديد_الرابع_والخامس_والسادس_الاعدادي",
+      "fileName": "كتاب_الفرنسي_المنهج_الجديد_الرابع_والخامس_والسادس_الاعدادي.json",
+      "title": "اللغة الفرنسية - السادس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "السادس الإعدادي",
+      "subject": "اللغة الفرنسية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "المنهج الجديد",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 534962,
+      "totalPages": 171,
+      "nonEmptyPages": 170,
+      "textLength": 492548,
+      "avgCharsPerPage": 2897,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الفرنسي السادس الاعدادي",
+      "fileName": "كتاب الفرنسي السادس الاعدادي.json",
+      "title": "اللغة الفرنسية - السادس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "السادس الإعدادي",
+      "subject": "اللغة الفرنسية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "alternative_edition",
+      "fileSizeBytes": 5371,
+      "totalPages": 80,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الفيزياء الثالث المتوسط",
+      "fileName": "كتاب الفيزياء الثالث المتوسط.json",
+      "title": "الفيزياء - الثالث المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثالث المتوسط",
+      "subject": "الفيزياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 303568,
+      "totalPages": 176,
+      "nonEmptyPages": 176,
+      "textLength": 169212,
+      "avgCharsPerPage": 961,
+      "chaptersCount": 14,
+      "questionSectionsCount": 9,
+      "chapters": [
+        {
+          "page": 44,
+          "title": "أسئلة الفصل الثاني"
+        },
+        {
+          "page": 47,
+          "title": "الفصل الثالث 3"
+        },
+        {
+          "page": 75,
+          "title": "أسئلة الفصل الثالث - تي: ختر العبارة ال�ضحيحة لكل مما يا أ ا إ 1س"
+        },
+        {
+          "page": 79,
+          "title": "الفصل الرابع 4"
+        },
+        {
+          "page": 91,
+          "title": "أسئلة الفصل الرابع"
+        },
+        {
+          "page": 108,
+          "title": "أسئلة الفصل الخامس - 1س اإختر العبارة ال�ضحيحة لكل مما ياأتي:"
+        },
+        {
+          "page": 111,
+          "title": "الفصل السادس 6 - الكهربائية والمغناطيسية Electricity and Magnetism"
+        },
+        {
+          "page": 129,
+          "title": "أسئلة الفصل السادس"
+        },
+        {
+          "page": 133,
+          "title": "الفصل السابع 7 - Electric Transformer المحولة الكهربائية"
+        },
+        {
+          "page": 144,
+          "title": "أسئلة الفصل السابع"
+        },
+        {
+          "page": 147,
+          "title": "الفصل الثامن 8 - Energy Sources technology تكنولوجيا مصادر الطاقة"
+        },
+        {
+          "page": 160,
+          "title": "أسئلة الفصل الثامن - اإختر العبارة ال�ضحيحة لكل مما ياأتي:1/�س"
+        },
+        {
+          "page": 171,
+          "title": "أسئلة الفصل التاسع - حة لكل مما ياأتي:1س اإختر العبارة ال�ضحي"
+        },
+        {
+          "page": 174,
+          "title": "ةالفصل الرابع البطارية والقوة الدافعة الكهربائي - ------"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 25,
+          "title": "أسئلة الفصل األول"
+        },
+        {
+          "page": 44,
+          "title": "أسئلة الفصل الثاني"
+        },
+        {
+          "page": 75,
+          "title": "أسئلة الفصل الثالث"
+        },
+        {
+          "page": 91,
+          "title": "أسئلة الفصل الرابع"
+        },
+        {
+          "page": 108,
+          "title": "أسئلة الفصل الخامس"
+        },
+        {
+          "page": 129,
+          "title": "أسئلة الفصل السادس"
+        },
+        {
+          "page": 144,
+          "title": "أسئلة الفصل السابع"
+        },
+        {
+          "page": 160,
+          "title": "أسئلة الفصل الثامن"
+        },
+        {
+          "page": 171,
+          "title": "أسئلة الفصل التاسع"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الفيزياء الثاني المتوسط",
+      "fileName": "كتاب الفيزياء الثاني المتوسط.json",
+      "title": "الفيزياء - الثاني المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "الفيزياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 187683,
+      "totalPages": 88,
+      "nonEmptyPages": 83,
+      "textLength": 102269,
+      "avgCharsPerPage": 1232,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الفيزياء الخامس الاعدادي",
+      "fileName": "كتاب الفيزياء الخامس الاعدادي.json",
+      "title": "الفيزياء - الخامس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "الفيزياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 16594,
+      "totalPages": 248,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الفيزياء الرابع العلمي",
+      "fileName": "كتاب الفيزياء الرابع العلمي.json",
+      "title": "الفيزياء - الرابع العلمي",
+      "stage": "الإعدادية",
+      "grade": "الرابع العلمي",
+      "subject": "الفيزياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 358181,
+      "totalPages": 188,
+      "nonEmptyPages": 188,
+      "textLength": 217566,
+      "avgCharsPerPage": 1157,
+      "chaptersCount": 16,
+      "questionSectionsCount": 28,
+      "chapters": [
+        {
+          "page": 13,
+          "title": "اسئلة الفصل 1 لول ا"
+        },
+        {
+          "page": 25,
+          "title": "اسئلة الفصل 2 الثاني"
+        },
+        {
+          "page": 28,
+          "title": "الفصل الثالث 3"
+        },
+        {
+          "page": 48,
+          "title": "اسئلة الفصل الثالث - 3"
+        },
+        {
+          "page": 51,
+          "title": "اسئلة الفصل 3 الثالث"
+        },
+        {
+          "page": 79,
+          "title": "اسئلة الفصل 4 الرابع - اسئلة"
+        },
+        {
+          "page": 82,
+          "title": "اسئلة الفصل 4 الرابع"
+        },
+        {
+          "page": 93,
+          "title": "اسئلة الفصل 5 الخامس"
+        },
+        {
+          "page": 111,
+          "title": "اسئلة الفصل 6 السادس - اسئلة"
+        },
+        {
+          "page": 114,
+          "title": "الفصل السابع Mirrors ال يا ا مر 7 - : مقدمة"
+        },
+        {
+          "page": 130,
+          "title": "اسئلة الفصل 7 السابع"
+        },
+        {
+          "page": 133,
+          "title": "الفصل الثامن العدسات الرقيقة 8 Thin Lenses العدسات الرقيقة 1-8"
+        },
+        {
+          "page": 152,
+          "title": "اسئلة الفصل 8 الثامن"
+        },
+        {
+          "page": 155,
+          "title": "اسئلة الفصل الثامن - مسائل"
+        },
+        {
+          "page": 183,
+          "title": "اسئلة الفصل 9 التاسع - اسئلة"
+        },
+        {
+          "page": 186,
+          "title": "اسئلة الفصل 9 التاسع"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 13,
+          "title": "اسئلة الفصل 1 لول ا"
+        },
+        {
+          "page": 14,
+          "title": "اسئلة الفصل 1 لول ا"
+        },
+        {
+          "page": 25,
+          "title": "اسئلة الفصل 2 الثاني"
+        },
+        {
+          "page": 26,
+          "title": "اسئلة الفصل 2 الثاني"
+        },
+        {
+          "page": 27,
+          "title": "اسئلة الفصل 2 الثاني"
+        },
+        {
+          "page": 48,
+          "title": "اسئلة الفصل الثالث"
+        },
+        {
+          "page": 49,
+          "title": "اسئلة الفصل 3 الثالث"
+        },
+        {
+          "page": 51,
+          "title": "اسئلة الفصل 3 الثالث"
+        },
+        {
+          "page": 79,
+          "title": "اسئلة الفصل 4 الرابع"
+        },
+        {
+          "page": 80,
+          "title": "اسئلة الفصل 4 الرابع"
+        },
+        {
+          "page": 81,
+          "title": "اسئلة الفصل 4 الرابع"
+        },
+        {
+          "page": 82,
+          "title": "اسئلة الفصل 4 الرابع"
+        },
+        {
+          "page": 83,
+          "title": "اسئلة الفصل 4 الرابع"
+        },
+        {
+          "page": 93,
+          "title": "اسئلة الفصل 5 الخامس"
+        },
+        {
+          "page": 94,
+          "title": "اسئلة الفصل 5 الخامس"
+        },
+        {
+          "page": 111,
+          "title": "اسئلة الفصل 6 السادس"
+        },
+        {
+          "page": 112,
+          "title": "اسئلة الفصل السادس"
+        },
+        {
+          "page": 113,
+          "title": "اسئلة الفصل السادس"
+        },
+        {
+          "page": 130,
+          "title": "اسئلة الفصل 7 السابع"
+        },
+        {
+          "page": 131,
+          "title": "اسئلة الفصل 7 السابع"
+        },
+        {
+          "page": 132,
+          "title": "اسئلة الفصل 7 السابع"
+        },
+        {
+          "page": 152,
+          "title": "اسئلة الفصل 8 الثامن"
+        },
+        {
+          "page": 153,
+          "title": "اسئلة 8 الفصل الثامن"
+        },
+        {
+          "page": 154,
+          "title": "اسئلة الفصل 8 الثامن"
+        },
+        {
+          "page": 155,
+          "title": "اسئلة الفصل الثامن"
+        },
+        {
+          "page": 183,
+          "title": "اسئلة الفصل 9 التاسع"
+        },
+        {
+          "page": 185,
+          "title": "اسئلة الفصل 9 التاسع"
+        },
+        {
+          "page": 186,
+          "title": "اسئلة الفصل 9 التاسع"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الفيزياء السادس العلمي",
+      "fileName": "كتاب الفيزياء السادس العلمي.json",
+      "title": "الفيزياء - السادس العلمي",
+      "stage": "الإعدادية",
+      "grade": "السادس العلمي",
+      "subject": "الفيزياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 196301,
+      "totalPages": 284,
+      "nonEmptyPages": 82,
+      "textLength": 96199,
+      "avgCharsPerPage": 1173,
+      "chaptersCount": 3,
+      "questionSectionsCount": 2,
+      "chapters": [
+        {
+          "page": 128,
+          "title": "مسائل الفصل الثالث"
+        },
+        {
+          "page": 175,
+          "title": "الفصل 6 السادس"
+        },
+        {
+          "page": 196,
+          "title": "؟ أسئلة الفصل السادس - : اختر العبارة ال�ضحيحة لكل مما ياأتي1 �س"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 37,
+          "title": "أسئلة الفصل األول ؟"
+        },
+        {
+          "page": 196,
+          "title": "؟ أسئلة الفصل السادس"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الفيزياء اول متوسط",
+      "fileName": "كتاب الفيزياء اول متوسط.json",
+      "title": "الفيزياء - الأول المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "الفيزياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 182430,
+      "totalPages": 88,
+      "nonEmptyPages": 88,
+      "textLength": 104769,
+      "avgCharsPerPage": 1191,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب القراءة الخامس الابتدائي",
+      "fileName": "كتاب القراءة الخامس الابتدائي.json",
+      "title": "القراءة العربية - الخامس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الخامس الابتدائي",
+      "subject": "القراءة العربية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 11008,
+      "totalPages": 162,
+      "nonEmptyPages": 4,
+      "textLength": 153,
+      "avgCharsPerPage": 38,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب القراءة الرابع الابتدائي",
+      "fileName": "كتاب القراءة الرابع الابتدائي.json",
+      "title": "القراءة العربية - الرابع الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الرابع الابتدائي",
+      "subject": "القراءة العربية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 9894,
+      "totalPages": 148,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب القراءة السادس الابتدائي",
+      "fileName": "كتاب القراءة السادس الابتدائي.json",
+      "title": "القراءة العربية - السادس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "السادس الابتدائي",
+      "subject": "القراءة العربية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 10320,
+      "totalPages": 142,
+      "nonEmptyPages": 15,
+      "textLength": 550,
+      "avgCharsPerPage": 37,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب القواعد الخامس الابتدائي",
+      "fileName": "كتاب القواعد الخامس الابتدائي.json",
+      "title": "قواعد اللغة العربية - الخامس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الخامس الابتدائي",
+      "subject": "قواعد اللغة العربية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 5635,
+      "totalPages": 84,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب القواعد الرابع الابتدائي",
+      "fileName": "كتاب القواعد الرابع الابتدائي.json",
+      "title": "قواعد اللغة العربية - الرابع الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الرابع الابتدائي",
+      "subject": "قواعد اللغة العربية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 6143,
+      "totalPages": 80,
+      "nonEmptyPages": 8,
+      "textLength": 606,
+      "avgCharsPerPage": 76,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب القواعد السادس الابتدائي",
+      "fileName": "كتاب القواعد السادس الابتدائي.json",
+      "title": "قواعد اللغة العربية - السادس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "السادس الابتدائي",
+      "subject": "قواعد اللغة العربية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 7508,
+      "totalPages": 108,
+      "nonEmptyPages": 3,
+      "textLength": 199,
+      "avgCharsPerPage": 66,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الكردي الخامس الاعدادي",
+      "fileName": "كتاب الكردي الخامس الاعدادي.json",
+      "title": "اللغة الكردية - الخامس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "اللغة الكردية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 219908,
+      "totalPages": 209,
+      "nonEmptyPages": 207,
+      "textLength": 74856,
+      "avgCharsPerPage": 362,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الكردي الصف الرابع الاعدادي",
+      "fileName": "كتاب الكردي الصف الرابع الاعدادي.json",
+      "title": "اللغة الكردية - الرابع الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الرابع الإعدادي",
+      "subject": "اللغة الكردية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 266444,
+      "totalPages": 174,
+      "nonEmptyPages": 174,
+      "textLength": 93787,
+      "avgCharsPerPage": 539,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الكيمياء الثالث المتوسط",
+      "fileName": "كتاب الكيمياء الثالث المتوسط.json",
+      "title": "الكيمياء - الثالث المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثالث المتوسط",
+      "subject": "الكيمياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 229229,
+      "totalPages": 152,
+      "nonEmptyPages": 115,
+      "textLength": 135797,
+      "avgCharsPerPage": 1181,
+      "chaptersCount": 9,
+      "questionSectionsCount": 6,
+      "chapters": [
+        {
+          "page": 6,
+          "title": "الفصل الثالث IIIA الزمرة الثالثة الزمرة الثالثة"
+        },
+        {
+          "page": 41,
+          "title": "2 الفصل الثاني - لولى والثانية ا الزمرتان Groups IA and IIA"
+        },
+        {
+          "page": 52,
+          "title": "أسئلة الفصل الثاني"
+        },
+        {
+          "page": 64,
+          "title": "أسئلة الفصل الثالث"
+        },
+        {
+          "page": 89,
+          "title": "6 الفصل السادس - مدخل في الكيمياء العضوية"
+        },
+        {
+          "page": 103,
+          "title": "7 الفصل السابع - الزمرة اخلامسة Group VA"
+        },
+        {
+          "page": 119,
+          "title": "أسئلة الفصل السابع"
+        },
+        {
+          "page": 134,
+          "title": "أسئلة الفصل الثامن"
+        },
+        {
+          "page": 147,
+          "title": "أسئلة الفصل التاسع"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 40,
+          "title": "أسئلة الفصل األول"
+        },
+        {
+          "page": 52,
+          "title": "أسئلة الفصل الثاني"
+        },
+        {
+          "page": 64,
+          "title": "أسئلة الفصل الثالث"
+        },
+        {
+          "page": 119,
+          "title": "أسئلة الفصل السابع"
+        },
+        {
+          "page": 134,
+          "title": "أسئلة الفصل الثامن"
+        },
+        {
+          "page": 147,
+          "title": "أسئلة الفصل التاسع"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الكيمياء الثاني المتوسط",
+      "fileName": "كتاب الكيمياء الثاني المتوسط.json",
+      "title": "الكيمياء - الثاني المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "الكيمياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 206771,
+      "totalPages": 96,
+      "nonEmptyPages": 96,
+      "textLength": 118065,
+      "avgCharsPerPage": 1230,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الكيمياء الخامس الاعدادي",
+      "fileName": "كتاب الكيمياء الخامس الاعدادي.json",
+      "title": "الكيمياء - الخامس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "الكيمياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 560662,
+      "totalPages": 220,
+      "nonEmptyPages": 205,
+      "textLength": 330683,
+      "avgCharsPerPage": 1613,
+      "chaptersCount": 1,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 8,
+          "title": "الفصل الثامن لروماتية ا الهيدروكاربونات"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب الكيمياء الرابع العلمي",
+      "fileName": "كتاب الكيمياء الرابع العلمي.json",
+      "title": "الكيمياء - الرابع العلمي",
+      "stage": "الإعدادية",
+      "grade": "الرابع العلمي",
+      "subject": "الكيمياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 303574,
+      "totalPages": 148,
+      "nonEmptyPages": 148,
+      "textLength": 183198,
+      "avgCharsPerPage": 1238,
+      "chaptersCount": 4,
+      "questionSectionsCount": 3,
+      "chapters": [
+        {
+          "page": 31,
+          "title": "الغازات الفصل الثاني Gases - 2"
+        },
+        {
+          "page": 85,
+          "title": "اسئلة الفصل الثالث"
+        },
+        {
+          "page": 116,
+          "title": "اسئلة الفصل الرابع"
+        },
+        {
+          "page": 142,
+          "title": "اسئلة الفصل الخامس"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 85,
+          "title": "اسئلة الفصل الثالث"
+        },
+        {
+          "page": 116,
+          "title": "اسئلة الفصل الرابع"
+        },
+        {
+          "page": 142,
+          "title": "اسئلة الفصل الخامس"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الكيمياء السادس العلمي",
+      "fileName": "كتاب الكيمياء السادس العلمي.json",
+      "title": "الكيمياء - السادس العلمي",
+      "stage": "الإعدادية",
+      "grade": "السادس العلمي",
+      "subject": "الكيمياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 693569,
+      "totalPages": 288,
+      "nonEmptyPages": 288,
+      "textLength": 429922,
+      "avgCharsPerPage": 1493,
+      "chaptersCount": 10,
+      "questionSectionsCount": 7,
+      "chapters": [
+        {
+          "page": 51,
+          "title": "التزان الكيميائي الفصل الثاني 2"
+        },
+        {
+          "page": 87,
+          "title": "التزان اليوني الفصل الثالث 3"
+        },
+        {
+          "page": 130,
+          "title": "اسئلة الفصل الثالث"
+        },
+        {
+          "page": 169,
+          "title": "الكيمياء التناسقية الفصل الخامس - Coordination Chemistry"
+        },
+        {
+          "page": 194,
+          "title": "اسئلة الفصل الخامس"
+        },
+        {
+          "page": 197,
+          "title": "طرائق التحليل الكيميائي الفصل السادس Chemical Analysis - 6"
+        },
+        {
+          "page": 226,
+          "title": "اسئلة الفصل السادس"
+        },
+        {
+          "page": 231,
+          "title": "الفصل السابع 7"
+        },
+        {
+          "page": 269,
+          "title": "الكيمياء الحياتية الفصل الثامن 8 - Biochemistry"
+        },
+        {
+          "page": 280,
+          "title": "اسئلة الفصل الثامن"
+        }
+      ],
+      "questionSections": [
+        {
+          "page": 130,
+          "title": "اسئلة الفصل الثالث"
+        },
+        {
+          "page": 164,
+          "title": "عاسئلة الفصل الراب"
+        },
+        {
+          "page": 194,
+          "title": "اسئلة الفصل الخامس"
+        },
+        {
+          "page": 207,
+          "title": "فصل الراسب بعملية الترشيح ثم غسله مبحلول مناسب"
+        },
+        {
+          "page": 226,
+          "title": "اسئلة الفصل السادس"
+        },
+        {
+          "page": 265,
+          "title": "عاسئلة الفصل الساب"
+        },
+        {
+          "page": 280,
+          "title": "اسئلة الفصل الثامن"
+        }
+      ]
+    },
+    {
+      "id": "كتاب الكيمياء اول متوسط",
+      "fileName": "كتاب الكيمياء اول متوسط.json",
+      "title": "الكيمياء - الأول المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "الكيمياء",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 177356,
+      "totalPages": 88,
+      "nonEmptyPages": 88,
+      "textLength": 101489,
+      "avgCharsPerPage": 1153,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب علم الاجتماع الرابع الادبي",
+      "fileName": "كتاب علم الاجتماع الرابع الادبي.json",
+      "title": "علم الاجتماع - الرابع الأدبي",
+      "stage": "الإعدادية",
+      "grade": "الرابع الأدبي",
+      "subject": "علم الاجتماع",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 258430,
+      "totalPages": 108,
+      "nonEmptyPages": 108,
+      "textLength": 139679,
+      "avgCharsPerPage": 1293,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب علم الارض الخامس الاعدادي",
+      "fileName": "كتاب علم الارض الخامس الاعدادي.json",
+      "title": "علم الأرض - الخامس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "علم الأرض",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 306650,
+      "totalPages": 132,
+      "nonEmptyPages": 132,
+      "textLength": 175071,
+      "avgCharsPerPage": 1326,
+      "chaptersCount": 5,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 4,
+          "title": "الفصل الثاني الزالزل والبراكين"
+        },
+        {
+          "page": 33,
+          "title": "2 الفصل الثاني - الزالزل والبراكين"
+        },
+        {
+          "page": 53,
+          "title": "الفصل الثالث - التجوية والتربة"
+        },
+        {
+          "page": 79,
+          "title": "الفصل الرابع - البيئة والتلوث"
+        },
+        {
+          "page": 107,
+          "title": "5 الفصل الخامس الم ت راجح ت جيولوجي ال ن م ز وال"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الاجتماعيات_الخامس_الابتدائي",
+      "fileName": "كتاب_الاجتماعيات_الخامس_الابتدائي.json",
+      "title": "الاجتماعيات - الخامس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الخامس الابتدائي",
+      "subject": "الاجتماعيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 170328,
+      "totalPages": 104,
+      "nonEmptyPages": 104,
+      "textLength": 93727,
+      "avgCharsPerPage": 901,
+      "chaptersCount": 6,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 17,
+          "title": "اسئلة الفصل الول : إستعن بخريطة الدول العربية ثم بين مايأتي /س١"
+        },
+        {
+          "page": 42,
+          "title": "الفصل الول تاريخنا .. حضارتنا .. هويتنا"
+        },
+        {
+          "page": 54,
+          "title": "الفصل الثاني العراق حاضرة الخالفة السالمية"
+        },
+        {
+          "page": 65,
+          "title": "الفصل الثالث العراق ... موطن العلم والعلماء"
+        },
+        {
+          "page": 81,
+          "title": "الوحدة الثالثة : التربية الوطنية و الجتماعية"
+        },
+        {
+          "page": 103,
+          "title": "81الوحدة الثالثة: الرتبية الوطنية والجتماعية ا - 82الف�سل الول ج"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الاجتماعيات_الرابع_الابتدائي",
+      "fileName": "كتاب_الاجتماعيات_الرابع_الابتدائي.json",
+      "title": "الاجتماعيات - الرابع الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الرابع الابتدائي",
+      "subject": "الاجتماعيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 21949,
+      "totalPages": 64,
+      "nonEmptyPages": 20,
+      "textLength": 10601,
+      "avgCharsPerPage": 530,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الاجتماعيات_السادس_الابتدائي",
+      "fileName": "كتاب_الاجتماعيات_السادس_الابتدائي.json",
+      "title": "الاجتماعيات - السادس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "السادس الابتدائي",
+      "subject": "الاجتماعيات",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 199011,
+      "totalPages": 116,
+      "nonEmptyPages": 116,
+      "textLength": 109637,
+      "avgCharsPerPage": 945,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الاحياء_المؤشر_سالم_ال_منصور_السادس_العلمي_2025_الفصل_الاول",
+      "fileName": "كتاب_الاحياء_المؤشر_سالم_ال_منصور_السادس_العلمي_2025_الفصل_الاول.json",
+      "title": "الأحياء - السادس العلمي [كتاب مؤشر / ملخص]",
+      "stage": "الإعدادية",
+      "grade": "السادس العلمي",
+      "subject": "الأحياء",
+      "part": "كامل",
+      "bookType": "كتاب مؤشر / ملخص",
+      "editionNotes": "طبعة 2025",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 5945,
+      "totalPages": 62,
+      "nonEmptyPages": 3,
+      "textLength": 1132,
+      "avgCharsPerPage": 377,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_الطالب_الاول_المتوسط",
+      "fileName": "كتاب_الانكليزي_الطالب_الاول_المتوسط.json",
+      "title": "اللغة الإنجليزية - الأول المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 6700,
+      "totalPages": 100,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_الطالب_الثالث_المتوسط",
+      "fileName": "كتاب_الانكليزي_الطالب_الثالث_المتوسط.json",
+      "title": "اللغة الإنجليزية - الثالث المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثالث المتوسط",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 28956,
+      "totalPages": 120,
+      "nonEmptyPages": 14,
+      "textLength": 20046,
+      "avgCharsPerPage": 1432,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_الطالب_الثاني_المتوسط",
+      "fileName": "كتاب_الانكليزي_الطالب_الثاني_المتوسط.json",
+      "title": "اللغة الإنجليزية - الثاني المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 8044,
+      "totalPages": 120,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_الطالب_الرابع_الاعدادي_كامل",
+      "fileName": "كتاب_الانكليزي_الطالب_الرابع_الاعدادي_كامل.json",
+      "title": "اللغة الإنجليزية - الرابع الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الرابع الإعدادي",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 9272,
+      "totalPages": 138,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_الطالب_الصف_الخامس_الابتدائي",
+      "fileName": "كتاب_الانكليزي_الطالب_الصف_الخامس_الابتدائي.json",
+      "title": "اللغة الإنجليزية - الخامس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الخامس الابتدائي",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 9008,
+      "totalPages": 134,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_الطالب_الصف_الرابع_الابتدائي",
+      "fileName": "كتاب_الانكليزي_الطالب_الصف_الرابع_الابتدائي.json",
+      "title": "اللغة الإنجليزية - الرابع الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "الرابع الابتدائي",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 9276,
+      "totalPages": 138,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_الطالب_خامس_اعدادي",
+      "fileName": "كتاب_الانكليزي_الطالب_خامس_اعدادي.json",
+      "title": "اللغة الإنجليزية - الخامس الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 14196,
+      "totalPages": 212,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_النشاط_الاول_المتوسط",
+      "fileName": "كتاب_الانكليزي_النشاط_الاول_المتوسط.json",
+      "title": "اللغة الإنجليزية - الأول المتوسط [كتاب النشاط / التمرينات]",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 8576,
+      "totalPages": 128,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_النشاط_الثالث_المتوسط",
+      "fileName": "كتاب_الانكليزي_النشاط_الثالث_المتوسط.json",
+      "title": "اللغة الإنجليزية - الثالث المتوسط [كتاب النشاط / التمرينات]",
+      "stage": "المتوسطة",
+      "grade": "الثالث المتوسط",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 27756,
+      "totalPages": 124,
+      "nonEmptyPages": 18,
+      "textLength": 18395,
+      "avgCharsPerPage": 1022,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_النشاط_الثاني_المتوسط",
+      "fileName": "كتاب_الانكليزي_النشاط_الثاني_المتوسط.json",
+      "title": "اللغة الإنجليزية - الثاني المتوسط [كتاب النشاط / التمرينات]",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 8513,
+      "totalPages": 127,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_النشاط_الرابع_الاعدادي_كامل",
+      "fileName": "كتاب_الانكليزي_النشاط_الرابع_الاعدادي_كامل.json",
+      "title": "اللغة الإنجليزية - الرابع الإعدادي [كتاب النشاط / التمرينات]",
+      "stage": "الإعدادية",
+      "grade": "الرابع الإعدادي",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 10344,
+      "totalPages": 154,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_النشاط_الصف_الخامس_الابتدائي",
+      "fileName": "كتاب_الانكليزي_النشاط_الصف_الخامس_الابتدائي.json",
+      "title": "اللغة الإنجليزية - الخامس الابتدائي [كتاب النشاط / التمرينات]",
+      "stage": "الابتدائية",
+      "grade": "الخامس الابتدائي",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 7400,
+      "totalPages": 110,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_النشاط_الصف_الرابع_الابتدائي",
+      "fileName": "كتاب_الانكليزي_النشاط_الصف_الرابع_الابتدائي.json",
+      "title": "اللغة الإنجليزية - الرابع الابتدائي [كتاب النشاط / التمرينات]",
+      "stage": "الابتدائية",
+      "grade": "الرابع الابتدائي",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 6597,
+      "totalPages": 98,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الانكليزي_النشاط_خامس_اعدادي",
+      "fileName": "كتاب_الانكليزي_النشاط_خامس_اعدادي.json",
+      "title": "اللغة الإنجليزية - الخامس الإعدادي [كتاب النشاط / التمرينات]",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 15268,
+      "totalPages": 228,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_التربية_الاخلاقية_الثاني_المتوسط",
+      "fileName": "كتاب_التربية_الاخلاقية_الثاني_المتوسط.json",
+      "title": "التربية الأخلاقية - الثاني المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "التربية الأخلاقية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 377503,
+      "totalPages": 128,
+      "nonEmptyPages": 128,
+      "textLength": 256376,
+      "avgCharsPerPage": 2003,
+      "chaptersCount": 1,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 128,
+          "title": "۲9التعامل مع الصحة الفردية والمجتمعية :الوحدة الثانية - 31.احافظ على لياقتي البدنيةالدرس األول"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الرياضيات_التمرينات_الخامس_الابتدائي",
+      "fileName": "كتاب_الرياضيات_التمرينات_الخامس_الابتدائي.json",
+      "title": "الرياضيات - الخامس الابتدائي [كتاب النشاط / التمرينات]",
+      "stage": "الابتدائية",
+      "grade": "الخامس الابتدائي",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 49702,
+      "totalPages": 54,
+      "nonEmptyPages": 54,
+      "textLength": 29908,
+      "avgCharsPerPage": 554,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الطالب_اربع_وحدات_سادس_ابتدائي_المنهج_الحديث",
+      "fileName": "كتاب_الطالب_اربع_وحدات_سادس_ابتدائي_المنهج_الحديث.json",
+      "title": "اللغة الإنجليزية - السادس الابتدائي",
+      "stage": "الابتدائية",
+      "grade": "السادس الابتدائي",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "المنهج الجديد",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 49995,
+      "totalPages": 52,
+      "nonEmptyPages": 52,
+      "textLength": 44607,
+      "avgCharsPerPage": 858,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الطالب_الفرنسي_الثاني_متوسط_المنهج_الجديد",
+      "fileName": "كتاب_الطالب_الفرنسي_الثاني_متوسط_المنهج_الجديد.json",
+      "title": "اللغة الفرنسية - الثاني المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "اللغة الفرنسية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "المنهج الجديد",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 86674,
+      "totalPages": 108,
+      "nonEmptyPages": 107,
+      "textLength": 74560,
+      "avgCharsPerPage": 697,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الطالب_الفرنسي_اول_متوسط_المنهج_الجديد",
+      "fileName": "كتاب_الطالب_الفرنسي_اول_متوسط_المنهج_الجديد.json",
+      "title": "اللغة الفرنسية - الأول المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "اللغة الفرنسية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "المنهج الجديد",
+      "isCanonical": false,
+      "status": "scanned_pdf_only",
+      "fileSizeBytes": 7465,
+      "totalPages": 111,
+      "nonEmptyPages": 0,
+      "textLength": 0,
+      "avgCharsPerPage": 0,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_الثاني_المتوسط_الجزء_الاول",
+      "fileName": "كتاب_العربي_الثاني_المتوسط_الجزء_الاول.json",
+      "title": "اللغة العربية - الثاني المتوسط (الجزء الأول)",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "اللغة العربية",
+      "part": "الجزء الأول",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 308895,
+      "totalPages": 136,
+      "nonEmptyPages": 129,
+      "textLength": 166944,
+      "avgCharsPerPage": 1294,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_الثاني_المتوسط_الجزء_الثاني",
+      "fileName": "كتاب_العربي_الثاني_المتوسط_الجزء_الثاني.json",
+      "title": "اللغة العربية - الثاني المتوسط (الجزء الثاني)",
+      "stage": "المتوسطة",
+      "grade": "الثاني المتوسط",
+      "subject": "اللغة العربية",
+      "part": "الجزء الثاني",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 232419,
+      "totalPages": 136,
+      "nonEmptyPages": 132,
+      "textLength": 126480,
+      "avgCharsPerPage": 958,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_الخامس_الاعدادي_الجزء_الاول",
+      "fileName": "كتاب_العربي_الخامس_الاعدادي_الجزء_الاول.json",
+      "title": "اللغة العربية - الخامس الإعدادي (الجزء الأول)",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "اللغة العربية",
+      "part": "الجزء الأول",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 256299,
+      "totalPages": 140,
+      "nonEmptyPages": 140,
+      "textLength": 134316,
+      "avgCharsPerPage": 959,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_الخامس_الاعدادي_الجزء_الاول (2)",
+      "fileName": "كتاب_العربي_الخامس_الاعدادي_الجزء_الاول (2).json",
+      "title": "اللغة العربية - الخامس الإعدادي (الجزء الأول)",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "اللغة العربية",
+      "part": "الجزء الأول",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "alternative_edition",
+      "fileSizeBytes": 254778,
+      "totalPages": 140,
+      "nonEmptyPages": 140,
+      "textLength": 133529,
+      "avgCharsPerPage": 954,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_الخامس_الاعدادي_الجزء_الثاني",
+      "fileName": "كتاب_العربي_الخامس_الاعدادي_الجزء_الثاني.json",
+      "title": "اللغة العربية - الخامس الإعدادي (الجزء الثاني)",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "اللغة العربية",
+      "part": "الجزء الثاني",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 276733,
+      "totalPages": 140,
+      "nonEmptyPages": 140,
+      "textLength": 144959,
+      "avgCharsPerPage": 1035,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_الخامس_الاعدادي_الجزء_الثاني (2)",
+      "fileName": "كتاب_العربي_الخامس_الاعدادي_الجزء_الثاني (2).json",
+      "title": "اللغة العربية - الخامس الإعدادي (الجزء الثاني)",
+      "stage": "الإعدادية",
+      "grade": "الخامس الإعدادي",
+      "subject": "اللغة العربية",
+      "part": "الجزء الثاني",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "alternative_edition",
+      "fileSizeBytes": 273254,
+      "totalPages": 140,
+      "nonEmptyPages": 140,
+      "textLength": 143083,
+      "avgCharsPerPage": 1022,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_الرابع_الاعدادي_الجزء_الاول",
+      "fileName": "كتاب_العربي_الرابع_الاعدادي_الجزء_الاول.json",
+      "title": "اللغة العربية - الرابع الإعدادي (الجزء الأول)",
+      "stage": "الإعدادية",
+      "grade": "الرابع الإعدادي",
+      "subject": "اللغة العربية",
+      "part": "الجزء الأول",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 161980,
+      "totalPages": 140,
+      "nonEmptyPages": 138,
+      "textLength": 83964,
+      "avgCharsPerPage": 608,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_الرابع_الاعدادي_الجزء_الثاني",
+      "fileName": "كتاب_العربي_الرابع_الاعدادي_الجزء_الثاني.json",
+      "title": "اللغة العربية - الرابع الإعدادي (الجزء الثاني)",
+      "stage": "الإعدادية",
+      "grade": "الرابع الإعدادي",
+      "subject": "اللغة العربية",
+      "part": "الجزء الثاني",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 93899,
+      "totalPages": 100,
+      "nonEmptyPages": 96,
+      "textLength": 48259,
+      "avgCharsPerPage": 503,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_السادس_الاعدادي_الجزء_الاول (2)",
+      "fileName": "كتاب_العربي_السادس_الاعدادي_الجزء_الاول (2).json",
+      "title": "اللغة العربية - السادس الإعدادي (الجزء الأول)",
+      "stage": "الإعدادية",
+      "grade": "السادس الإعدادي",
+      "subject": "اللغة العربية",
+      "part": "الجزء الأول",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 338390,
+      "totalPages": 164,
+      "nonEmptyPages": 163,
+      "textLength": 188445,
+      "avgCharsPerPage": 1156,
+      "chaptersCount": 1,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 85,
+          "title": "الوحدة الثالثة اجلزء األول األمل مفتاح النجاح - :ُالتَّمْهِيْد"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_السادس_الاعدادي_الجزء_الاول",
+      "fileName": "كتاب_العربي_السادس_الاعدادي_الجزء_الاول.json",
+      "title": "اللغة العربية - السادس الإعدادي (الجزء الأول)",
+      "stage": "الإعدادية",
+      "grade": "السادس الإعدادي",
+      "subject": "اللغة العربية",
+      "part": "الجزء الأول",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "alternative_edition",
+      "fileSizeBytes": 336472,
+      "totalPages": 164,
+      "nonEmptyPages": 163,
+      "textLength": 187629,
+      "avgCharsPerPage": 1151,
+      "chaptersCount": 2,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 43,
+          "title": "الوحدة الثانية ِ اجلزء األول التَّضْحِيَةُ طَرِيقُ النَّصر :التمهيد"
+        },
+        {
+          "page": 85,
+          "title": "الوحدة الثالثة اجلزء األول األمل مفتاح النجاح - :ُالتَّمْهِيْد"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_السادس_الاعدادي_الجزء_الثاني (2)",
+      "fileName": "كتاب_العربي_السادس_الاعدادي_الجزء_الثاني (2).json",
+      "title": "اللغة العربية - السادس الإعدادي (الجزء الثاني)",
+      "stage": "الإعدادية",
+      "grade": "السادس الإعدادي",
+      "subject": "اللغة العربية",
+      "part": "الجزء الثاني",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 272751,
+      "totalPages": 112,
+      "nonEmptyPages": 111,
+      "textLength": 151919,
+      "avgCharsPerPage": 1369,
+      "chaptersCount": 4,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 3,
+          "title": "الوحدة السادسة الزء ج الثاني باإلصالحِ تنهضُ األُمَّةُ - :ُالتَّمْهِيْد"
+        },
+        {
+          "page": 27,
+          "title": "الوحدة السابعة اجلزء الثاني حقوق الطفل"
+        },
+        {
+          "page": 51,
+          "title": "الوحدة الثامنة اجلزء الثاني جائزة نوبل - :التمهيد"
+        },
+        {
+          "page": 67,
+          "title": "الوحدة التاسعة اجلزء الثاني بني اجلديد والقدمي"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_السادس_الاعدادي_الجزء_الثاني",
+      "fileName": "كتاب_العربي_السادس_الاعدادي_الجزء_الثاني.json",
+      "title": "اللغة العربية - السادس الإعدادي (الجزء الثاني)",
+      "stage": "الإعدادية",
+      "grade": "السادس الإعدادي",
+      "subject": "اللغة العربية",
+      "part": "الجزء الثاني",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": false,
+      "status": "alternative_edition",
+      "fileSizeBytes": 269545,
+      "totalPages": 112,
+      "nonEmptyPages": 112,
+      "textLength": 150743,
+      "avgCharsPerPage": 1346,
+      "chaptersCount": 3,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 3,
+          "title": "الوحدة السادسة الزء ج الثاني باإلصالحِ تنهضُ األُمَّةُ - :ُالتَّمْهِيْد"
+        },
+        {
+          "page": 51,
+          "title": "الوحدة الثامنة اجلزء الثاني جائزة نوبل - :التمهيد"
+        },
+        {
+          "page": 67,
+          "title": "الوحدة التاسعة اجلزء الثاني بني اجلديد والقدمي"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_اول_متوسط_الجزء_الاول",
+      "fileName": "كتاب_العربي_اول_متوسط_الجزء_الاول.json",
+      "title": "اللغة العربية - الأول المتوسط (الجزء الأول)",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "اللغة العربية",
+      "part": "الجزء الأول",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 335095,
+      "totalPages": 152,
+      "nonEmptyPages": 151,
+      "textLength": 180407,
+      "avgCharsPerPage": 1195,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العربي_اول_متوسط_الجزء_الثاني",
+      "fileName": "كتاب_العربي_اول_متوسط_الجزء_الثاني.json",
+      "title": "اللغة العربية - الأول المتوسط (الجزء الثاني)",
+      "stage": "المتوسطة",
+      "grade": "الأول المتوسط",
+      "subject": "اللغة العربية",
+      "part": "الجزء الثاني",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 211711,
+      "totalPages": 132,
+      "nonEmptyPages": 131,
+      "textLength": 113676,
+      "avgCharsPerPage": 868,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_العلوم_النشاط_الخامس_الابتدائي",
+      "fileName": "كتاب_العلوم_النشاط_الخامس_الابتدائي.json",
+      "title": "العلوم - الخامس الابتدائي [كتاب النشاط / التمرينات]",
+      "stage": "الابتدائية",
+      "grade": "الخامس الابتدائي",
+      "subject": "العلوم",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 153077,
+      "totalPages": 92,
+      "nonEmptyPages": 90,
+      "textLength": 97111,
+      "avgCharsPerPage": 1079,
+      "chaptersCount": 1,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 36,
+          "title": "الوحدة الثالثة: املادة الف�سل اخلام�س: العنا�سرُ الدر�س الول: العنا�سر وانواعها"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الفرنسي_المرحلة_المتوسطة_المنهج_الجديد",
+      "fileName": "كتاب_الفرنسي_المرحلة_المتوسطة_المنهج_الجديد.json",
+      "title": "اللغة الفرنسية - المرحلة المتوسطة (شامل)",
+      "stage": "المتوسطة",
+      "grade": "المرحلة المتوسطة (شامل)",
+      "subject": "اللغة الفرنسية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "المنهج الجديد",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 361054,
+      "totalPages": 164,
+      "nonEmptyPages": 163,
+      "textLength": 331000,
+      "avgCharsPerPage": 2031,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_الفلسفة_وعلم_النفس_الخامس_الادبي",
+      "fileName": "كتاب_الفلسفة_وعلم_النفس_الخامس_الادبي.json",
+      "title": "الفلسفة وعلم النفس - الخامس الأدبي",
+      "stage": "الإعدادية",
+      "grade": "الخامس الأدبي",
+      "subject": "الفلسفة وعلم النفس",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 359285,
+      "totalPages": 136,
+      "nonEmptyPages": 136,
+      "textLength": 198717,
+      "avgCharsPerPage": 1461,
+      "chaptersCount": 2,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 4,
+          "title": "الفصل الثاني أ إاّ - 31 . المبحث األول : الفلسفة اإلسالميّة"
+        },
+        {
+          "page": 31,
+          "title": "الفصل الثاني المبحث الول - الفلسفة السالمية"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_اللغة_العربية_الصف_الثالث_متوسط2026",
+      "fileName": "كتاب_اللغة_العربية_الصف_الثالث_متوسط2026.json",
+      "title": "اللغة العربية - الثالث المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثالث المتوسط",
+      "subject": "اللغة العربية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "طبعة 2026 مع التقليص الجديد",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 353964,
+      "totalPages": 129,
+      "nonEmptyPages": 120,
+      "textLength": 188122,
+      "avgCharsPerPage": 1568,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_اللغة_العربية_الصف_الثالث_متوسط2026_1",
+      "fileName": "كتاب_اللغة_العربية_الصف_الثالث_متوسط2026_1.json",
+      "title": "اللغة العربية - الثالث المتوسط",
+      "stage": "المتوسطة",
+      "grade": "الثالث المتوسط",
+      "subject": "اللغة العربية",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "طبعة 2026 مع التقليص الجديد",
+      "isCanonical": false,
+      "status": "alternative_edition",
+      "fileSizeBytes": 265649,
+      "totalPages": 101,
+      "nonEmptyPages": 94,
+      "textLength": 140425,
+      "avgCharsPerPage": 1494,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_النشاط_اربع_وحدات_سادس_ابتدائي_المنهج_الحديث",
+      "fileName": "كتاب_النشاط_اربع_وحدات_سادس_ابتدائي_المنهج_الحديث.json",
+      "title": "اللغة الإنجليزية - السادس الابتدائي [كتاب النشاط / التمرينات]",
+      "stage": "الابتدائية",
+      "grade": "السادس الابتدائي",
+      "subject": "اللغة الإنجليزية",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "المنهج الجديد",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 54899,
+      "totalPages": 52,
+      "nonEmptyPages": 52,
+      "textLength": 49063,
+      "avgCharsPerPage": 944,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_تمرينات_الرياضيات_الرابع_الابتدائي",
+      "fileName": "كتاب_تمرينات_الرياضيات_الرابع_الابتدائي.json",
+      "title": "الرياضيات - الرابع الابتدائي [كتاب النشاط / التمرينات]",
+      "stage": "الابتدائية",
+      "grade": "الرابع الابتدائي",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 60843,
+      "totalPages": 56,
+      "nonEmptyPages": 53,
+      "textLength": 36147,
+      "avgCharsPerPage": 682,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_تمرينات_الرياضيات_السادس_الابتدائي",
+      "fileName": "كتاب_تمرينات_الرياضيات_السادس_الابتدائي.json",
+      "title": "الرياضيات - السادس الابتدائي [كتاب النشاط / التمرينات]",
+      "stage": "الابتدائية",
+      "grade": "السادس الابتدائي",
+      "subject": "الرياضيات",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 61756,
+      "totalPages": 58,
+      "nonEmptyPages": 58,
+      "textLength": 36621,
+      "avgCharsPerPage": 631,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_جرائم_حزب_البعث_الرابع_الاعدادي",
+      "fileName": "كتاب_جرائم_حزب_البعث_الرابع_الاعدادي.json",
+      "title": "جرائم حزب البعث - الرابع الإعدادي",
+      "stage": "الإعدادية",
+      "grade": "الرابع الإعدادي",
+      "subject": "جرائم حزب البعث",
+      "part": "كامل",
+      "bookType": "كتاب الطالب",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 198359,
+      "totalPages": 96,
+      "nonEmptyPages": 96,
+      "textLength": 108491,
+      "avgCharsPerPage": 1130,
+      "chaptersCount": 0,
+      "questionSectionsCount": 0,
+      "chapters": [],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_نشاط_العلوم_الرابع_الابتدائي",
+      "fileName": "كتاب_نشاط_العلوم_الرابع_الابتدائي.json",
+      "title": "العلوم - الرابع الابتدائي [كتاب النشاط / التمرينات]",
+      "stage": "الابتدائية",
+      "grade": "الرابع الابتدائي",
+      "subject": "العلوم",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 158635,
+      "totalPages": 100,
+      "nonEmptyPages": 100,
+      "textLength": 105409,
+      "avgCharsPerPage": 1054,
+      "chaptersCount": 1,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 4,
+          "title": "ي ت احليةالت�صنيف والتنوع يف الكائنا حاأن�صطة الوحدة الولى - 13 - ٥ حالكائنات احلية الب�صيطةان�صطة الف�صل الول"
+        }
+      ],
+      "questionSections": []
+    },
+    {
+      "id": "كتاب_نشاط_العلوم_السادس_الابتدائي",
+      "fileName": "كتاب_نشاط_العلوم_السادس_الابتدائي.json",
+      "title": "العلوم - السادس الابتدائي [كتاب النشاط / التمرينات]",
+      "stage": "الابتدائية",
+      "grade": "السادس الابتدائي",
+      "subject": "العلوم",
+      "part": "كامل",
+      "bookType": "كتاب النشاط / التمرينات",
+      "editionNotes": "",
+      "isCanonical": true,
+      "status": "ready",
+      "fileSizeBytes": 149806,
+      "totalPages": 92,
+      "nonEmptyPages": 92,
+      "textLength": 98169,
+      "avgCharsPerPage": 1067,
+      "chaptersCount": 4,
+      "questionSectionsCount": 0,
+      "chapters": [
+        {
+          "page": 37,
+          "title": "الوحدة الثالثة: المادة وتفاعالتها"
+        },
+        {
+          "page": 58,
+          "title": "الوحدة الرابعة : القوة والطاقة الفصل الثامن: الطاقة الكهربائية"
+        },
+        {
+          "page": 63,
+          "title": "الوحدة الرابعة : القوة والطاقة الفصل الثامن: الطاقة الكهربائية - الدرس الثاني :المواد الموصلة والمواد العازلة"
+        },
+        {
+          "page": 80,
+          "title": "الوحدة الخامسة : األرض والكون الفصل العاشر: األرض المتغيرة - ُأَستَكشِف "
+        }
+      ],
+      "questionSections": []
+    }
+  ]
+}

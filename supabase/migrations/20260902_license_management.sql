@@ -1,0 +1,476 @@
+-- نظام تراخيص حقيبة المدرس.
+-- لا تمنح هذه الجداول أي صلاحية مباشرة لعملاء التطبيق؛ كل العمليات تمر عبر Edge Function.
+
+create extension if not exists pgcrypto;
+
+create table if not exists public.license_admins (
+  user_id uuid primary key references auth.users (id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.licenses (
+  id uuid primary key default gen_random_uuid(),
+  -- يحتفظ النظام ببصمة SHA-256 فقط، ولا يخزن رمز التفعيل الأصلي.
+  code_hash text not null unique check (code_hash ~ '^[0-9a-f]{64}$'),
+  code_hint text not null check (char_length(code_hint) between 4 and 16),
+  label text,
+  status text not null default 'active'
+    check (status in ('active', 'suspended', 'revoked')),
+  expires_at timestamptz,
+  max_devices smallint not null default 1 check (max_devices between 1 and 50),
+  notes text,
+  created_by uuid references auth.users (id) on delete set null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.license_activations (
+  id uuid primary key default gen_random_uuid(),
+  license_id uuid not null references public.licenses (id) on delete cascade,
+  installation_id uuid not null,
+  platform text not null default 'unknown',
+  app_version text,
+  activated_at timestamptz not null default now(),
+  last_checked_at timestamptz not null default now(),
+  is_active boolean not null default true,
+  deactivated_at timestamptz,
+  revoked_at timestamptz
+);
+
+-- لا يمكن للجهاز أن يكون نشطاً بأكثر من ترخيص واحد في الوقت نفسه.
+create unique index if not exists license_activations_one_active_installation_idx
+  on public.license_activations (installation_id)
+  where is_active;
+
+create unique index if not exists license_activations_license_installation_idx
+  on public.license_activations (license_id, installation_id);
+
+create index if not exists license_activations_active_license_idx
+  on public.license_activations (license_id, last_checked_at desc)
+  where is_active;
+
+create table if not exists public.license_trials (
+  installation_id uuid primary key,
+  started_at timestamptz not null default now(),
+  ends_at timestamptz not null,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists license_trials_ends_at_idx
+  on public.license_trials (ends_at);
+
+create table if not exists public.license_audit_log (
+  id bigint generated always as identity primary key,
+  admin_user_id uuid references auth.users (id) on delete set null,
+  license_id uuid references public.licenses (id) on delete set null,
+  action text not null,
+  details jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists license_audit_log_license_created_idx
+  on public.license_audit_log (license_id, created_at desc);
+
+-- يسجل بصمة مملحة لطلب عام لمدة قصيرة لمقاومة التخمين دون حفظ IP أو الرمز.
+create table if not exists public.license_request_log (
+  id bigint generated always as identity primary key,
+  subject_hash text not null check (subject_hash ~ '^[0-9a-f]{64}$'),
+  action text not null check (action in ('status', 'activate', 'start_trial')),
+  created_at timestamptz not null default now()
+);
+
+create index if not exists license_request_log_subject_created_idx
+  on public.license_request_log (subject_hash, created_at desc);
+
+-- يسجل المحاولة ويفحص حدها ضمن قفل واحد لمنع تجاوز الحد بالطلبات المتزامنة.
+create or replace function public.record_license_request_attempt(
+  p_subject_hash text,
+  p_action text,
+  p_limit integer,
+  p_window_seconds integer
+)
+returns boolean
+language plpgsql
+security definer
+set search_path = public, pg_temp
+as $$
+declare
+  v_count integer;
+begin
+  if p_subject_hash !~ '^[0-9a-f]{64}$'
+    or p_action not in ('status', 'activate', 'start_trial')
+    or p_limit < 1
+    or p_limit > 1000
+    or p_window_seconds < 1
+    or p_window_seconds > 86400 then
+    raise exception 'invalid license rate limit arguments' using errcode = '22023';
+  end if;
+
+  perform pg_advisory_xact_lock(hashtext(p_subject_hash || ':' || p_action));
+  select count(*)::integer into v_count
+  from public.license_request_log
+  where subject_hash = p_subject_hash
+    and action = p_action
+    and created_at >= now() - make_interval(secs => p_window_seconds);
+
+  if v_count >= p_limit then
+    return false;
+  end if;
+
+  insert into public.license_request_log (subject_hash, action)
+  values (p_subject_hash, p_action);
+  return true;
+end;
+$$;
+
+alter table public.license_admins enable row level security;
+alter table public.licenses enable row level security;
+alter table public.license_activations enable row level security;
+alter table public.license_trials enable row level security;
+alter table public.license_audit_log enable row level security;
+alter table public.license_request_log enable row level security;
+
+revoke all on table public.license_admins from anon, authenticated;
+revoke all on table public.licenses from anon, authenticated;
+revoke all on table public.license_activations from anon, authenticated;
+revoke all on table public.license_trials from anon, authenticated;
+revoke all on table public.license_audit_log from anon, authenticated;
+revoke all on table public.license_request_log from anon, authenticated;
+
+create or replace function public.license_touch_updated_at()
+returns trigger
+language plpgsql
+set search_path = public
+as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$;
+
+drop trigger if exists license_touch_updated_at on public.licenses;
+create trigger license_touch_updated_at
+  before update on public.licenses
+  for each row execute function public.license_touch_updated_at();
+
+-- لا يسمح بتخفيض حد الأجهزة بينما توجد تفعيلات أكثر من الحد الجديد.
+create or replace function public.license_enforce_device_limit()
+returns trigger
+language plpgsql
+set search_path = public
+as $$
+declare
+  v_active_count integer;
+begin
+  if new.max_devices >= old.max_devices then
+    return new;
+  end if;
+
+  select count(*)::integer into v_active_count
+  from public.license_activations
+  where license_id = new.id
+    and is_active;
+  if v_active_count > new.max_devices then
+    raise exception 'active device count exceeds requested limit' using errcode = '23514';
+  end if;
+  return new;
+end;
+$$;
+
+drop trigger if exists license_enforce_device_limit on public.licenses;
+create trigger license_enforce_device_limit
+  before update of max_devices on public.licenses
+  for each row execute function public.license_enforce_device_limit();
+
+-- يستخرج حالة الجهاز من وقت قاعدة البيانات، وليس من ساعة الهاتف.
+create or replace function public.license_access_for_installation(
+  p_installation_id uuid
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public, pg_temp
+as $$
+declare
+  v_activation record;
+  v_revoked_activation record;
+  v_trial public.license_trials%rowtype;
+begin
+  select
+    a.id as activation_id,
+    l.id as license_id,
+    l.status as license_status,
+    l.expires_at,
+    l.code_hint
+  into v_activation
+  from public.license_activations a
+  join public.licenses l on l.id = a.license_id
+  where a.installation_id = p_installation_id
+    and a.is_active
+  order by a.activated_at desc
+  limit 1;
+
+  if found then
+    update public.license_activations
+      set last_checked_at = now()
+      where id = v_activation.activation_id;
+
+    if v_activation.license_status <> 'active' then
+      return jsonb_build_object(
+        'ok', true,
+        'access', 'license_revoked',
+        'expiresAt', v_activation.expires_at,
+        'codeHint', v_activation.code_hint,
+        'serverTime', now()
+      );
+    end if;
+
+    if v_activation.expires_at is not null and v_activation.expires_at <= now() then
+      return jsonb_build_object(
+        'ok', true,
+        'access', 'license_expired',
+        'expiresAt', v_activation.expires_at,
+        'codeHint', v_activation.code_hint,
+        'serverTime', now()
+      );
+    end if;
+
+    return jsonb_build_object(
+      'ok', true,
+      'access', 'licensed',
+      'expiresAt', v_activation.expires_at,
+      'codeHint', v_activation.code_hint,
+      'serverTime', now()
+    );
+  end if;
+
+  -- يعرض إيقاف الجهاز صراحةً بدلاً من تقديمه كتجربة منتهية.
+  select
+    a.id as activation_id,
+    l.expires_at,
+    l.code_hint
+  into v_revoked_activation
+  from public.license_activations a
+  join public.licenses l on l.id = a.license_id
+  where a.installation_id = p_installation_id
+    and a.revoked_at is not null
+  order by a.revoked_at desc
+  limit 1;
+
+  if found then
+    return jsonb_build_object(
+      'ok', true,
+      'access', 'license_revoked',
+      'expiresAt', v_revoked_activation.expires_at,
+      'codeHint', v_revoked_activation.code_hint,
+      'serverTime', now()
+    );
+  end if;
+
+  select * into v_trial
+  from public.license_trials
+  where installation_id = p_installation_id;
+
+  if found then
+    if v_trial.ends_at > now() then
+      return jsonb_build_object(
+        'ok', true,
+        'access', 'trial',
+        'expiresAt', v_trial.ends_at,
+        'codeHint', null,
+        'serverTime', now()
+      );
+    end if;
+
+    return jsonb_build_object(
+      'ok', true,
+      'access', 'trial_expired',
+      'expiresAt', v_trial.ends_at,
+      'codeHint', null,
+      'serverTime', now()
+    );
+  end if;
+
+  return jsonb_build_object(
+    'ok', true,
+    'access', 'none',
+    'expiresAt', null,
+    'codeHint', null,
+    'serverTime', now()
+  );
+end;
+$$;
+
+-- ينشئ التجربة مرة واحدة لكل معرّف تثبيت. مدة التجربة ثابتة: 3 أيام.
+create or replace function public.start_license_trial(
+  p_installation_id uuid
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public, pg_temp
+as $$
+declare
+  v_access jsonb;
+begin
+  v_access := public.license_access_for_installation(p_installation_id);
+  if coalesce(v_access->>'access', 'none') <> 'none' then
+    return v_access;
+  end if;
+
+  insert into public.license_trials (installation_id, ends_at)
+  values (p_installation_id, now() + interval '3 days')
+  on conflict (installation_id) do nothing;
+
+  return public.license_access_for_installation(p_installation_id);
+end;
+$$;
+
+-- عملية ذرية لتفعيل رمز وربطه بالجهاز ضمن الحد المسموح للأجهزة.
+create or replace function public.activate_license(
+  p_code_hash text,
+  p_installation_id uuid,
+  p_platform text,
+  p_app_version text
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public, pg_temp
+as $$
+declare
+  v_license public.licenses%rowtype;
+  v_existing_activation uuid;
+  v_existing_active boolean;
+  v_active_count integer;
+begin
+  if p_code_hash !~ '^[0-9a-f]{64}$' then
+    return jsonb_build_object(
+      'ok', false,
+      'code', 'invalid_code',
+      'message', 'رمز التفعيل غير صحيح، يرجى التأكد من الرمز والمحاولة مرة أخرى.'
+    );
+  end if;
+
+  -- تسلسل محاولات التفعيل للجهاز نفسه قبل قفل صف الرمز، لتفادي تعارض الفهرس الفريد.
+  perform pg_advisory_xact_lock(
+    hashtext('license-activation'),
+    hashtext(p_installation_id::text)
+  );
+
+  -- قفل صف الترخيص يمنع تجاوز حد الأجهزة عند وصول طلبين متزامنين.
+  select * into v_license
+  from public.licenses
+  where code_hash = p_code_hash
+  for update;
+
+  if not found then
+    return jsonb_build_object(
+      'ok', false,
+      'code', 'invalid_code',
+      'message', 'رمز التفعيل غير صحيح، يرجى التأكد من الرمز والمحاولة مرة أخرى.'
+    );
+  end if;
+
+  if v_license.status <> 'active' then
+    return jsonb_build_object(
+      'ok', true,
+      'access', 'license_revoked',
+      'expiresAt', v_license.expires_at,
+      'codeHint', v_license.code_hint,
+      'serverTime', now()
+    );
+  end if;
+
+  if v_license.expires_at is not null and v_license.expires_at <= now() then
+    return jsonb_build_object(
+      'ok', true,
+      'access', 'license_expired',
+      'expiresAt', v_license.expires_at,
+      'codeHint', v_license.code_hint,
+      'serverTime', now()
+    );
+  end if;
+
+  select id, is_active into v_existing_activation, v_existing_active
+  from public.license_activations
+  where license_id = v_license.id
+    and installation_id = p_installation_id
+  limit 1;
+
+  if found and v_existing_active then
+    update public.license_activations
+      set last_checked_at = now(),
+          platform = left(coalesce(p_platform, 'unknown'), 32),
+          app_version = left(coalesce(p_app_version, ''), 32)
+      where id = v_existing_activation;
+  else
+    select count(*)::integer into v_active_count
+    from public.license_activations
+    where license_id = v_license.id
+      and is_active;
+
+    if v_active_count >= v_license.max_devices then
+      return jsonb_build_object(
+        'ok', false,
+        'code', 'device_limit_reached',
+        'message', 'استُخدم هذا الرمز على العدد المسموح من الأجهزة. تواصل مع الجهة التي زودتك بالرمز.'
+      );
+    end if;
+
+    -- يبدّل الترخيص السابق على الجهاز بدلاً من ترك تفعيلات نشطة متضاربة.
+    update public.license_activations
+      set is_active = false,
+          deactivated_at = now()
+      where installation_id = p_installation_id
+        and is_active;
+
+    if v_existing_activation is null then
+      insert into public.license_activations (
+        license_id,
+        installation_id,
+        platform,
+        app_version
+      ) values (
+        v_license.id,
+        p_installation_id,
+        left(coalesce(p_platform, 'unknown'), 32),
+        left(coalesce(p_app_version, ''), 32)
+      );
+    else
+      -- يعيد استخدام السجل التاريخي نفسه عند الرجوع إلى رمز استُخدم سابقاً.
+      update public.license_activations
+        set is_active = true,
+            activated_at = now(),
+            last_checked_at = now(),
+            deactivated_at = null,
+            revoked_at = null,
+            platform = left(coalesce(p_platform, 'unknown'), 32),
+            app_version = left(coalesce(p_app_version, ''), 32)
+        where id = v_existing_activation;
+    end if;
+  end if;
+
+  -- لا يتيح إلغاء تفعيل جهاز سبق له استعمال رمز صالح بدء تجربة مجانية جديدة.
+  -- يصل هذا السطر فقط بعد نجاح التفعيل، وليس عند رمز صحيح لكنه ممتلئ الأجهزة.
+  insert into public.license_trials (installation_id, started_at, ends_at)
+  values (p_installation_id, now(), now())
+  on conflict (installation_id) do nothing;
+
+  return public.license_access_for_installation(p_installation_id);
+end;
+$$;
+
+revoke all on function public.license_access_for_installation(uuid) from public, anon, authenticated;
+revoke all on function public.start_license_trial(uuid) from public, anon, authenticated;
+revoke all on function public.activate_license(text, uuid, text, text) from public, anon, authenticated;
+revoke all on function public.record_license_request_attempt(text, text, integer, integer) from public, anon, authenticated;
+
+grant execute on function public.license_access_for_installation(uuid) to service_role;
+grant execute on function public.start_license_trial(uuid) to service_role;
+grant execute on function public.activate_license(text, uuid, text, text) to service_role;
+grant execute on function public.record_license_request_attempt(text, text, integer, integer) to service_role;
+
+-- بعد أول دخول للمالك إلى لوحة الويب، شغّل مرة واحدة من SQL Editor:
+-- insert into public.license_admins (user_id)
+-- select id from auth.users where email = 'owner@example.com';

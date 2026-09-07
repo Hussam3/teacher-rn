@@ -1,0 +1,1039 @@
+{
+  "book_id": "كتاب الرياضيات الخامس الاعدادي",
+  "book_title": "كتاب الرياضيات الخامس الاعدادي",
+  "total_pages": 258,
+  "pages": {
+    "1": {
+      "page_num": 1,
+      "content": ""
+    },
+    "2": {
+      "page_num": 2,
+      "content": ""
+    },
+    "3": {
+      "page_num": 3,
+      "content": ""
+    },
+    "4": {
+      "page_num": 4,
+      "content": "**ــــ 19-38               تاـعباتتملا              يناثلا لصفلا 39-53        ةیطورخملا عوطقلا              ثلاثلا لصفلا 54-103           ةیرئادلا لاودلا               عبارلا لصفلا** \n\n**104-123     الفصل الخامس            الغایة واالستمراریة** \n\n**124-163                  الفصل السادس           المشتقات** \n\n**164-189   (ةمسجملا ) ةیئاضفلا ةسدنھلا    عباسلا لصفلا 190-215 لیدابتلاو دعلا أدبم      نماثلا لصفلا** \n\n**216-258** \n\n**تافوفصملا         عساتلا لصفلا**"
+    },
+    "5": {
+      "page_num": 5,
+      "content": "**5**"
+    },
+    "6": {
+      "page_num": 6,
+      "content": "**6**"
+    },
+    "7": {
+      "page_num": 7,
+      "content": ""
+    },
+    "8": {
+      "page_num": 8,
+      "content": ""
+    },
+    "9": {
+      "page_num": 9,
+      "content": "**9**"
+    },
+    "10": {
+      "page_num": 10,
+      "content": "**10**"
+    },
+    "11": {
+      "page_num": 11,
+      "content": "**11**"
+    },
+    "12": {
+      "page_num": 12,
+      "content": "**12**"
+    },
+    "13": {
+      "page_num": 13,
+      "content": "**13**"
+    },
+    "14": {
+      "page_num": 14,
+      "content": "**14**"
+    },
+    "15": {
+      "page_num": 15,
+      "content": "**15**"
+    },
+    "16": {
+      "page_num": 16,
+      "content": "**16**"
+    },
+    "17": {
+      "page_num": 17,
+      "content": "**17**"
+    },
+    "18": {
+      "page_num": 18,
+      "content": "**18**"
+    },
+    "19": {
+      "page_num": 19,
+      "content": "**19**"
+    },
+    "20": {
+      "page_num": 20,
+      "content": ""
+    },
+    "21": {
+      "page_num": 21,
+      "content": "**21**"
+    },
+    "22": {
+      "page_num": 22,
+      "content": "**22**"
+    },
+    "23": {
+      "page_num": 23,
+      "content": "**23**"
+    },
+    "24": {
+      "page_num": 24,
+      "content": "**24**"
+    },
+    "25": {
+      "page_num": 25,
+      "content": "**25**"
+    },
+    "26": {
+      "page_num": 26,
+      "content": "**26**"
+    },
+    "27": {
+      "page_num": 27,
+      "content": "**27**"
+    },
+    "28": {
+      "page_num": 28,
+      "content": "**28**"
+    },
+    "29": {
+      "page_num": 29,
+      "content": ""
+    },
+    "30": {
+      "page_num": 30,
+      "content": ""
+    },
+    "31": {
+      "page_num": 31,
+      "content": "**31**"
+    },
+    "32": {
+      "page_num": 32,
+      "content": ""
+    },
+    "33": {
+      "page_num": 33,
+      "content": "**33**"
+    },
+    "34": {
+      "page_num": 34,
+      "content": "**34**"
+    },
+    "35": {
+      "page_num": 35,
+      "content": "**35**"
+    },
+    "36": {
+      "page_num": 36,
+      "content": "**36**"
+    },
+    "37": {
+      "page_num": 37,
+      "content": "**37**"
+    },
+    "38": {
+      "page_num": 38,
+      "content": "**38**"
+    },
+    "39": {
+      "page_num": 39,
+      "content": ""
+    },
+    "40": {
+      "page_num": 40,
+      "content": ""
+    },
+    "41": {
+      "page_num": 41,
+      "content": "**41**"
+    },
+    "42": {
+      "page_num": 42,
+      "content": "**42**"
+    },
+    "43": {
+      "page_num": 43,
+      "content": "**43**"
+    },
+    "44": {
+      "page_num": 44,
+      "content": "**44**"
+    },
+    "45": {
+      "page_num": 45,
+      "content": "**45**"
+    },
+    "46": {
+      "page_num": 46,
+      "content": "**46**"
+    },
+    "47": {
+      "page_num": 47,
+      "content": "**47**"
+    },
+    "48": {
+      "page_num": 48,
+      "content": "**48**"
+    },
+    "49": {
+      "page_num": 49,
+      "content": "**49**"
+    },
+    "50": {
+      "page_num": 50,
+      "content": "**50**"
+    },
+    "51": {
+      "page_num": 51,
+      "content": "**51**"
+    },
+    "52": {
+      "page_num": 52,
+      "content": ""
+    },
+    "53": {
+      "page_num": 53,
+      "content": ""
+    },
+    "54": {
+      "page_num": 54,
+      "content": "**54**"
+    },
+    "55": {
+      "page_num": 55,
+      "content": "**55**"
+    },
+    "56": {
+      "page_num": 56,
+      "content": ""
+    },
+    "57": {
+      "page_num": 57,
+      "content": "**57**"
+    },
+    "58": {
+      "page_num": 58,
+      "content": "**58**"
+    },
+    "59": {
+      "page_num": 59,
+      "content": "**59**"
+    },
+    "60": {
+      "page_num": 60,
+      "content": ""
+    },
+    "61": {
+      "page_num": 61,
+      "content": "**61**"
+    },
+    "62": {
+      "page_num": 62,
+      "content": ""
+    },
+    "63": {
+      "page_num": 63,
+      "content": "**63**"
+    },
+    "64": {
+      "page_num": 64,
+      "content": ""
+    },
+    "65": {
+      "page_num": 65,
+      "content": "**65**"
+    },
+    "66": {
+      "page_num": 66,
+      "content": "**66**"
+    },
+    "67": {
+      "page_num": 67,
+      "content": "**67**"
+    },
+    "68": {
+      "page_num": 68,
+      "content": "**68**"
+    },
+    "69": {
+      "page_num": 69,
+      "content": "**69**"
+    },
+    "70": {
+      "page_num": 70,
+      "content": "**70**"
+    },
+    "71": {
+      "page_num": 71,
+      "content": "**71**"
+    },
+    "72": {
+      "page_num": 72,
+      "content": ""
+    },
+    "73": {
+      "page_num": 73,
+      "content": ""
+    },
+    "74": {
+      "page_num": 74,
+      "content": "**74**"
+    },
+    "75": {
+      "page_num": 75,
+      "content": ""
+    },
+    "76": {
+      "page_num": 76,
+      "content": ""
+    },
+    "77": {
+      "page_num": 77,
+      "content": ""
+    },
+    "78": {
+      "page_num": 78,
+      "content": "**78**"
+    },
+    "79": {
+      "page_num": 79,
+      "content": ""
+    },
+    "80": {
+      "page_num": 80,
+      "content": "**80**"
+    },
+    "81": {
+      "page_num": 81,
+      "content": "**81**"
+    },
+    "82": {
+      "page_num": 82,
+      "content": "**82**"
+    },
+    "83": {
+      "page_num": 83,
+      "content": "**83**"
+    },
+    "84": {
+      "page_num": 84,
+      "content": ""
+    },
+    "85": {
+      "page_num": 85,
+      "content": "**85**"
+    },
+    "86": {
+      "page_num": 86,
+      "content": "**86**"
+    },
+    "87": {
+      "page_num": 87,
+      "content": "**87**"
+    },
+    "88": {
+      "page_num": 88,
+      "content": ""
+    },
+    "89": {
+      "page_num": 89,
+      "content": ""
+    },
+    "90": {
+      "page_num": 90,
+      "content": "**90**"
+    },
+    "91": {
+      "page_num": 91,
+      "content": ""
+    },
+    "92": {
+      "page_num": 92,
+      "content": ""
+    },
+    "93": {
+      "page_num": 93,
+      "content": "**93**"
+    },
+    "94": {
+      "page_num": 94,
+      "content": "**94**"
+    },
+    "95": {
+      "page_num": 95,
+      "content": "**95**"
+    },
+    "96": {
+      "page_num": 96,
+      "content": ""
+    },
+    "97": {
+      "page_num": 97,
+      "content": ""
+    },
+    "98": {
+      "page_num": 98,
+      "content": ""
+    },
+    "99": {
+      "page_num": 99,
+      "content": ""
+    },
+    "100": {
+      "page_num": 100,
+      "content": ""
+    },
+    "101": {
+      "page_num": 101,
+      "content": ""
+    },
+    "102": {
+      "page_num": 102,
+      "content": ""
+    },
+    "103": {
+      "page_num": 103,
+      "content": "**ةیتلاا** \n\n**103**"
+    },
+    "104": {
+      "page_num": 104,
+      "content": "**104**"
+    },
+    "105": {
+      "page_num": 105,
+      "content": "**105**"
+    },
+    "106": {
+      "page_num": 106,
+      "content": "**106**"
+    },
+    "107": {
+      "page_num": 107,
+      "content": ""
+    },
+    "108": {
+      "page_num": 108,
+      "content": "**108**"
+    },
+    "109": {
+      "page_num": 109,
+      "content": "**109**"
+    },
+    "110": {
+      "page_num": 110,
+      "content": ""
+    },
+    "111": {
+      "page_num": 111,
+      "content": "**111**"
+    },
+    "112": {
+      "page_num": 112,
+      "content": "**112**"
+    },
+    "113": {
+      "page_num": 113,
+      "content": "**113**"
+    },
+    "114": {
+      "page_num": 114,
+      "content": "**114**"
+    },
+    "115": {
+      "page_num": 115,
+      "content": ""
+    },
+    "116": {
+      "page_num": 116,
+      "content": "**116**"
+    },
+    "117": {
+      "page_num": 117,
+      "content": "**117**"
+    },
+    "118": {
+      "page_num": 118,
+      "content": "**118**"
+    },
+    "119": {
+      "page_num": 119,
+      "content": "**119**"
+    },
+    "120": {
+      "page_num": 120,
+      "content": ""
+    },
+    "121": {
+      "page_num": 121,
+      "content": ""
+    },
+    "122": {
+      "page_num": 122,
+      "content": "**122**"
+    },
+    "123": {
+      "page_num": 123,
+      "content": "**123**"
+    },
+    "124": {
+      "page_num": 124,
+      "content": "**124**"
+    },
+    "125": {
+      "page_num": 125,
+      "content": ""
+    },
+    "126": {
+      "page_num": 126,
+      "content": "**126**"
+    },
+    "127": {
+      "page_num": 127,
+      "content": ""
+    },
+    "128": {
+      "page_num": 128,
+      "content": "**128**"
+    },
+    "129": {
+      "page_num": 129,
+      "content": "**129**"
+    },
+    "130": {
+      "page_num": 130,
+      "content": ""
+    },
+    "131": {
+      "page_num": 131,
+      "content": "**131**"
+    },
+    "132": {
+      "page_num": 132,
+      "content": ""
+    },
+    "133": {
+      "page_num": 133,
+      "content": "**133**"
+    },
+    "134": {
+      "page_num": 134,
+      "content": "**134**"
+    },
+    "135": {
+      "page_num": 135,
+      "content": "**135**"
+    },
+    "136": {
+      "page_num": 136,
+      "content": "**136**"
+    },
+    "137": {
+      "page_num": 137,
+      "content": "**137**"
+    },
+    "138": {
+      "page_num": 138,
+      "content": "**138**"
+    },
+    "139": {
+      "page_num": 139,
+      "content": "**139**"
+    },
+    "140": {
+      "page_num": 140,
+      "content": "**140**"
+    },
+    "141": {
+      "page_num": 141,
+      "content": ""
+    },
+    "142": {
+      "page_num": 142,
+      "content": "**142**"
+    },
+    "143": {
+      "page_num": 143,
+      "content": "**143**"
+    },
+    "144": {
+      "page_num": 144,
+      "content": "**144**"
+    },
+    "145": {
+      "page_num": 145,
+      "content": "**145**"
+    },
+    "146": {
+      "page_num": 146,
+      "content": "**146**"
+    },
+    "147": {
+      "page_num": 147,
+      "content": "**147**"
+    },
+    "148": {
+      "page_num": 148,
+      "content": "**148**"
+    },
+    "149": {
+      "page_num": 149,
+      "content": "**149**"
+    },
+    "150": {
+      "page_num": 150,
+      "content": "**150**"
+    },
+    "151": {
+      "page_num": 151,
+      "content": "**151**"
+    },
+    "152": {
+      "page_num": 152,
+      "content": ""
+    },
+    "153": {
+      "page_num": 153,
+      "content": "**153**"
+    },
+    "154": {
+      "page_num": 154,
+      "content": "**154**"
+    },
+    "155": {
+      "page_num": 155,
+      "content": "**155**"
+    },
+    "156": {
+      "page_num": 156,
+      "content": "**156**"
+    },
+    "157": {
+      "page_num": 157,
+      "content": "**157**"
+    },
+    "158": {
+      "page_num": 158,
+      "content": "**158**"
+    },
+    "159": {
+      "page_num": 159,
+      "content": "**159**"
+    },
+    "160": {
+      "page_num": 160,
+      "content": "**160**"
+    },
+    "161": {
+      "page_num": 161,
+      "content": "**161**"
+    },
+    "162": {
+      "page_num": 162,
+      "content": "**162**"
+    },
+    "163": {
+      "page_num": 163,
+      "content": "**163**"
+    },
+    "164": {
+      "page_num": 164,
+      "content": "**164**"
+    },
+    "165": {
+      "page_num": 165,
+      "content": ""
+    },
+    "166": {
+      "page_num": 166,
+      "content": ""
+    },
+    "167": {
+      "page_num": 167,
+      "content": ""
+    },
+    "168": {
+      "page_num": 168,
+      "content": "**168**"
+    },
+    "169": {
+      "page_num": 169,
+      "content": ""
+    },
+    "170": {
+      "page_num": 170,
+      "content": ""
+    },
+    "171": {
+      "page_num": 171,
+      "content": "**171**"
+    },
+    "172": {
+      "page_num": 172,
+      "content": "**172**"
+    },
+    "173": {
+      "page_num": 173,
+      "content": ""
+    },
+    "174": {
+      "page_num": 174,
+      "content": "**174**"
+    },
+    "175": {
+      "page_num": 175,
+      "content": "**175**"
+    },
+    "176": {
+      "page_num": 176,
+      "content": "**176**"
+    },
+    "177": {
+      "page_num": 177,
+      "content": "**177**"
+    },
+    "178": {
+      "page_num": 178,
+      "content": "**178**"
+    },
+    "179": {
+      "page_num": 179,
+      "content": "**179**"
+    },
+    "180": {
+      "page_num": 180,
+      "content": "**180**"
+    },
+    "181": {
+      "page_num": 181,
+      "content": "**181**"
+    },
+    "182": {
+      "page_num": 182,
+      "content": "**182**"
+    },
+    "183": {
+      "page_num": 183,
+      "content": "**183**"
+    },
+    "184": {
+      "page_num": 184,
+      "content": "**184**"
+    },
+    "185": {
+      "page_num": 185,
+      "content": "**185**"
+    },
+    "186": {
+      "page_num": 186,
+      "content": "**186**"
+    },
+    "187": {
+      "page_num": 187,
+      "content": ""
+    },
+    "188": {
+      "page_num": 188,
+      "content": "**188**"
+    },
+    "189": {
+      "page_num": 189,
+      "content": "**189**"
+    },
+    "190": {
+      "page_num": 190,
+      "content": "**190**"
+    },
+    "191": {
+      "page_num": 191,
+      "content": "**191**"
+    },
+    "192": {
+      "page_num": 192,
+      "content": ""
+    },
+    "193": {
+      "page_num": 193,
+      "content": "**193**"
+    },
+    "194": {
+      "page_num": 194,
+      "content": "**194**"
+    },
+    "195": {
+      "page_num": 195,
+      "content": "**195**"
+    },
+    "196": {
+      "page_num": 196,
+      "content": "**196**"
+    },
+    "197": {
+      "page_num": 197,
+      "content": "**197**"
+    },
+    "198": {
+      "page_num": 198,
+      "content": "**198**"
+    },
+    "199": {
+      "page_num": 199,
+      "content": "**199**"
+    },
+    "200": {
+      "page_num": 200,
+      "content": "**200**"
+    },
+    "201": {
+      "page_num": 201,
+      "content": "**201**"
+    },
+    "202": {
+      "page_num": 202,
+      "content": ""
+    },
+    "203": {
+      "page_num": 203,
+      "content": "**203**"
+    },
+    "204": {
+      "page_num": 204,
+      "content": ""
+    },
+    "205": {
+      "page_num": 205,
+      "content": "**205**"
+    },
+    "206": {
+      "page_num": 206,
+      "content": "**206**"
+    },
+    "207": {
+      "page_num": 207,
+      "content": ""
+    },
+    "208": {
+      "page_num": 208,
+      "content": ""
+    },
+    "209": {
+      "page_num": 209,
+      "content": ""
+    },
+    "210": {
+      "page_num": 210,
+      "content": "**210**"
+    },
+    "211": {
+      "page_num": 211,
+      "content": "**211**"
+    },
+    "212": {
+      "page_num": 212,
+      "content": "**212**"
+    },
+    "213": {
+      "page_num": 213,
+      "content": "**213**"
+    },
+    "214": {
+      "page_num": 214,
+      "content": "**214**"
+    },
+    "215": {
+      "page_num": 215,
+      "content": "**215**"
+    },
+    "216": {
+      "page_num": 216,
+      "content": "**216**"
+    },
+    "217": {
+      "page_num": 217,
+      "content": ""
+    },
+    "218": {
+      "page_num": 218,
+      "content": "**218**"
+    },
+    "219": {
+      "page_num": 219,
+      "content": ""
+    },
+    "220": {
+      "page_num": 220,
+      "content": "**220**"
+    },
+    "221": {
+      "page_num": 221,
+      "content": ""
+    },
+    "222": {
+      "page_num": 222,
+      "content": "**222**"
+    },
+    "223": {
+      "page_num": 223,
+      "content": "**223**"
+    },
+    "224": {
+      "page_num": 224,
+      "content": ""
+    },
+    "225": {
+      "page_num": 225,
+      "content": "**225**"
+    },
+    "226": {
+      "page_num": 226,
+      "content": "**226**"
+    },
+    "227": {
+      "page_num": 227,
+      "content": "**227**"
+    },
+    "228": {
+      "page_num": 228,
+      "content": "**228**"
+    },
+    "229": {
+      "page_num": 229,
+      "content": "**229**"
+    },
+    "230": {
+      "page_num": 230,
+      "content": "**230**"
+    },
+    "231": {
+      "page_num": 231,
+      "content": "**231**"
+    },
+    "232": {
+      "page_num": 232,
+      "content": ""
+    },
+    "233": {
+      "page_num": 233,
+      "content": ""
+    },
+    "234": {
+      "page_num": 234,
+      "content": "**234**"
+    },
+    "235": {
+      "page_num": 235,
+      "content": ""
+    },
+    "236": {
+      "page_num": 236,
+      "content": "**236**"
+    },
+    "237": {
+      "page_num": 237,
+      "content": "**237**"
+    },
+    "238": {
+      "page_num": 238,
+      "content": "**238**"
+    },
+    "239": {
+      "page_num": 239,
+      "content": "**239**"
+    },
+    "240": {
+      "page_num": 240,
+      "content": "**240**"
+    },
+    "241": {
+      "page_num": 241,
+      "content": "**241**"
+    },
+    "242": {
+      "page_num": 242,
+      "content": "**242**"
+    },
+    "243": {
+      "page_num": 243,
+      "content": "**243**"
+    },
+    "244": {
+      "page_num": 244,
+      "content": "**244**"
+    },
+    "245": {
+      "page_num": 245,
+      "content": "**245**"
+    },
+    "246": {
+      "page_num": 246,
+      "content": "**246**"
+    },
+    "247": {
+      "page_num": 247,
+      "content": "**247**"
+    },
+    "248": {
+      "page_num": 248,
+      "content": "**248**"
+    },
+    "249": {
+      "page_num": 249,
+      "content": "**249**"
+    },
+    "250": {
+      "page_num": 250,
+      "content": "**250**"
+    },
+    "251": {
+      "page_num": 251,
+      "content": "**251**"
+    },
+    "252": {
+      "page_num": 252,
+      "content": "**252**"
+    },
+    "253": {
+      "page_num": 253,
+      "content": "**253**"
+    },
+    "254": {
+      "page_num": 254,
+      "content": "**254**"
+    },
+    "255": {
+      "page_num": 255,
+      "content": "**255**"
+    },
+    "256": {
+      "page_num": 256,
+      "content": "**256**"
+    },
+    "257": {
+      "page_num": 257,
+      "content": "**257**"
+    },
+    "258": {
+      "page_num": 258,
+      "content": "**258**"
+    }
+  }
+}
