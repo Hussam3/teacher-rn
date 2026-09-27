@@ -23,6 +23,7 @@ interface ProofreadDialogProps {
   visible: boolean;
   loading: boolean;
   issues: ProofreadIssue[];
+  linguisticOnly?: boolean;
   onClose: () => void;
   onApply: (selectedIssues: ProofreadIssue[]) => void;
   onRecheck?: () => void;
@@ -32,6 +33,7 @@ export function ProofreadDialog({
   visible,
   loading,
   issues,
+  linguisticOnly = false,
   onClose,
   onApply,
   onRecheck,
@@ -113,7 +115,11 @@ export function ProofreadDialog({
   return (
     <Dialog
       visible={visible}
-      title="التدقيق اللغوي والعلمي بالذكاء الاصطناعي"
+      title={
+        linguisticOnly
+          ? 'التدقيق اللغوي بالذكاء الاصطناعي'
+          : 'التدقيق اللغوي والعلمي بالذكاء الاصطناعي'
+      }
       onClose={onClose}
       scrollable={false}
       actions={
@@ -137,8 +143,9 @@ export function ProofreadDialog({
             جاري فحص ورقة الامتحان...
           </Text>
           <Text style={[styles.loadingSub, { color: colors.textSecondary }]}>
-            يقوم الذكاء الاصطناعي بالتحقق من الإملاء، النحو، المفاهيم العلمية،
-            والصيغ الكيميائية والرموز.
+            {linguisticOnly
+              ? 'يقوم الذكاء الاصطناعي بالتحقق من الإملاء والنحو والأسلوب فقط.'
+              : 'يقوم الذكاء الاصطناعي بالتحقق من الإملاء، النحو، المفاهيم العلمية، والصيغ الكيميائية والرموز.'}
           </Text>
         </View>
       ) : issues.length === 0 ? (
@@ -155,7 +162,9 @@ export function ProofreadDialog({
             ورقة الامتحان ممتازة وسليمة!
           </Text>
           <Text style={[styles.emptySub, { color: colors.textSecondary }]}>
-            لم يتم العثور على أخطاء إملائية أو علمية أو مشاكل في الصيغ الكيميائية.
+            {linguisticOnly
+              ? 'لم يتم العثور على أخطاء إملائية أو نحوية.'
+              : 'لم يتم العثور على أخطاء إملائية أو علمية أو مشاكل في الصيغ الكيميائية.'}
           </Text>
           {onRecheck ? (
             <Button
@@ -173,7 +182,10 @@ export function ProofreadDialog({
           <View
             style={[
               styles.toolbar,
-              { backgroundColor: colors.surfaceElevated, borderColor: colors.border },
+              {
+                backgroundColor: colors.surfaceElevated,
+                borderColor: colors.border,
+              },
             ]}
           >
             <View style={styles.statsBadge}>
@@ -197,7 +209,9 @@ export function ProofreadDialog({
                 animated={false}
                 style={[styles.smallBtn, { borderColor: colors.border }]}
               >
-                <Text style={[styles.smallBtnText, { color: colors.textSecondary }]}>
+                <Text
+                  style={[styles.smallBtnText, { color: colors.textSecondary }]}
+                >
                   إلغاء التحديد
                 </Text>
               </PressableScale>
@@ -301,7 +315,9 @@ export function ProofreadDialog({
                       ]}
                     >
                       <Text style={styles.diffLabelNew}>التصحيح المقترح:</Text>
-                      <Text style={styles.diffTextNew}>{iss.suggestedText}</Text>
+                      <Text style={styles.diffTextNew}>
+                        {iss.suggestedText}
+                      </Text>
                     </View>
                   </View>
                 </PressableScale>

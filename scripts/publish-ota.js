@@ -20,6 +20,7 @@ function getArg(flag, defaultValue = '') {
 
 const versionName = getArg('--version', `1.0.${Date.now().toString().slice(-4)}`);
 const releaseNotes = getArg('--notes', 'تحديثات وتحسينات عامة في الأداء والواجهة');
+const platform = getArg('--platform', 'android');
 const isMandatory = args.includes('--mandatory');
 
 loadLocalEnv();
@@ -90,7 +91,7 @@ async function main() {
     .from('app_updates')
     .insert([
       {
-        platform: 'android',
+        platform: platform,
         version_name: versionName,
         version_code: Math.floor(Date.now() / 1000),
         bundle_url: bundleUrl,

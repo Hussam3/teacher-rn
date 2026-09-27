@@ -9,6 +9,8 @@ import { haptics } from '../lib/haptics';
 interface PressableScaleProps extends PressableProps {
   children: React.ReactNode;
   style?: StyleProp<ViewStyle>;
+  /** نمط المحتوى الداخلي — يجعل مساحة اللمس تغطي الحشو بالكامل */
+  contentStyle?: StyleProp<ViewStyle>;
   /** تعطيل الحركة */
   animated?: boolean;
   /** تفعيل الاهتزاز الخفيف */
@@ -18,6 +20,7 @@ interface PressableScaleProps extends PressableProps {
 export function PressableScale({
   children,
   style,
+  contentStyle,
   animated = true,
   haptic = false,
   onPressIn,
@@ -37,6 +40,7 @@ export function PressableScale({
     <Animated.View style={[animatedStyle, style]}>
       <Pressable
         {...rest}
+        style={contentStyle}
         onPressIn={e => {
           if (animated) scale.value = withSpring(0.97, { damping: 20, stiffness: 300 });
           if (haptic) haptics.light();

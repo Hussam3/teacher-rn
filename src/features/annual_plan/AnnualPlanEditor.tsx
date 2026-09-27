@@ -35,6 +35,8 @@ import { getAIService } from '../../services/aiService';
 import { generateAnnualPlanPdf } from '../../services/pdfService';
 import { printPdf } from '../../services/printService';
 import { teacherRoleLabel } from '../../shared/utils/teacherRole';
+import { EmptyState } from '../../shared/ui/EmptyState';
+import { useLicenseStore } from '../license/licenseStore';
 
 type EditorRoute = RouteProp<RootStackParamList, 'AnnualPlanEditor'>;
 
@@ -43,6 +45,7 @@ export function AnnualPlanEditor() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { colors } = useTheme();
+  const access = useLicenseStore(s => s.access);
   const subjects = useScheduleStore(s => s.subjects);
 
   const [mode, setMode] = useState<'wizard' | 'editor'>('wizard');
@@ -167,6 +170,31 @@ export function AnnualPlanEditor() {
       showError(strings.dailyPlan.printError.replace('{error}', String(e)));
     }
   };
+
+  if (access.kind === 'trial') {
+    return (
+      <AppScreen edges={['top', 'bottom']}>
+        <View style={[styles.header, { backgroundColor: colors.surface }]}>
+          <PressableScale
+            onPress={() => navigation.goBack()}
+            animated={false}
+            style={styles.backBtn}
+          >
+            <Icon name="arrow-forward" size={24} color={colors.textPrimary} />
+          </PressableScale>
+          <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
+            {strings.annualPlan.title}
+          </Text>
+          <View style={{ width: 40 }} />
+        </View>
+        <EmptyState
+          icon={{ name: 'lock-outline' }}
+          title="الخطة السنوية غير متاحة في التجربة"
+          hint="فعّل الخطة المدفوعة للوصول إلى الخطة السنوية وذكاء أعلى جودة."
+        />
+      </AppScreen>
+    );
+  }
 
   return (
     <AppScreen edges={['top', 'bottom']}>

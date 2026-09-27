@@ -293,7 +293,7 @@ export const EMPTY_EXAM_HEADER: ExamHeader = {
   round: '',
   track: '',
   showBismillah: true,
-  closingNote: 'مع دعواتكم بالنجاح والتوفيق',
+  closingNote: 'مع تمنياتي لكم بالنجاح والتوفيق',
 };
 
 /** إعدادات طباعة افتراضية */

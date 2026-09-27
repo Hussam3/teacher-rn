@@ -31,7 +31,11 @@ import type {
   QuestionBranch,
   TableBlock,
 } from '../../shared/types/editor';
-import { stripBranchPrefix, stripQuestionPrefix } from './examTextParser';
+import {
+  stripBranchPrefix,
+  stripQuestionPrefix,
+  stripSubItemPrefix,
+} from './examTextParser';
 
 /** حالة حقل نصي داخل كتلة (للإدراج عند المؤشر) */
 export interface FieldFocusInfo {
@@ -1055,7 +1059,7 @@ function PreviewQuestion({
                     lineHeight: 22,
                   }}
                 >
-                  {subItemIndex + 1}. {subItem.text}
+                  {subItemIndex + 1}. {stripSubItemPrefix(subItem.text)}
                 </Text>
               ))}
             </View>

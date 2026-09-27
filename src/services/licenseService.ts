@@ -65,7 +65,11 @@ interface LicenseApiResult extends LicenseAccess {
   offlineGraceUntil?: string;
 }
 
-type LicenseApiAction = 'status' | 'activate' | 'start_trial' | 'set_selected_subjects';
+type LicenseApiAction =
+  | 'status'
+  | 'activate'
+  | 'start_trial'
+  | 'set_selected_subjects';
 
 interface LicenseApiRequest {
   action: LicenseApiAction;
@@ -142,6 +146,12 @@ function parseCachedAccess(value: unknown): CachedLicenseAccess | null {
   if (!isRecord(value) || !isAccessKind(value.kind)) return null;
   if (typeof value.offlineGraceUntil !== 'string') return null;
 
+  const selectedSubjects = Array.isArray(value.selectedSubjects)
+    ? value.selectedSubjects.filter(
+        (subject): subject is string => typeof subject === 'string',
+      )
+    : [];
+
   return {
     kind: value.kind,
     expiresAt: typeof value.expiresAt === 'string' ? value.expiresAt : null,
@@ -157,6 +167,14 @@ function parseCachedAccess(value: unknown): CachedLicenseAccess | null {
       typeof value.lastObservedDeviceAt === 'string'
         ? value.lastObservedDeviceAt
         : new Date().toISOString(),
+    planId: typeof value.planId === 'string' ? value.planId : null,
+    maxSubjects:
+      typeof value.maxSubjects === 'number' &&
+      Number.isInteger(value.maxSubjects) &&
+      value.maxSubjects > 0
+        ? value.maxSubjects
+        : 1,
+    selectedSubjects,
   };
 }
 
@@ -175,6 +193,9 @@ export function getStoredLicenseAccess(): LicenseAccess | null {
     expiresAt: cached.expiresAt,
     codeHint: cached.codeHint,
     checkedAt: cached.checkedAt,
+    planId: cached.planId,
+    maxSubjects: cached.maxSubjects,
+    selectedSubjects: cached.selectedSubjects,
   };
 }
 
@@ -239,6 +260,9 @@ export function getUsableCachedLicenseAccess(
     expiresAt: cached.expiresAt,
     codeHint: cached.codeHint,
     checkedAt: cached.checkedAt,
+    planId: cached.planId,
+    maxSubjects: cached.maxSubjects,
+    selectedSubjects: cached.selectedSubjects,
   };
 }
 
@@ -368,8 +392,11 @@ function parseApiResult(payload: unknown): LicenseApiResult {
     checkedAt:
       typeof payload.serverTime === 'string' ? payload.serverTime : null,
     planId: typeof payload.planId === 'string' ? payload.planId : null,
-    maxSubjects: typeof payload.maxSubjects === 'number' ? payload.maxSubjects : 1,
-    selectedSubjects: Array.isArray(payload.selectedSubjects) ? payload.selectedSubjects : [],
+    maxSubjects:
+      typeof payload.maxSubjects === 'number' ? payload.maxSubjects : 1,
+    selectedSubjects: Array.isArray(payload.selectedSubjects)
+      ? payload.selectedSubjects
+      : [],
   };
 }
 
@@ -431,7 +458,9 @@ export async function startFreeTrial(): Promise<LicenseAccess> {
 }
 
 /** حفظ المواد الأساسية المحددة في الترخيص على الخادم ومحلياً */
-export async function saveSelectedSubjects(subjects: string[]): Promise<LicenseAccess> {
+export async function saveSelectedSubjects(
+  subjects: string[],
+): Promise<LicenseAccess> {
   return callLicenseApi({
     ...baseRequest('set_selected_subjects'),
     subjects,
@@ -441,11 +470,11 @@ export async function saveSelectedSubjects(subjects: string[]): Promise<LicenseA
 /** يحفظ قراراً تم قبوله من أحدث طلب فقط. يستدعيه المخزن بعد حراسة ترتيب الردود. */
 export function saveLicenseAccess(access: LicenseAccess): void {
   persistAccess(access);
-  if (access.selectedSubjects && access.selectedSubjects.length > 0) {
-    import('./aiUsageManager').then(m => {
-      m.aiUsageManager.setSelectedSubjects(access.selectedSubjects!);
-    }).catch(() => {});
-  }
+  import('./aiUsageManager')
+    .then(m => {
+      m.aiUsageManager.setSelectedSubjects(access.selectedSubjects ?? []);
+    })
+    .catch(() => {});
 }
 
 /** إعادة حالة افتراضية آمنة عند عدم وجود ترخيص أو اتصال سابق. */

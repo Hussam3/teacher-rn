@@ -17,9 +17,11 @@ import { Dialog } from '../../shared/ui/Dialog';
 import { PressableScale } from '../../shared/ui/PressableScale';
 import { Icon } from '../../shared/ui/Icon';
 import { TextField } from '../../shared/ui/TextField';
+import { ContactLinks } from '../../shared/ui/ContactLinks';
 import { showError, showSuccess } from '../../shared/ui/toast';
 import type { ThemeMode } from '../../shared/types/domain';
 import { useSettingsStore } from './settingsStore';
+import { useAppUpdate } from './useAppUpdate';
 import {
   aiQuotaService,
   type AIQuotaStatus,
@@ -43,14 +45,6 @@ import {
   type SyncState,
 } from '../../data/syncBridge';
 import { syncNow } from '../../services/cloudSyncService';
-import {
-  checkForAppUpdate,
-  getCurrentAppVersion,
-  applyAppUpdate,
-  isOtaEnabled,
-  BASE_APP_VERSION,
-  type AppUpdateInfo,
-} from '../../services/otaUpdateService';
 import { LEGAL_URL } from '../../services/legal';
 import {
   GeminiApiKeyHelpDialog,
@@ -65,7 +59,6 @@ export function SettingsScreen() {
 
   const { themeMode, setThemeMode } = useSettingsStore();
   const { user, logout, deleteAccount } = useAuthStore();
-  const otaEnabled = isOtaEnabled();
 
   const [confirm, setConfirm] = useState<null | {
     title: string;
@@ -75,11 +68,17 @@ export function SettingsScreen() {
     action: () => void;
   }>(null);
   const [sync, setSync] = useState<SyncState>(() => getSyncState());
-  const [checkingUpdate, setCheckingUpdate] = useState(false);
-  const [applyingUpdate, setApplyingUpdate] = useState(false);
-  const [updateProgress, setUpdateProgress] = useState(0);
-  const [otaVersion, setOtaVersion] = useState<string>(BASE_APP_VERSION);
-  const [updateInfo, setUpdateInfo] = useState<AppUpdateInfo | null>(null);
+  const {
+    otaVersion,
+    webUpdate,
+    enabled: updateChannelEnabled,
+    updateInfo,
+    checking: checkingUpdate,
+    applying: applyingUpdate,
+    progress: updateProgress,
+    check: checkForUpdate,
+    apply: applyUpdate,
+  } = useAppUpdate();
 
   const access = useLicenseStore(s => s.access);
   const [aiQuota, setAiQuota] = useState<AIQuotaStatus | null>(null);
@@ -124,72 +123,37 @@ export function SettingsScreen() {
   useEffect(() => onSyncStateChanged(setSync), []);
 
   useEffect(() => {
-    if (!otaEnabled) return;
-    let active = true;
-    getCurrentAppVersion().then(v => {
-      if (active) setOtaVersion(v.versionName);
-    });
-    checkForAppUpdate().then(result => {
-      if (active && result.hasUpdate && result.update) {
-        setUpdateInfo(result.update);
-      }
-    });
-    return () => {
-      active = false;
-    };
-  }, [otaEnabled]);
+    if (!updateChannelEnabled) return;
+    checkForUpdate().catch(() => {});
+  }, [updateChannelEnabled, checkForUpdate]);
 
   const handleCheckUpdates = async () => {
-    if (!otaEnabled) return;
-    setCheckingUpdate(true);
+    if (!updateChannelEnabled) return;
     try {
-      const res = await checkForAppUpdate();
+      const res = await checkForUpdate();
       if (res.error) {
         showError(res.error);
         return;
       }
       if (res.hasUpdate && res.update) {
-        setUpdateInfo(res.update);
-        showSuccess(`يوجد تحديث فوري متاح: الإصدار ${res.update.versionName}`);
+        showSuccess(
+          strings.update.foundToast.replace('{version}', res.update.versionName),
+        );
       } else {
-        showSuccess('تطبيقك يعمل بأحدث إصدار فوري');
+        showSuccess(strings.update.upToDate);
       }
     } catch {
-      showError('تعذر التحقق من التحديثات الفورية حالياً');
-    } finally {
-      setCheckingUpdate(false);
+      showError(strings.update.checkFailed);
     }
   };
 
   const handleApplyUpdate = async () => {
     if (!updateInfo) return;
-    setApplyingUpdate(true);
-    setUpdateProgress(0);
-    try {
-      const result = await applyAppUpdate(updateInfo, p =>
-        setUpdateProgress(p),
-      );
-      if (result.ok) {
-        if (result.needsRestart) {
-          setOtaVersion(updateInfo.versionName);
-          setUpdateInfo(null);
-          showSuccess(
-            result.restartScheduled
-              ? 'تم تثبيت التحديث. إن لم يُعد التطبيق تشغيل نفسه خلال ثوانٍ، أغلقه وافتحه يدويًا.'
-              : 'تم تثبيت التحديث. أغلق التطبيق وافتحه يدويًا لتطبيقه.',
-          );
-        } else {
-          setOtaVersion(updateInfo.versionName);
-          setUpdateInfo(null);
-          showSuccess(`تم تطبيق التحديث ${updateInfo.versionName} بنجاح!`);
-        }
-      } else {
-        showError(`تعذر تطبيق التحديث: ${result.error || 'خطأ غير متوقع'}`);
-      }
-    } catch {
-      showError('تعذر تطبيق التحديث');
-    } finally {
-      setApplyingUpdate(false);
+    const result = await applyUpdate(updateInfo);
+    if (result.ok) {
+      showSuccess(result.message);
+    } else {
+      showError(result.message);
     }
   };
 
@@ -324,7 +288,7 @@ export function SettingsScreen() {
         </Text>
       </View>
       <ScrollView contentContainerStyle={styles.content}>
-        <TrialStatusBanner />
+        <TrialStatusBanner showContact={false} />
         {/* المظهر */}
         <SectionHeader
           title={strings.settings.appearance}
@@ -393,7 +357,8 @@ export function SettingsScreen() {
                   { color: colors.textSecondary, marginTop: 2 },
                 ]}
               >
-                {friendlyQuota?.statusDescription || strings.settings.aiServiceNote}
+                {friendlyQuota?.statusDescription ||
+                  strings.settings.aiServiceNote}
               </Text>
             </View>
             <View
@@ -431,7 +396,7 @@ export function SettingsScreen() {
           </View>
 
           {/* قسم المواد المعتمدة في الترخيص */}
-          {access.kind === 'licensed' && !friendlyQuota?.hasPersonalKey && (
+          {(access.kind === 'licensed' || access.kind === 'trial') && (
             <View
               style={[
                 styles.subjectCardSection,
@@ -442,7 +407,13 @@ export function SettingsScreen() {
               ]}
             >
               <View style={{ flex: 1 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 6,
+                  }}
+                >
                   <Icon name="school" size={16} color={colors.primary} />
                   <Text
                     style={[
@@ -460,8 +431,15 @@ export function SettingsScreen() {
                   ]}
                 >
                   {access.selectedSubjects && access.selectedSubjects.length > 0
-                    ? `المواد المعتمدة: ${access.selectedSubjects.join('، ')} (${access.selectedSubjects.length}/${access.maxSubjects || 1})`
-                    : `لم يتم تحديد المواد بعد (المسموح: ${access.maxSubjects || 1})`}
+                    ? `المواد المعتمدة: ${access.selectedSubjects.join(
+                        '، ',
+                      )} (${access.selectedSubjects.length}/${
+                        access.maxSubjects || 1
+                      })`
+                    : `لم يتم تحديد المواد بعد (المسموح: ${
+                        access.maxSubjects || 1
+                      })`}
+                  {' يمكنك تغيير الاختيار مرتين فقط في كل شهر.'}
                 </Text>
               </View>
               <Button
@@ -696,6 +674,15 @@ export function SettingsScreen() {
           ) : null}
         </Card>
 
+        {/* تواصل معنا */}
+        <SectionHeader
+          title={strings.settings.contact}
+          icon={{ name: 'headset' }}
+        />
+        <Card>
+          <ContactLinks />
+        </Card>
+
         {/* المزامنة السحابية */}
         {!user?.isGuest && (
           <>
@@ -793,11 +780,11 @@ export function SettingsScreen() {
           />
         </Card>
 
-        {otaEnabled ? (
+        {updateChannelEnabled ? (
           <>
             {/* التحديثات الفورية */}
             <SectionHeader
-              title="التحديثات الفورية (Live OTA Updates)"
+              title={webUpdate ? strings.update.liveWeb : strings.update.live}
               icon={{ name: 'system-update' }}
             />
             <Card>
@@ -811,11 +798,13 @@ export function SettingsScreen() {
                   <Text
                     style={[styles.updateSub, { color: colors.textSecondary }]}
                   >
-                    تصلك التحديثات الفورية وإصلاحات المحرر مباشرة عبر السحابة
+                    {webUpdate
+                      ? strings.update.liveWebSubtitle
+                      : strings.update.liveSubtitle}
                   </Text>
                 </View>
                 <Button
-                  label="فحص التحديثات"
+                  label={strings.update.check}
                   icon={{ name: 'refresh' }}
                   variant="outline"
                   loading={checkingUpdate}
@@ -860,8 +849,13 @@ export function SettingsScreen() {
                   <Button
                     label={
                       applyingUpdate
-                        ? `جارٍ التنزيل ${Math.round(updateProgress * 100)}٪`
-                        : 'تطبيق التحديث الآن'
+                        ? webUpdate
+                          ? strings.update.reloading
+                          : strings.update.downloading.replace(
+                              '{percent}',
+                              String(Math.round(updateProgress * 100)),
+                            )
+                        : strings.update.applyNow
                     }
                     icon={{ name: 'download-for-offline' }}
                     onPress={handleApplyUpdate}
@@ -869,7 +863,7 @@ export function SettingsScreen() {
                     disabled={applyingUpdate}
                     style={{ marginTop: 8 }}
                   />
-                  {applyingUpdate ? (
+                  {applyingUpdate && !webUpdate ? (
                     <View
                       style={{
                         marginTop: 10,
@@ -905,7 +899,7 @@ export function SettingsScreen() {
             {strings.app.name}
           </Text>
           <Text style={[styles.aboutMeta, { color: colors.textSecondary }]}>
-            {otaEnabled
+            {updateChannelEnabled
               ? `${strings.app.version} (بناء ${otaVersion})`
               : strings.app.version}
           </Text>

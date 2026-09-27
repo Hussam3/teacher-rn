@@ -81,6 +81,7 @@ import {
   parseExamText,
   stripBranchPrefix,
   stripQuestionPrefix,
+  stripSubItemPrefix,
 } from './examTextParser';
 import { compactSmartFormatBlocks } from './smartFormat';
 import {
@@ -244,6 +245,7 @@ function documentToText(doc: EditorDocument): string {
           );
           getBranchSubItems(br).forEach((item, itemIndex) => {
             parts.push(`${itemIndex + 1}. ${item.text}`);
+            parts.push(`${itemIndex + 1}. ${stripSubItemPrefix(item.text)}`);
           });
         });
       }

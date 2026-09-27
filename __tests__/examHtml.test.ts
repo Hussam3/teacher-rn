@@ -64,8 +64,8 @@ describe('HTML ورقة الامتحان', () => {
   it('يعرض السؤال المتفرع من فروعه مباشرةً دون عنوان سؤال مستقل', () => {
     const html = buildExamHtml(doc);
 
-    expect(html).toContain('<span class="branch-label">س1/أ/</span>');
-    expect(html).toContain('<span class="branch-label">س1/ب/</span>');
+    expect(html).toContain('<span class="branch-label">س1/ أ/</span>');
+    expect(html).toContain('<span class="branch-label">س1/ ب/</span>');
     expect(html).not.toContain('class="question-label"');
     expect(html).toContain('طاقة بلانك');
     expect(html).toContain('SO₄²⁻');
@@ -170,7 +170,7 @@ describe('HTML ورقة الامتحان', () => {
     expect(html).not.toContain('font-size:15pt');
   });
 
-  it('يضع الدرجة مباشرة بعد نص السؤال دون سطر جديد عندما لا توجد درجات للأفرع', () => {
+  it('يعرض الدرجة بصيغة عائمة في رأس السؤال دون سطر جديد عندما لا توجد درجات للأفرع', () => {
     const directDoc: EditorDocument = {
       ...doc,
       blocks: [
@@ -187,14 +187,9 @@ describe('HTML ورقة الامتحان', () => {
     };
 
     const html = buildExamHtml(directDoc);
-    const textIndex = html.indexOf('اذكر قانون بلانك.');
-    const scoreIndex = html.indexOf('(10 درجة)');
-    const newlineBetween = html.slice(textIndex, scoreIndex).includes('\n');
-
-    expect(textIndex).not.toBe(-1);
-    expect(scoreIndex).not.toBe(-1);
-    expect(scoreIndex).toBeGreaterThan(textIndex);
-    expect(newlineBetween).toBe(false);
+    expect(html).toContain('<span class="score">(10 درجة)</span>');
+    expect(html).toContain('اذكر قانون بلانك.');
+    expect(html).toContain('.score {\n      float: left;');
   });
 
   it('يخفي درجة السؤال الكلية عندما تحمل الفروع درجاتها الخاصة', () => {
@@ -225,5 +220,37 @@ describe('HTML ورقة الامتحان', () => {
     expect(html).toContain('.q-head {\n      text-align: justify;');
     expect(html).toContain('.branch {\n      text-align: justify;');
     expect(html).toContain('.sub-item {\n      margin: 0.5mm 0;\n      text-align: justify;');
+  });
+
+  it('يمنع تكرار أرقام التعداد في النقاط الفرعية داخل HTML', () => {
+    const subItemDoc: EditorDocument = {
+      ...doc,
+      blocks: [
+        {
+          id: 'q-sub',
+          type: 'question',
+          questionMode: 'branched',
+          text: 'س1/',
+          score: '10',
+          format: 'generic',
+          branches: [
+            {
+              text: 'أ/ اجب عما يأتي:',
+              score: '10',
+              subItems: [
+                { text: '1. 1. يعد العالم منزلي' },
+                { text: '2. 2- نشاط الإنسان' },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+
+    const html = buildExamHtml(subItemDoc);
+    expect(html).toContain('1. يعد العالم منزلي');
+    expect(html).toContain('2. نشاط الإنسان');
+    expect(html).not.toContain('1. 1.');
+    expect(html).not.toContain('2. 2-');
   });
 });

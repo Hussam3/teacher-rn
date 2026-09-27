@@ -118,8 +118,8 @@ android {
         applicationId "com.teacherbag"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
-        versionName "1.0.8"
+        versionCode 9
+        versionName "1.1.19"
         buildConfigField "boolean", "ENABLE_OTA", enableOta.toString()
         buildConfigField "boolean", "IS_LICENSE_ADMIN", "false"
         manifestPlaceholders = [authRedirectScheme: 'teacherbag']
@@ -162,11 +162,13 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
         // تطبيق مستقل للمالك، يشارك البنية الأصلية فقط ولا يحمّل تحديثات OTA.
+        // تطبيق مستقل للمالك، يشارك البنية الأصلية ويدعم تحديثات OTA المباشرة عند تفعيلها.
         admin {
             initWith release
             applicationIdSuffix ".admin"
             matchingFallbacks = ['release']
             buildConfigField "boolean", "ENABLE_OTA", "false"
+            buildConfigField "boolean", "ENABLE_OTA", enableOta.toString()
             buildConfigField "boolean", "IS_LICENSE_ADMIN", "true"
             manifestPlaceholders.authRedirectScheme = 'teacherbagadmin'
             manifestPlaceholders.usesCleartextTraffic = 'false'
@@ -188,6 +190,14 @@ dependencies {
 // استبعاد مكتبة الدعم القديمة (com.android.support) لتفادي تعارض الفئات مع AndroidX
 configurations.configureEach {
     exclude group: 'com.android.support'
+}
+
+tasks.configureEach { task ->
+    if (task.name.startsWith("configureCMake")) {
+        def variantName = task.name.contains("Debug") ? "Debug" : "Release"
+        task.dependsOn(":react-native-nitro-modules:prefab${variantName}Package")
+        task.dependsOn(":react-native-reanimated:prefab${variantName}Package")
+    }
 }
 
 gradle.taskGraph.whenReady { graph ->

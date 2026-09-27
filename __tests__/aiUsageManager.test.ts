@@ -18,7 +18,26 @@ jest.mock('react-native-mmkv', () => ({
 }));
 
 import { aiUsageManager } from '../src/services/aiUsageManager';
-import { useLicenseStore } from '../src/features/license/licenseStore';
+import { storage, StorageKeys } from '../src/shared/lib/storage';
+
+function setActiveTrial(): void {
+  const now = new Date();
+  const expiresAt = new Date(
+    now.getTime() + 3 * 24 * 60 * 60 * 1000,
+  ).toISOString();
+  storage.set(
+    StorageKeys.licenseEntitlement,
+    JSON.stringify({
+      kind: 'trial',
+      expiresAt,
+      codeHint: null,
+      checkedAt: now.toISOString(),
+      offlineGraceUntil: expiresAt,
+      serverTimeOffsetMs: 0,
+      lastObservedDeviceAt: now.toISOString(),
+    }),
+  );
+}
 
 describe('AIUsageManager - إدارة الاستهلاك وضوابط الأمان', () => {
   beforeEach(async () => {
@@ -186,5 +205,116 @@ describe('AIUsageManager - إدارة الاستهلاك وضوابط الأما
       expect(status.statusTitle).toContain('غير محدود');
     });
   });
-});
 
+  describe('حدود ميزات التجربة المجانية', () => {
+    it('تسمح فقط بخطة وتدقيق وتنسيق واحد لكل يوم', async () => {
+      setActiveTrial();
+
+      expect(
+        (await aiUsageManager.checkCanRequest({ featureType: 'annual_plan' }))
+          .allowed,
+      ).toBe(false);
+      expect(
+        (
+          await aiUsageManager.checkCanRequest({
+            featureType: 'question_generation',
+          })
+        ).allowed,
+      ).toBe(false);
+      expect(
+        (
+          await aiUsageManager.checkCanRequest({
+            featureType: 'question_improvement',
+          })
+        ).allowed,
+      ).toBe(true);
+      expect(
+        (
+          await aiUsageManager.checkCanRequest({
+            featureType: 'question_formatting',
+          })
+        ).allowed,
+      ).toBe(true);
+
+      await aiUsageManager.recordUsageSuccess({
+        requestId: 'trial-daily-plan',
+        featureType: 'daily_plan',
+        modelId: 'gemini-2.5-flash',
+        inputTokens: 1000,
+        outputTokens: 500,
+        totalTokens: 1500,
+      });
+
+      const repeatedDailyPlan = await aiUsageManager.checkCanRequest({
+        featureType: 'daily_plan',
+      });
+      expect(repeatedDailyPlan.allowed).toBe(false);
+      expect(repeatedDailyPlan.reason).toContain('خطة اليوم');
+
+      await aiUsageManager.recordUsageSuccess({
+        requestId: 'trial-proofread',
+        featureType: 'question_improvement',
+        modelId: 'gemini-2.5-flash',
+        inputTokens: 500,
+        outputTokens: 300,
+        totalTokens: 800,
+      });
+      expect(
+        (
+          await aiUsageManager.checkCanRequest({
+            featureType: 'question_improvement',
+          })
+        ).allowed,
+      ).toBe(false);
+
+      await aiUsageManager.recordUsageSuccess({
+        requestId: 'trial-format',
+        featureType: 'question_formatting',
+        modelId: 'gemini-2.5-flash-lite',
+        inputTokens: 500,
+        outputTokens: 300,
+        totalTokens: 800,
+      });
+      expect(
+        (
+          await aiUsageManager.checkCanRequest({
+            featureType: 'question_formatting',
+          })
+        ).allowed,
+      ).toBe(false);
+
+      const status = await aiUsageManager.getFriendlyQuotaStatus();
+      expect(status.isTrial).toBe(true);
+      expect(status.trialFeatureUsage).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            featureType: 'daily_plan',
+            used: 1,
+            remaining: 0,
+          }),
+          expect.objectContaining({
+            featureType: 'question_improvement',
+            used: 1,
+            remaining: 0,
+          }),
+          expect.objectContaining({
+            featureType: 'question_formatting',
+            used: 1,
+            remaining: 0,
+          }),
+        ]),
+      );
+    });
+
+    it('لا يسمح المفتاح الشخصي بتجاوز ميزات التجربة المقيدة', async () => {
+      setActiveTrial();
+      await aiUsageManager.setPersonalApiKey('AIzaSyCustomTrialKey999');
+
+      const check = await aiUsageManager.checkCanRequest({
+        featureType: 'annual_plan',
+      });
+      expect(check.allowed).toBe(false);
+      expect(check.reason).toContain('الخطة المدفوعة');
+    });
+  });
+});

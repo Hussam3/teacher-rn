@@ -16,10 +16,13 @@ export const questionSchema = z.object({
   source: z.string().optional(),
 });
 
-/** استجابة توليد الأسئلة (JSON فقط) */
-export const questionsResponseSchema = z.object({
-  questions: z.array(questionSchema),
-});
+/** استجابة توليد الأسئلة (JSON فقط) — تقبل كائناً أو مصفوفة مباشرة */
+export const questionsResponseSchema = z.preprocess(
+  val => (Array.isArray(val) ? { questions: val } : val),
+  z.object({
+    questions: z.array(questionSchema),
+  }),
+);
 
 /** مخطط توزيع شهر من الذكاء الاصطناعي */
 export const aiMonthDistributionSchema = z.object({
@@ -97,12 +100,15 @@ export const aiHeadingBlockSchema = z.object({
   align: z.enum(['right', 'center', 'left']).optional(),
 });
 
-/** استجابة تنسيق الأسئلة بنيويًا (JSON فقط) */
-export const formatBlocksResponseSchema = z.object({
-  blocks: z.array(
-    z.union([aiQuestionBlockSchema, aiParagraphBlockSchema, aiHeadingBlockSchema]),
-  ),
-});
+/** استجابة تنسيق الأسئلة بنيويًا (JSON فقط) — تقبل كائناً أو مصفوفة مباشرة */
+export const formatBlocksResponseSchema = z.preprocess(
+  val => (Array.isArray(val) ? { blocks: val } : val),
+  z.object({
+    blocks: z.array(
+      z.union([aiQuestionBlockSchema, aiParagraphBlockSchema, aiHeadingBlockSchema]),
+    ),
+  }),
+);
 
 /** مخطط مشكلة تدقيق لغوي أو علمي */
 export const proofreadIssueSchema = z.object({
@@ -116,14 +122,93 @@ export const proofreadIssueSchema = z.object({
   blockId: z.string().optional(),
 });
 
-/** استجابة التدقيق اللغوي والعلمي الكاملة (JSON فقط) */
-export const proofreadResponseSchema = z.object({
-  issues: z.array(proofreadIssueSchema),
-});
+/** استجابة التدقيق اللغوي والعلمي الكاملة (JSON فقط) — تقبل كائناً أو مصفوفة مباشرة */
+export const proofreadResponseSchema = z.preprocess(
+  val => (Array.isArray(val) ? { issues: val } : val),
+  z.object({
+    issues: z.array(proofreadIssueSchema),
+  }),
+);
+
+/** استجابة توليد الخطة اليومية (JSON فقط) — تدعم السلاسل النصية والمصفوفات والمفاتيح العربية والإنجليزية */
+const stringOrArrayField = z
+  .union([z.string(), z.array(z.string())])
+  .optional()
+  .default('')
+  .transform(val => {
+    if (Array.isArray(val)) {
+      return val
+        .map(item => String(item ?? '').trim())
+        .filter(Boolean)
+        .join('\n');
+    }
+    return String(val ?? '').trim();
+  });
+
+export const dailyPlanResponseSchema = z.preprocess(
+  val => {
+    if (!val || typeof val !== 'object' || Array.isArray(val)) return val;
+    const obj = val as Record<string, unknown>;
+    const pick = (keys: string[]) => {
+      for (const k of keys) {
+        if (obj[k] !== undefined && obj[k] !== null) return obj[k];
+      }
+      return undefined;
+    };
+    return {
+      objectives: pick(['objectives', 'الأهداف السلوكية', 'الأهداف', 'الاهداف السلوكية', 'الاهداف']),
+      teachingAids: pick([
+        'teachingAids',
+        'activities',
+        'الوسائل التعليمية',
+        'الوسائل والأدوات',
+        'الوسائل والأدوات التعليمية',
+        'الوسائل',
+        'الأدوات التعليمية',
+        'الادوات التعليمية',
+        'الأدوات',
+      ]),
+      activities: pick([
+        'activities',
+        'teachingAids',
+        'الوسائل التعليمية',
+        'الوسائل والأدوات',
+        'الوسائل والأدوات التعليمية',
+        'الوسائل',
+        'الأدوات التعليمية',
+        'الادوات التعليمية',
+        'الأدوات',
+      ]),
+      introduction: pick(['introduction', 'التمهيد', 'المقدمة', 'التهيئة', 'سؤال الاستكشاف']),
+      presentation: pick([
+        'presentation',
+        'عرض الدرس',
+        'العرض',
+        'سير الدرس',
+        'شرح الدرس',
+        'خطوات الدرس',
+        'شرح المفاهيم',
+      ]),
+      evaluation: pick(['evaluation', 'التقويم', 'التقييم', 'أسئلة التقويم']),
+      homework: pick(['homework', 'الواجب البيتي', 'الواجب', 'المهمة']),
+    };
+  },
+  z.object({
+    objectives: stringOrArrayField,
+    teachingAids: stringOrArrayField,
+    activities: stringOrArrayField,
+    introduction: stringOrArrayField,
+    presentation: stringOrArrayField,
+    evaluation: stringOrArrayField,
+    homework: stringOrArrayField,
+  }),
+);
 
 export type FormatBlocksResponse = z.infer<typeof formatBlocksResponseSchema>;
 export type ProofreadResponse = z.infer<typeof proofreadResponseSchema>;
 
 export type QuestionsResponse = z.infer<typeof questionsResponseSchema>;
 export type AnnualPlanResponse = z.infer<typeof annualPlanResponseSchema>;
+export type DailyPlanResponse = z.infer<typeof dailyPlanResponseSchema>;
 export type BackupPayload = z.infer<typeof backupSchema>;
+

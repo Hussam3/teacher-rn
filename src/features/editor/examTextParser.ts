@@ -144,6 +144,12 @@ export function normalizeExamText(rawText: string): string {
 
   text = text.replace(/(^|\s)بين(?=\s+(?:نوع|السبب))/gmu, '$1بيّن');
 
+  // استبدال كلمة 'فراغ' المنطوقة داخل الجملة بنقاط الفراغ المعتمدة
+  text = text.replace(
+    /(?<!(?:املا|املأ|ملء)\s+(?:ال)?)فراغ(?:اً|ات|اتِ)?(?!\s+(?:الاتية|الآتية|التالية))/gu,
+    '............',
+  );
+
   return normalizeScientificText(text);
 }
 
@@ -167,6 +173,21 @@ export function stripBranchPrefix(text: string): string {
       '',
     )
     .trim();
+}
+
+/** إزالة ترقيم أو تعداد النقطة الفرعية مثل "1." أو "1-" أو "1. 1." لتجنب تكرار الترقيم. */
+export function stripSubItemPrefix(text: string): string {
+  let cleaned = (text ?? '').trim();
+  while (
+    /^(?:[-•*•·▪▫–—]\s*[0-9٠-٩]+[a-zA-Z]?\s*[-.):/]?\s*|[-•*•·▪▫–—]|\(?\s*[0-9٠-٩]+[a-zA-Z]?\s*[-.):/]\s*|\(\s*[0-9٠-٩]+[a-zA-Z]?\s*\)\s*)/u.test(cleaned)
+  ) {
+    const next = cleaned
+      .replace(/^(?:[-•*•·▪▫–—]\s*[0-9٠-٩]+[a-zA-Z]?\s*[-.):/]?\s*|[-•*•·▪▫–—]|\(?\s*[0-9٠-٩]+[a-zA-Z]?\s*[-.):/]\s*|\(\s*[0-9٠-٩]+[a-zA-Z]?\s*\)\s*)/u, '')
+      .trim();
+    if (next === cleaned) break;
+    cleaned = next;
+  }
+  return cleaned;
 }
 
 function normalizeLine(line: string): string {
@@ -332,14 +353,16 @@ export function parseExamText(rawText: string): ParsedExamText | null {
 
     const numberedItem = parseNumberedLine(line);
     if (numberedItem && currentBranch) {
-      currentBranch.subItems.push({ text: numberedItem });
+      currentBranch.subItems.push({ text: stripSubItemPrefix(numberedItem) });
       continue;
     }
 
     if (isParenthesized(line) && currentBranch) {
       const items = listItemsFromParentheses(line);
       if (items.length > 1) {
-        currentBranch.subItems.push(...items.map(text => ({ text })));
+        currentBranch.subItems.push(
+          ...items.map(text => ({ text: stripSubItemPrefix(text) })),
+        );
       } else {
         currentBranch.text = appendText(currentBranch.text, line);
       }

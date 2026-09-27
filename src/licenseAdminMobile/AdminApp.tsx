@@ -33,6 +33,15 @@ import {
 } from './adminApi';
 import { initAdminAuth, signInAdminWithGoogle } from './adminAuth';
 import { copyActivationCode } from './adminClipboard';
+import {
+  checkForAppUpdate,
+  applyAppUpdate,
+  confirmUpdateInstalled,
+  getCurrentAppVersion,
+  isOtaEnabled,
+  BASE_APP_VERSION,
+  type AppUpdateInfo,
+} from '../services/otaUpdateService';
 
 if (!I18nManager.isRTL) {
   I18nManager.allowRTL(true);
@@ -72,6 +81,11 @@ export function LicenseAdminApp() {
   const [session, setSession] = useState<Session | null>(null);
   const [checkingSession, setCheckingSession] = useState(true);
   const [authError, setAuthError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isOtaEnabled()) return;
+    confirmUpdateInstalled();
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -187,6 +201,80 @@ function Dashboard({ session }: { session: Session }) {
   const [detailLoading, setDetailLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [editForm, setEditForm] = useState(INITIAL_EDIT_FORM);
+
+  const otaEnabled = isOtaEnabled();
+  const [checkingUpdate, setCheckingUpdate] = useState(false);
+  const [applyingUpdate, setApplyingUpdate] = useState(false);
+  const [updateProgress, setUpdateProgress] = useState(0);
+  const [otaVersion, setOtaVersion] = useState<string>(BASE_APP_VERSION);
+  const [updateInfo, setUpdateInfo] = useState<AppUpdateInfo | null>(null);
+
+  useEffect(() => {
+    if (!otaEnabled) return;
+    let active = true;
+    getCurrentAppVersion().then(v => {
+      if (active) setOtaVersion(v.versionName);
+    });
+    checkForAppUpdate().then(result => {
+      if (active && result.hasUpdate && result.update) {
+        setUpdateInfo(result.update);
+      }
+    });
+    return () => {
+      active = false;
+    };
+  }, [otaEnabled]);
+
+  const handleCheckUpdates = async () => {
+    if (!otaEnabled) return;
+    setCheckingUpdate(true);
+    setError(null);
+    setNotice(null);
+    try {
+      const res = await checkForAppUpdate();
+      if (res.error) {
+        setError(res.error);
+        return;
+      }
+      if (res.hasUpdate && res.update) {
+        setUpdateInfo(res.update);
+        setNotice(`يوجد تحديث فوري متاح: الإصدار ${res.update.versionName}`);
+      } else {
+        setNotice('تطبيق المالك يعمل بأحدث إصدار فوري.');
+      }
+    } catch {
+      setError('تعذر التحقق من التحديثات الفورية حالياً.');
+    } finally {
+      setCheckingUpdate(false);
+    }
+  };
+
+  const handleApplyUpdate = async () => {
+    if (!updateInfo) return;
+    setApplyingUpdate(true);
+    setUpdateProgress(0);
+    setError(null);
+    try {
+      const result = await applyAppUpdate(updateInfo, p =>
+        setUpdateProgress(p),
+      );
+      if (result.ok) {
+        setOtaVersion(updateInfo.versionName);
+        setUpdateInfo(null);
+        setNotice(
+          result.restartScheduled
+            ? 'تم تثبيت التحديث الفوري. يُعاد تشغيل التطبيق تلقائياً خلال لحظات...'
+            : 'تم تثبيت التحديث الفوري. أعد تشغيل التطبيق لتطبيقه.',
+        );
+      } else {
+        setError(`تعذر تطبيق التحديث: ${result.error || 'خطأ غير متوقع'}`);
+      }
+    } catch {
+      setError('تعذر تطبيق التحديث الفوري.');
+    } finally {
+      setApplyingUpdate(false);
+    }
+  };
 
   const loadData = useCallback(async (searchValue: string) => {
     setLoading(true);
@@ -365,6 +453,78 @@ function Dashboard({ session }: { session: Session }) {
       >
         {error ? <Text style={styles.errorBanner}>{error}</Text> : null}
         {notice ? <Text style={styles.noticeBanner}>{notice}</Text> : null}
+
+        {otaEnabled ? (
+          <View style={styles.otaCard}>
+            <View style={styles.otaHeaderRow}>
+              <View style={styles.flex}>
+                <Text style={styles.otaTitle}>
+                  التحديث الفوري: {otaVersion}
+                </Text>
+                <Text style={styles.otaSubtitle}>
+                  تحديثات وإصلاحات فورية لتطبيق المالك عبر السحابة
+                </Text>
+              </View>
+              <Pressable
+                accessibilityRole="button"
+                disabled={checkingUpdate || applyingUpdate}
+                onPress={handleCheckUpdates}
+                style={({ pressed }) => [
+                  styles.otaCheckButton,
+                  (checkingUpdate || applyingUpdate) && styles.disabledButton,
+                  pressed && styles.pressedCard,
+                ]}
+              >
+                {checkingUpdate ? (
+                  <ActivityIndicator color={colors.primary} size="small" />
+                ) : (
+                  <Text style={styles.otaCheckButtonText}>فحص التحديثات</Text>
+                )}
+              </Pressable>
+            </View>
+
+            {updateInfo ? (
+              <View style={styles.otaAlertBox}>
+                <Text style={styles.otaAlertTitle}>
+                  إصدار جديد متوفر: {updateInfo.versionName}
+                </Text>
+                {updateInfo.releaseNotes ? (
+                  <Text style={styles.otaAlertNotes}>
+                    {updateInfo.releaseNotes}
+                  </Text>
+                ) : null}
+                {applyingUpdate ? (
+                  <View style={styles.otaProgressContainer}>
+                    <View
+                      style={[
+                        styles.otaProgressBar,
+                        { width: `${Math.round(updateProgress * 100)}%` },
+                      ]}
+                    />
+                    <Text style={styles.otaProgressText}>
+                      جارٍ تنزيل وتثبيت التحديث ({Math.round(updateProgress * 100)}٪)...
+                    </Text>
+                  </View>
+                ) : (
+                  <Pressable
+                    accessibilityRole="button"
+                    disabled={applyingUpdate}
+                    onPress={handleApplyUpdate}
+                    style={({ pressed }) => [
+                      styles.primaryButton,
+                      styles.otaInstallButton,
+                      pressed && styles.pressedButton,
+                    ]}
+                  >
+                    <Text style={styles.primaryButtonText}>
+                      تثبيت التحديث الآن
+                    </Text>
+                  </Pressable>
+                )}
+              </View>
+            ) : null}
+          </View>
+        ) : null}
 
         <View style={styles.statsGrid}>
           <StatCard label="كل التراخيص" value={summary?.licenses} />
@@ -1111,6 +1271,96 @@ const styles = StyleSheet.create({
     padding: 12,
     textAlign: 'right',
     writingDirection: 'rtl',
+  },
+  otaCard: {
+    backgroundColor: colors.surface,
+    borderColor: colors.line,
+    borderRadius: 16,
+    borderWidth: 1,
+    marginBottom: 16,
+    padding: 16,
+  },
+  otaHeaderRow: {
+    alignItems: 'center',
+    flexDirection: 'row-reverse',
+    gap: 12,
+    justifyContent: 'space-between',
+  },
+  otaTitle: {
+    color: colors.ink,
+    fontSize: 15,
+    fontWeight: '700',
+    textAlign: 'right',
+  },
+  otaSubtitle: {
+    color: colors.muted,
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 2,
+    textAlign: 'right',
+    writingDirection: 'rtl',
+  },
+  otaCheckButton: {
+    alignItems: 'center',
+    borderColor: colors.primary,
+    borderRadius: 10,
+    borderWidth: 1,
+    justifyContent: 'center',
+    minHeight: 38,
+    paddingHorizontal: 14,
+  },
+  otaCheckButtonText: {
+    color: colors.primary,
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  otaAlertBox: {
+    backgroundColor: '#EBF5F3',
+    borderColor: '#B3DDD5',
+    borderRadius: 12,
+    borderWidth: 1,
+    marginTop: 14,
+    padding: 14,
+  },
+  otaAlertTitle: {
+    color: colors.primaryDark,
+    fontSize: 14,
+    fontWeight: '800',
+    textAlign: 'right',
+  },
+  otaAlertNotes: {
+    color: colors.ink,
+    fontSize: 12,
+    lineHeight: 19,
+    marginTop: 6,
+    textAlign: 'right',
+    writingDirection: 'rtl',
+  },
+  otaInstallButton: {
+    marginTop: 12,
+    minHeight: 44,
+  },
+  otaProgressContainer: {
+    backgroundColor: '#D1EAE5',
+    borderRadius: 8,
+    height: 32,
+    justifyContent: 'center',
+    marginTop: 12,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  otaProgressBar: {
+    backgroundColor: colors.primary,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
+    top: 0,
+  },
+  otaProgressText: {
+    color: colors.ink,
+    fontSize: 12,
+    fontWeight: '700',
+    textAlign: 'center',
   },
   statsGrid: {
     flexDirection: 'row-reverse',

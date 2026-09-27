@@ -21,7 +21,9 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/sw.js');
+          // updateViaCache: 'none' يمنع المتصفح من خدمة service worker
+          // من ذاكرته، فيصل أحدث sw.js (سياسة الشبكة أولاً) في أول زيارة.
+          navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' });
         });
       }
     </script>

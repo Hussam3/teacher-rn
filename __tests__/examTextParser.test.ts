@@ -2,6 +2,7 @@ import {
   parseExamText,
   stripBranchPrefix,
   stripQuestionPrefix,
+  stripSubItemPrefix,
 } from '../src/features/editor/examTextParser';
 import type { EditorBlock, QuestionBlock } from '../src/shared/types/editor';
 
@@ -115,5 +116,17 @@ describe('تحليل نص الامتحان', () => {
     ]);
     expect(stripQuestionPrefix('س1/ سؤال مباشر')).toBe('سؤال مباشر');
     expect(stripBranchPrefix('س1/ (أ) نص الفرع')).toBe('نص الفرع');
+  });
+
+  it('يزيل تكرار أرقام التعداد والنقاط الفرعية مثل "1. 1." أو "1. 1-" أو "(1)"', () => {
+    expect(stripSubItemPrefix('1. 1. يعد العالم منزلي')).toBe('يعد العالم منزلي');
+    expect(stripSubItemPrefix('1. 1- يعد العالم منزلي')).toBe('يعد العالم منزلي');
+    expect(stripSubItemPrefix('2. 2. نشاط الإنسان')).toBe('نشاط الإنسان');
+    expect(stripSubItemPrefix('1- نقطة')).toBe('نقطة');
+    expect(stripSubItemPrefix('(1) نقطة')).toBe('نقطة');
+    expect(stripSubItemPrefix('١. نقطة')).toBe('نقطة');
+    expect(stripSubItemPrefix('• نقطة')).toBe('نقطة');
+    expect(stripSubItemPrefix('100 mL')).toBe('100 mL');
+    expect(stripSubItemPrefix('2026 م')).toBe('2026 م');
   });
 });

@@ -17,6 +17,7 @@ import { strings } from '../../shared/i18n/ar';
 import { AppScreen } from '../../shared/ui/AppScreen';
 import { Button } from '../../shared/ui/Button';
 import { TextField } from '../../shared/ui/TextField';
+import { ContactLinks } from '../../shared/ui/ContactLinks';
 import {
   isLicenseAccessAllowed,
   messageForLicenseAccess,
@@ -173,6 +174,8 @@ export function LicenseScreen() {
             <Text style={[styles.footer, { color: colors.textSecondary }]}>
               {strings.license.footer}
             </Text>
+
+            <ContactLinks style={styles.contact} />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -279,5 +282,8 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     marginTop: 22,
     textAlign: 'center',
+  },
+  contact: {
+    marginTop: 18,
   },
 });

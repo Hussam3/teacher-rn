@@ -61,9 +61,9 @@ describe('aiSubjectNormalizer - تطبيع وفحص المواد الدراسي�
   });
 
   describe('isSubjectAllowed', () => {
-    it('يسمح بكافة المواد عند تفعيل خيار كافة المواد (*)', () => {
-      expect(isSubjectAllowed('كيمياء الرابع العلمي', ['*'])).toBe(true);
-      expect(isSubjectAllowed('فيزياء السادس العلمي', ['*'])).toBe(true);
+    it('يرفض الرموز البديلة مثل * و all لمنع التحايل', () => {
+      expect(isSubjectAllowed('كيمياء الرابع العلمي', ['*'])).toBe(false);
+      expect(isSubjectAllowed('فيزياء السادس العلمي', ['all'])).toBe(false);
     });
 
     it('يرفض عند خلو قائمة المواد المصرح بها', () => {

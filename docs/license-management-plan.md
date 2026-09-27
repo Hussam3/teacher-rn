@@ -140,9 +140,9 @@ npm run license-admin
 7. من SQL Editor أضف الحساب الذي سجّل دخوله إلى دور المالك، ثم أعد تحميل اللوحة:
 
 ```sql
-insert into public.license_admins (user_id)
-select id from auth.users where lower(email) = lower('owner@example.com')
-on conflict (user_id) do nothing;
+insert into public.license_admins (user_id, role)
+select id, 'owner' from auth.users where lower(email) = lower('owner@example.com')
+on conflict (user_id) do update set role = excluded.role;
 ```
 
 8. ابنِ اللوحة ثم استضف محتوى `dist-license-admin/` على نطاق HTTPS خاص بالمالك، ثم أضف نطاقه إلى Redirect URLs أعلاه:
@@ -152,6 +152,44 @@ npm run license-admin:build
 ```
 
 9. أنشئ رمزاً اختبارياً من اللوحة، واختبره على نسخة تطوير، ثم ابنِ نسخة التطبيق.
+
+## تدوير مفاتيح AI من اللوحة
+
+تُنفّذ هذه العملية من لوحة الويب فقط، وليست من تطبيق Android. لا تضف مفتاح خدمة
+Supabase أو token إدارة إلى التطبيق أو Vercel.
+
+1. طبّق `20260913150000_ai_provider_key_rotation.sql` ثم انشر `provider-keys`
+   بالتحقق الافتراضي لـ JWT، وانشر `gemini` و`licenses` أيضاً. يوسّع
+   `20260914_multi_provider_catalog.sql` الكتالوج إلى أربعة مزوّدين:
+   `openrouter` و`nvidia_nim` نصيّان، و`deepseek` نصي، و`gemini` نص + صور.
+
+   ```bash
+   npx supabase db push
+   npx supabase functions deploy provider-keys --use-api --project-ref YOUR_PROJECT_REF
+npx supabase functions deploy gemini --use-api --project-ref YOUR_PROJECT_REF
+npx supabase functions deploy licenses --no-verify-jwt --use-api --project-ref YOUR_PROJECT_REF
+   ```
+
+2. أنشئ قيمة Base64URL عشوائية تمثل 32 بايت لخدمة
+   `AI_PROVIDER_KEY_ENCRYPTION_KEY` وخزّنها في Supabase Secrets. هذا هو مفتاح
+   التشفير الجذري؛ فقدانه يمنع قراءة المفاتيح المدارة، لذلك لا تبدّله بلا خطة
+   إعادة تشفير.
+
+3. يضيف الترحيل دور `owner` إلى المشرفين الحاليين، ويجعل أي مشرف جديد `admin`
+   افتراضياً. وحده `owner` يستطيع تدوير المفتاح.
+
+4. من تبويب **مركز تحكم AI** فعّل TOTP ثم تحقّق منه قبل كل تدوير. الخادم يرفض
+   عملية لا تحمل `aal2` وتحقق MFA أحدث من خمس دقائق. يُختبر المفتاح الجديد قبل
+   تشفيره، وتكتب عملية النجاح أو الرفض في سجل تدقيق لا يحتوي المفتاح أو بصمته.
+
+5. مفاتيح المزوّدين الأربعة قابلة للتدوير من اللوحة بالطريقة نفسها:
+   `GEMINI_API_KEY` و`DEEPSEEK_API_KEY` و`OPENROUTER_API_KEY` و
+   `NVIDIA_NIM_API_KEY` مخزّنة في Supabase Secrets كاحتياطي قبل التدوير الأول،
+   ثم تصبح النسخة المدارة المشفرة بـ AES-GCM هي النشطة.
+
+6. لا يحذف النظام المفتاح القديم عند مزوّد الخدمة الخارجي. بعد ظهور نجاح التدوير
+   من اللوحة، ألغِ المفتاح السابق من Google AI Studio أو حساب DeepSeek،
+   ومن حساب OpenRouter أو NVIDIA عند التقاعد.
 
 ## حالات القبول قبل الإصدار
 

@@ -34,7 +34,12 @@ describe('فترة سماح الترخيص', () => {
     mockStorage.clear();
   });
 
-  function saveCachedLicense(options: { expiresAt?: string | null } = {}) {
+  function saveCachedLicense(
+    options: {
+      expiresAt?: string | null;
+      selectedSubjects?: string[];
+    } = {},
+  ) {
     const graceDeadline = deviceNow + 7 * 24 * 60 * 60 * 1000;
     storage.set(
       StorageKeys.licenseEntitlement,
@@ -43,6 +48,9 @@ describe('فترة سماح الترخيص', () => {
         expiresAt: options.expiresAt ?? null,
         codeHint: 'ABCD',
         checkedAt: new Date(deviceNow + serverOffsetMs).toISOString(),
+        planId: 'two_subjects',
+        maxSubjects: 2,
+        selectedSubjects: options.selectedSubjects ?? ['الكيمياء'],
         offlineGraceUntil: new Date(
           graceDeadline + serverOffsetMs,
         ).toISOString(),
@@ -72,5 +80,14 @@ describe('فترة سماح الترخيص', () => {
     expect(getLicenseRefreshDeadline(expiresAt)).toBe(
       deviceNow + 24 * 60 * 60 * 1000,
     );
+  });
+
+  it('يحتفظ بالمواد المحددة عند فتح التطبيق دون اتصال', () => {
+    saveCachedLicense({ selectedSubjects: ['الكيمياء', 'الفيزياء'] });
+
+    expect(getUsableCachedLicenseAccess(deviceNow)?.selectedSubjects).toEqual([
+      'الكيمياء',
+      'الفيزياء',
+    ]);
   });
 });

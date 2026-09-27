@@ -12,16 +12,14 @@ import { newId } from '../shared/utils/id';
 import type {
   FeatureType,
   FriendlyQuotaStatus,
-  AIPlan,
+  TrialFeatureUsage,
 } from '../shared/types/aiUsage';
 import {
   isSubjectAllowed,
   normalizeBaseSubject,
   getSubjectMismatchMessage,
 } from './aiSubjectNormalizer';
-import { aiModelRouter } from './aiModelRouter';
 import { calculateAICost } from './aiCostCalculator';
-import { supabase } from './supabase';
 
 interface StoredAIUsageSummary {
   date: string; // YYYY-MM-DD
@@ -30,6 +28,7 @@ interface StoredAIUsageSummary {
   monthlyTokens: number;
   dailyRequests: number;
   monthlyRequests: number;
+  dailyFeatureRequests: Partial<Record<FeatureType, number>>;
   totalEstimatedCost: number;
   timestamps: number[];
   recentRequestIds: string[];
@@ -52,6 +51,52 @@ export const AI_MANAGER_CONSTANTS = {
   PAID_MONTHLY_SOFT_LIMIT: 2000000,
   PAID_MONTHLY_HARD_LIMIT: 4500000,
 } as const;
+
+export const FREE_TRIAL_FEATURE_LIMITS = {
+  daily_plan: 1,
+  question_improvement: 1,
+  question_formatting: 1,
+} as const;
+
+type FreeTrialFeature = keyof typeof FREE_TRIAL_FEATURE_LIMITS;
+
+const FREE_TRIAL_FEATURE_LABELS: Record<FreeTrialFeature, string> = {
+  daily_plan: 'الخطة اليومية',
+  question_improvement: 'التدقيق اللغوي',
+  question_formatting: 'التنسيق بالذكاء',
+};
+
+function activeFreeTrialExpiresAt(): string | null {
+  const raw = storage.getString(StorageKeys.licenseEntitlement);
+  if (!raw) return null;
+
+  try {
+    const access = JSON.parse(raw) as { kind?: unknown; expiresAt?: unknown };
+    if (access.kind !== 'trial' || typeof access.expiresAt !== 'string') {
+      return null;
+    }
+    return Date.parse(access.expiresAt) > Date.now() ? access.expiresAt : null;
+  } catch {
+    return null;
+  }
+}
+
+function isActiveFreeTrial(): boolean {
+  return activeFreeTrialExpiresAt() !== null;
+}
+
+function freeTrialBlockedMessage(featureType: FeatureType): string {
+  switch (featureType) {
+    case 'daily_plan':
+      return 'استخدمت خطة اليوم في التجربة المجانية. تتجدد فرصتك لإنشاء خطة جديدة غداً.';
+    case 'question_improvement':
+      return 'استخدمت التدقيق اللغوي المتاح اليوم في التجربة المجانية. يتجدد غداً.';
+    case 'question_formatting':
+      return 'استخدمت التنسيق بالذكاء المتاح اليوم في التجربة المجانية. يتجدد غداً.';
+    default:
+      return 'هذه الميزة متاحة في الخطة المدفوعة، التي تفتح أدوات ذكاء إضافية ونتائج أعلى جودة.';
+  }
+}
 
 function getTodayKey(): string {
   const now = new Date();
@@ -83,7 +128,9 @@ class AIUsageManager {
     try {
       const summaryRaw = storage.getString(STORAGE_KEYS.USAGE_SUMMARY);
       const keyRaw = storage.getString(STORAGE_KEYS.PERSONAL_KEY);
-      const subjectsRaw = storage.getString(STORAGE_KEYS.LOCAL_SELECTED_SUBJECTS);
+      const subjectsRaw = storage.getString(
+        STORAGE_KEYS.LOCAL_SELECTED_SUBJECTS,
+      );
 
       const today = getTodayKey();
       const month = getMonthKey();
@@ -97,8 +144,10 @@ class AIUsageManager {
           dailyRequests: parsed.date === today ? parsed.dailyRequests : 0,
           monthlyTokens: parsed.month === month ? parsed.monthlyTokens : 0,
           monthlyRequests: parsed.month === month ? parsed.monthlyRequests : 0,
+          dailyFeatureRequests:
+            parsed.date === today ? parsed.dailyFeatureRequests || {} : {},
           totalEstimatedCost: parsed.totalEstimatedCost || 0,
-          timestamps: parsed.date === today ? (parsed.timestamps || []) : [],
+          timestamps: parsed.date === today ? parsed.timestamps || [] : [],
           recentRequestIds: (parsed.recentRequestIds || []).slice(-50),
         };
       } else {
@@ -109,6 +158,7 @@ class AIUsageManager {
           monthlyTokens: 0,
           dailyRequests: 0,
           monthlyRequests: 0,
+          dailyFeatureRequests: {},
           totalEstimatedCost: 0,
           timestamps: [],
           recentRequestIds: [],
@@ -127,6 +177,7 @@ class AIUsageManager {
         monthlyTokens: 0,
         dailyRequests: 0,
         monthlyRequests: 0,
+        dailyFeatureRequests: {},
         totalEstimatedCost: 0,
         timestamps: [],
         recentRequestIds: [],
@@ -138,7 +189,10 @@ class AIUsageManager {
   private async save(): Promise<void> {
     if (!this.memorySummary) return;
     try {
-      storage.set(STORAGE_KEYS.USAGE_SUMMARY, JSON.stringify(this.memorySummary));
+      storage.set(
+        STORAGE_KEYS.USAGE_SUMMARY,
+        JSON.stringify(this.memorySummary),
+      );
       this.notifyListeners();
     } catch (e) {
       console.warn('Failed to save AI usage summary', e);
@@ -180,8 +234,67 @@ class AIUsageManager {
       .filter((s, i, arr) => arr.indexOf(s) === i);
 
     this.localSelectedSubjects = normalized;
-    storage.set(STORAGE_KEYS.LOCAL_SELECTED_SUBJECTS, JSON.stringify(normalized));
+    storage.set(
+      STORAGE_KEYS.LOCAL_SELECTED_SUBJECTS,
+      JSON.stringify(normalized),
+    );
     await this.notifyListeners();
+  }
+
+  /**
+   * جلب ملخص الاستهلاك اليومي والشهري
+   */
+  async getDailyUsageSummary(): Promise<{
+    dailyTokens: number;
+    monthlyTokens: number;
+    dailyRequests: number;
+    monthlyRequests: number;
+    dailyFeatureRequests: Partial<Record<FeatureType, number>>;
+    totalEstimatedCost: number;
+  }> {
+    await this.load();
+    const today = getTodayKey();
+    const month = getMonthKey();
+    return {
+      dailyTokens:
+        this.memorySummary?.date === today ? this.memorySummary.dailyTokens : 0,
+      monthlyTokens:
+        this.memorySummary?.month === month
+          ? this.memorySummary.monthlyTokens
+          : 0,
+      dailyRequests:
+        this.memorySummary?.date === today
+          ? this.memorySummary.dailyRequests
+          : 0,
+      monthlyRequests:
+        this.memorySummary?.month === month
+          ? this.memorySummary.monthlyRequests
+          : 0,
+      dailyFeatureRequests:
+        this.memorySummary?.date === today
+          ? this.memorySummary.dailyFeatureRequests
+          : {},
+      totalEstimatedCost: this.memorySummary?.totalEstimatedCost || 0,
+    };
+  }
+
+  async getFreeTrialFeatureUsage(): Promise<TrialFeatureUsage[]> {
+    await this.load();
+    const used = this.memorySummary?.dailyFeatureRequests ?? {};
+
+    return (Object.keys(FREE_TRIAL_FEATURE_LIMITS) as FreeTrialFeature[]).map(
+      featureType => {
+        const limit = FREE_TRIAL_FEATURE_LIMITS[featureType];
+        const count = used[featureType] ?? 0;
+        return {
+          featureType,
+          label: FREE_TRIAL_FEATURE_LABELS[featureType],
+          used: count,
+          limit,
+          remaining: Math.max(0, limit - count),
+        };
+      },
+    );
   }
 
   /**
@@ -190,17 +303,41 @@ class AIUsageManager {
   async checkCanRequest(params: {
     featureType: FeatureType;
     subjectName?: string | null;
+    requestId?: string;
   }): Promise<{ allowed: boolean; reason?: string; requestId: string }> {
     await this.load();
-    const requestId = newId();
+    const requestId = params.requestId || newId();
 
     // 1. فحص التزامن اللحظي المباشر (Concurrency Guard)
     if (this.inFlight) {
       return {
         allowed: false,
-        reason: 'يوجد طلب ذكاء اصطناعي قيد المعالجة حالياً. يرجى الانتظار حتى اكتماله.',
+        reason:
+          'يوجد طلب ذكاء اصطناعي قيد المعالجة حالياً. يرجى الانتظار حتى اكتماله.',
         requestId,
       };
+    }
+
+    if (isActiveFreeTrial()) {
+      const limit =
+        FREE_TRIAL_FEATURE_LIMITS[params.featureType as FreeTrialFeature];
+      if (!limit) {
+        return {
+          allowed: false,
+          reason: freeTrialBlockedMessage(params.featureType),
+          requestId,
+        };
+      }
+
+      const used =
+        this.memorySummary?.dailyFeatureRequests[params.featureType] ?? 0;
+      if (used >= limit) {
+        return {
+          allowed: false,
+          reason: freeTrialBlockedMessage(params.featureType),
+          requestId,
+        };
+      }
     }
 
     // إذا كان للمستخدم مفتاح شخصي خاص به
@@ -217,7 +354,10 @@ class AIUsageManager {
         if (!isAllowed) {
           return {
             allowed: false,
-            reason: getSubjectMismatchMessage(params.subjectName, allowedSubjects),
+            reason: getSubjectMismatchMessage(
+              params.subjectName,
+              allowedSubjects,
+            ),
             requestId,
           };
         }
@@ -298,9 +438,16 @@ class AIUsageManager {
         date: today,
         month: month,
         dailyTokens: 0,
-        monthlyTokens: this.memorySummary?.month === month ? this.memorySummary.monthlyTokens : 0,
+        monthlyTokens:
+          this.memorySummary?.month === month
+            ? this.memorySummary.monthlyTokens
+            : 0,
         dailyRequests: 0,
-        monthlyRequests: this.memorySummary?.month === month ? this.memorySummary.monthlyRequests : 0,
+        monthlyRequests:
+          this.memorySummary?.month === month
+            ? this.memorySummary.monthlyRequests
+            : 0,
+        dailyFeatureRequests: {},
         totalEstimatedCost: this.memorySummary?.totalEstimatedCost || 0,
         timestamps: [],
         recentRequestIds: [],
@@ -316,12 +463,18 @@ class AIUsageManager {
     const cost =
       params.estimatedCost !== undefined
         ? params.estimatedCost
-        : calculateAICost(params.inputTokens, params.outputTokens, params.modelId);
+        : calculateAICost(
+            params.inputTokens,
+            params.outputTokens,
+            params.modelId,
+          );
 
     this.memorySummary.dailyTokens += params.totalTokens;
     this.memorySummary.monthlyTokens += params.totalTokens;
     this.memorySummary.dailyRequests += 1;
     this.memorySummary.monthlyRequests += 1;
+    this.memorySummary.dailyFeatureRequests[params.featureType] =
+      (this.memorySummary.dailyFeatureRequests[params.featureType] ?? 0) + 1;
     this.memorySummary.totalEstimatedCost += cost;
     this.memorySummary.recentRequestIds.push(params.requestId);
     if (this.memorySummary.recentRequestIds.length > 50) {
@@ -347,9 +500,49 @@ class AIUsageManager {
     );
     const selectedSubjects = await this.getSelectedSubjects();
     const dailyTokens = this.memorySummary?.dailyTokens ?? 0;
+    const isTrial = isActiveFreeTrial();
 
-    const isNearDailySoftLimit = dailyTokens >= AI_MANAGER_CONSTANTS.PAID_DAILY_SOFT_LIMIT;
-    const isHardLimitReached = dailyTokens >= AI_MANAGER_CONSTANTS.PAID_DAILY_HARD_LIMIT;
+    if (isTrial) {
+      const trialFeatureUsage = await this.getFreeTrialFeatureUsage();
+      const anyExhausted = trialFeatureUsage.some(item => item.remaining === 0);
+      const allExhausted = trialFeatureUsage.every(
+        item => item.remaining === 0,
+      );
+      const expiresAt = activeFreeTrialExpiresAt();
+      const daysRemaining = expiresAt
+        ? Math.max(
+            0,
+            Math.ceil(
+              (Date.parse(expiresAt) - Date.now()) / (24 * 60 * 60 * 1000),
+            ),
+          )
+        : undefined;
+
+      return {
+        isTrial: true,
+        isLicensed: false,
+        planName: 'التجربة المجانية',
+        maxSubjects: 1,
+        selectedSubjects,
+        statusTitle: allExhausted ? 'اكتمل رصيد اليوم' : 'رصيد التجربة اليومي',
+        statusDescription:
+          'كل يوم: خطة يومية واحدة، تدقيق لغوي واحد، وتنسيق واحد بالذكاء الاصطناعي.',
+        isNearLimit: anyExhausted,
+        isLimitReached: allExhausted,
+        canRequest: !allExhausted,
+        reasonIfBlocked: allExhausted
+          ? 'اكتمل رصيد الذكاء الاصطناعي المتاح اليوم في التجربة المجانية.'
+          : undefined,
+        hasPersonalKey,
+        daysRemaining,
+        trialFeatureUsage,
+      };
+    }
+
+    const isNearDailySoftLimit =
+      dailyTokens >= AI_MANAGER_CONSTANTS.PAID_DAILY_SOFT_LIMIT;
+    const isHardLimitReached =
+      dailyTokens >= AI_MANAGER_CONSTANTS.PAID_DAILY_HARD_LIMIT;
 
     if (hasPersonalKey) {
       return {
@@ -375,7 +568,8 @@ class AIUsageManager {
         maxSubjects: selectedSubjects.length || 1,
         selectedSubjects,
         statusTitle: 'الحد اليومي للأمان',
-        statusDescription: 'وصلت إلى الحد اليومي الأقصى للأمان. سيتجدد الرصيد غداً تلقائياً.',
+        statusDescription:
+          'وصلت إلى الحد اليومي الأقصى للأمان. سيتجدد الرصيد غداً تلقائياً.',
         isNearLimit: true,
         isLimitReached: true,
         canRequest: false,
@@ -392,7 +586,8 @@ class AIUsageManager {
         maxSubjects: selectedSubjects.length || 1,
         selectedSubjects,
         statusTitle: 'استخدام مرتفع اليوم',
-        statusDescription: 'أنت تقترب من حد الاستخدام العادل اليومي، يمكنك الاستمرار بشكل طبيعي.',
+        statusDescription:
+          'أنت تقترب من حد الاستخدام العادل اليومي، يمكنك الاستمرار بشكل طبيعي.',
         isNearLimit: true,
         isLimitReached: false,
         canRequest: true,
@@ -447,4 +642,3 @@ class AIUsageManager {
 }
 
 export const aiUsageManager = new AIUsageManager();
-

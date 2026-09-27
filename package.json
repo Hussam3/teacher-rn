@@ -1,6 +1,6 @@
 {
   "name": "TeacherBag",
-  "version": "1.0.8",
+  "version": "1.1.19",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -22,8 +22,13 @@
     "apk:android:ota:arm64": "cd android && gradlew assembleRelease -PenableOta=true -PreactNativeArchitectures=arm64-v8a",
     "apk:android:ota:armv7": "cd android && gradlew assembleRelease -PenableOta=true -PreactNativeArchitectures=armeabi-v7a",
     "bundle:admin-android": "cd android && gradlew bundleAdmin",
-    "apk:admin-android": "cd android && gradlew assembleAdmin",
+    "apk:admin-android": "cd android && gradlew assembleAdmin -PenableOta=true",
+    "bundle:admin-android:ota": "cd android && gradlew bundleAdmin -PenableOta=true",
+    "apk:admin-android:ota": "cd android && gradlew assembleAdmin -PenableOta=true",
+    "apk:admin-android:ota:arm64": "cd android && gradlew assembleAdmin -PenableOta=true -PreactNativeArchitectures=arm64-v8a",
+    "apk:admin-android:ota:armv7": "cd android && gradlew assembleAdmin -PenableOta=true -PreactNativeArchitectures=armeabi-v7a",
     "ota:publish": "node scripts/publish-ota.js",
+    "ota:publish:admin": "node scripts/publish-ota.js --platform android-admin",
     "ota:publish-apk": "node scripts/publish-ota-apk.js",
     "postinstall": "node scripts/patch_android_modules.js"
   },
@@ -31,7 +36,6 @@
     "@notifee/react-native": "^9.1.8",
     "@react-native-community/datetimepicker": "^9.1.0",
     "@react-native-documents/picker": "^12.0.2",
-    "@react-native-voice/voice": "^3.2.4",
     "@react-native/new-app-screen": "0.87.0",
     "@react-navigation/bottom-tabs": "^7.18.16",
     "@react-navigation/drawer": "^7.13.8",

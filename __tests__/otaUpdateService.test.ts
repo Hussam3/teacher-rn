@@ -31,6 +31,7 @@ jest.mock('../src/services/supabase', () => ({ supabase: { from: jest.fn() } }))
 import {
   applyAppUpdate,
   checkForAppUpdate,
+  isLicenseAdminApp,
 } from '../src/services/otaUpdateService';
 
 const mockBlobUtil = jest.requireMock('react-native-blob-util').default;
@@ -48,6 +49,8 @@ let updateQuery: Record<string, jest.Mock>;
 describe('OTA updates', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockStorage.getString.mockReset();
+    mockStorage.getNumber.mockReset();
     mockFs.exists.mockResolvedValue(true);
     mockFs.unlink.mockResolvedValue(undefined);
     mockFs.stat.mockResolvedValue({ size: 1 });
@@ -201,4 +204,30 @@ describe('OTA updates', () => {
     });
     expect(mockFs.mv).not.toHaveBeenCalled();
   });
+
+  it('checks isLicenseAdminApp correctly from native module', () => {
+    expect(isLicenseAdminApp()).toBe(false);
+  });
+
+  it('prioritizes preferredPlatform (e.g. android-admin) when checking for updates', async () => {
+    updateQuery.maybeSingle.mockResolvedValue({
+      data: {
+        id: 'update-admin-1',
+        version_name: '9.0.1',
+        version_code: 100,
+        bundle_url: 'https://example.com/admin.bundle',
+        bundle_hash: 'admin-hash',
+        release_notes: 'تحديث المالك',
+        is_mandatory: false,
+        created_at: '2026-09-09T00:00:00.000Z',
+      },
+      error: null,
+    });
+
+    const result = await checkForAppUpdate('android-admin');
+    expect(result.hasUpdate).toBe(true);
+    expect(result.update?.id).toBe('update-admin-1');
+    expect(updateQuery.eq).toHaveBeenCalledWith('platform', 'android-admin');
+  });
 });
+

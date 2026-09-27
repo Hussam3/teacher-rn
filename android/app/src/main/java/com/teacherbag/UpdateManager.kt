@@ -39,6 +39,7 @@ class UpdateManager(reactContext: ReactApplicationContext) :
     return mapOf(
         "documentDir" to reactApplicationContext.filesDir.absolutePath,
         "otaEnabled" to BuildConfig.ENABLE_OTA,
+        "isLicenseAdmin" to BuildConfig.IS_LICENSE_ADMIN,
     )
   }
 

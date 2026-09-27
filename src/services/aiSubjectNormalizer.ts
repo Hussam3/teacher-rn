@@ -73,14 +73,12 @@ export function isSubjectAllowed(
     return false;
   }
 
-  // إذا كان الترخيص يسمح بكافة المواد
-  if (allowedSubjects.includes('*') || allowedSubjects.includes('all')) {
-    return true;
-  }
-
   const normalizedTarget = normalizeBaseSubject(targetSubject);
 
   return allowedSubjects.some(allowed => {
+    if (!allowed || allowed.trim() === '*' || allowed.trim().toLowerCase() === 'all') {
+      return false;
+    }
     const normalizedAllowed = normalizeBaseSubject(allowed);
     return (
       normalizedTarget === normalizedAllowed ||

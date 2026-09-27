@@ -41,7 +41,8 @@ class WebVoice {
   }
 
   private createRecognition(locale: string): any {
-    const w = typeof window !== 'undefined' ? (window as any) : {};
+    const globalScope = typeof globalThis !== 'undefined' ? (globalThis as any) : {};
+    const w = globalScope.window || globalScope;
     const Ctor = w.SpeechRecognition ?? w.webkitSpeechRecognition;
     if (!Ctor) {
       throw new Error('Web Speech API غير مدعوم في هذا المتصفح');
@@ -104,7 +105,7 @@ class WebVoice {
     };
   }
 
-  async start(locale?: string): Promise<void> {
+  async start(locale?: string, _options?: any): Promise<void> {
     this.teardown();
     this.isListening = true;
     this.currentLocale = locale ?? 'ar-IQ';
@@ -112,6 +113,10 @@ class WebVoice {
     this.bindEvents(rec);
     this.recognition = rec;
     rec.start();
+  }
+
+  async cancel(): Promise<void> {
+    await this.stop();
   }
 
   async stop(): Promise<void> {

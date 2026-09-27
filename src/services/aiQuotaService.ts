@@ -40,15 +40,22 @@ class AIQuotaServiceBridge {
     const personalKey = await aiUsageManager.getPersonalApiKey();
     const hasPersonalKey = Boolean(personalKey && personalKey.length > 10);
     const friendly = await aiUsageManager.getFriendlyQuotaStatus();
+    const summary = await aiUsageManager.getDailyUsageSummary();
 
     const dailyLimit = AI_QUOTA_CONSTANTS.DAILY_REQUEST_LIMIT;
-    const remainingToday = hasPersonalKey ? 9999 : friendly.isLimitReached ? 0 : 25;
+    const usedToday = summary.dailyRequests;
+    const estimatedTokensUsed = summary.dailyTokens;
+    const remainingToday = hasPersonalKey
+      ? 9999
+      : friendly.isLimitReached
+      ? 0
+      : Math.max(0, dailyLimit - usedToday);
 
     return {
       dailyLimit,
-      usedToday: 0,
+      usedToday,
       remainingToday,
-      estimatedTokensUsed: 0,
+      estimatedTokensUsed,
       resetsAt: '12:00 منتصف الليل',
       hoursUntilReset: getHoursUntilMidnight(),
       hasPersonalKey,

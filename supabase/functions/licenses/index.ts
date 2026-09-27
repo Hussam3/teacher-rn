@@ -1,5 +1,13 @@
 // @ts-nocheck
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import {
+  AIProviderId,
+  ProviderCredentialError,
+  isAIProviderId,
+  providerCredentialStatuses,
+  resolveProviderApiKey,
+  testProviderApiKey,
+} from '../_shared/provider-credentials.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,6 +19,43 @@ const corsHeaders = {
 const UUID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const AI_FEATURES = [
+  'daily_plan',
+  'annual_plan',
+  'question_generation',
+  'question_regeneration',
+  'question_formatting',
+  'question_improvement',
+  'curriculum_analysis',
+  'lesson_summary',
+  'other_ai',
+] as const;
+const AI_MODEL_CATALOG = {
+  gemini: ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-2.5-pro'],
+  deepseek: ['deepseek-v4-pro'],
+  openrouter: [
+    'openai/gpt-4o-mini',
+    'anthropic/claude-3.5-haiku',
+    'google/gemini-2.5-flash',
+    'meta-llama/llama-3.3-70b-instruct',
+    'qwen/qwen-2.5-72b-instruct',
+    'deepseek/deepseek-chat-v3-0324',
+  ],
+  nvidia_nim: [
+    'meta/llama-3.3-70b-instruct',
+    'meta/llama-3.1-8b-instruct',
+    'qwen/qwen2.5-72b-instruct',
+    'google/gemma-2-27b-it',
+    'deepseek-ai/deepseek-r1',
+  ],
+} as const;
+
+const AI_PROVIDER_LABELS: Record<AIProviderId, string> = {
+  gemini: 'Google Gemini',
+  deepseek: 'DeepSeek',
+  openrouter: 'OpenRouter',
+  nvidia_nim: 'NVIDIA NIM',
+};
 
 class ApiError extends Error {
   constructor(readonly status: number, readonly code: string, message: string) {
@@ -281,7 +326,11 @@ async function handlePublicAction(
     'الطلب غير صالح.',
     32,
   ) as 'status' | 'activate' | 'start_trial' | 'set_selected_subjects';
-  if (!['status', 'activate', 'start_trial', 'set_selected_subjects'].includes(action)) {
+  if (
+    !['status', 'activate', 'start_trial', 'set_selected_subjects'].includes(
+      action,
+    )
+  ) {
     throw new ApiError(400, 'invalid_action', 'الطلب غير صالح.');
   }
 
@@ -299,37 +348,23 @@ async function handlePublicAction(
       .map(s => s.trim())
       .filter(s => s.length > 0);
 
-    const { data: activation } = await admin
-      .from('license_activations')
-      .select('license_id, licenses(id, max_subjects)')
-      .eq('installation_id', installationId)
-      .eq('is_active', true)
-      .maybeSingle();
+    const { data: result, error } = await admin.rpc('set_licensed_subjects', {
+      p_installation_id: installationId,
+      p_subjects: subjects,
+    });
 
-    if (activation?.licenses) {
-      const lic = activation.licenses as Record<string, unknown>;
-      const maxSubj = Number(lic.max_subjects) || 1;
-      if (subjects.length > maxSubj) {
-        throw new ApiError(400, 'max_subjects_exceeded', `لا يمكنك اختيار أكثر من ${maxSubj} مواد في باقتك.`);
-      }
-      await admin
-        .from('licenses')
-        .update({
-          selected_subjects: subjects,
-          subject_last_changed_at: new Date().toISOString(),
-        })
-        .eq('id', lic.id);
-
-      return rpcAccess(admin, installationId);
+    if (error) {
+      console.error('Error setting licensed subjects RPC', error);
+      throw new ApiError(500, 'rpc_error', 'تعذر تحديث المواد الدراسية.');
     }
 
-    if (subjects.length > 1) {
-      throw new ApiError(400, 'max_subjects_exceeded', 'الفترة التجريبية تسمح بمادة واحدة فقط.');
+    if (result && result.ok === false) {
+      throw new ApiError(
+        400,
+        result.error_code || 'invalid_subjects',
+        result.error || 'تعذر تحديث المواد الدراسية.',
+      );
     }
-    await admin
-      .from('license_trials')
-      .update({ selected_subjects: subjects })
-      .eq('installation_id', installationId);
 
     return rpcAccess(admin, installationId);
   }
@@ -346,7 +381,7 @@ async function handlePublicAction(
         'تعذر بدء التجربة المجانية حالياً. حاول مرة أخرى بعد قليل.',
       );
     }
-    return data;
+    return rpcAccess(admin, installationId);
   }
 
   const rawCode = requiredString(
@@ -380,7 +415,8 @@ async function handlePublicAction(
       'تعذر التحقق من الرمز حالياً. تحقق من اتصالك ثم أعد المحاولة.',
     );
   }
-  return data;
+  if (data.ok !== true || data.access !== 'licensed') return data;
+  return rpcAccess(admin, installationId);
 }
 
 async function requireAdmin(
@@ -445,6 +481,287 @@ function adminLicense(row: Record<string, unknown>, activeDevices = 0) {
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
+}
+
+function invalidAIRouting(): never {
+  throw new ApiError(
+    400,
+    'invalid_ai_routing',
+    'إعدادات توجيه الذكاء الاصطناعي غير صالحة.',
+  );
+}
+
+function parseAIRoute(
+  value: unknown,
+  scope: 'trial' | 'licensed',
+  featureType: string,
+): { provider: AIProviderId; model: string } {
+  if (!isRecord(value)) invalidAIRouting();
+  const provider = value.provider;
+  const model = value.model;
+  if (
+    !isAIProviderId(provider) ||
+    typeof model !== 'string' ||
+    !AI_MODEL_CATALOG[provider].includes(model as never)
+  ) {
+    invalidAIRouting();
+  }
+
+  // The current OCR flow sends images, and the free offer stays on Gemini.
+  if (
+    (scope === 'trial' || featureType === 'other_ai') &&
+    provider !== 'gemini'
+  ) {
+    invalidAIRouting();
+  }
+
+  return { provider, model };
+}
+
+function parseAIRouting(value: unknown): Record<string, unknown> {
+  if (!isRecord(value) || !isRecord(value.trial) || !isRecord(value.licensed)) {
+    invalidAIRouting();
+  }
+
+  const trial: Record<string, unknown> = {};
+  const licensed: Record<string, unknown> = {};
+  for (const featureType of AI_FEATURES) {
+    trial[featureType] = parseAIRoute(
+      value.trial[featureType],
+      'trial',
+      featureType,
+    );
+    licensed[featureType] = parseAIRoute(
+      value.licensed[featureType],
+      'licensed',
+      featureType,
+    );
+  }
+
+  const emergency = value.emergency;
+  if (!isRecord(emergency)) invalidAIRouting();
+  const rawPaused = emergency.pausedProviders;
+  if (!Array.isArray(rawPaused)) invalidAIRouting();
+  const pausedProviders = Array.from(
+    new Set(
+      rawPaused.filter(
+        (provider): provider is AIProviderId => isAIProviderId(provider),
+      ),
+    ),
+  );
+  if (pausedProviders.length !== rawPaused.length) invalidAIRouting();
+
+  const paidFallback = parseAIRoute(
+    emergency.paidFallback,
+    'licensed',
+    'daily_plan',
+  );
+
+  return {
+    version:
+      typeof value.version === 'number' && Number.isInteger(value.version)
+        ? value.version
+        : 1,
+    trial,
+    licensed,
+    emergency: { pausedProviders, paidFallback },
+  };
+}
+
+async function requireConfiguredRoutingProviders(
+  admin: ReturnType<typeof createClient>,
+  routing: Record<string, unknown>,
+): Promise<void> {
+  const providers = new Set<AIProviderId>();
+  for (const scope of ['trial', 'licensed']) {
+    const routes = routing[scope];
+    if (!isRecord(routes)) invalidAIRouting();
+    for (const route of Object.values(routes)) {
+      if (!isRecord(route)) invalidAIRouting();
+      if (isAIProviderId(route.provider)) {
+        providers.add(route.provider);
+      } else {
+        invalidAIRouting();
+      }
+    }
+  }
+
+  const emergency = routing.emergency;
+  if (!isRecord(emergency) || !isRecord(emergency.paidFallback)) {
+    invalidAIRouting();
+  }
+  const fallbackProvider = emergency.paidFallback.provider;
+  if (isAIProviderId(fallbackProvider)) {
+    providers.add(fallbackProvider);
+  } else {
+    invalidAIRouting();
+  }
+
+  let statuses: Awaited<ReturnType<typeof providerCredentialStatuses>>;
+  try {
+    statuses = await providerCredentialStatuses(admin);
+  } catch (error) {
+    console.error(
+      'Could not check provider credential status',
+      error instanceof ProviderCredentialError ? error.code : 'unknown',
+    );
+    throw new ApiError(
+      503,
+      'service_unavailable',
+      'تعذر التحقق من إعدادات مفاتيح المزوّدين بأمان.',
+    );
+  }
+  const configured = new Map(statuses.map(status => [status.id, status.configured]));
+  for (const provider of providers) {
+    if (!configured.get(provider)) {
+      throw new ApiError(
+        400,
+        'provider_not_configured',
+        `لا يمكن حفظ توجيه ${
+          AI_PROVIDER_LABELS[provider]
+        } قبل ضبط مفتاحه بأمان على الخادم.`,
+      );
+    }
+  }
+}
+
+async function readAIControl(
+  admin: ReturnType<typeof createClient>,
+): Promise<Record<string, unknown>> {
+  const [routingResult, monitoringResult] = await Promise.all([
+    admin
+      .from('ai_system_config')
+      .select('value, updated_at')
+      .eq('key', 'provider_model_routing')
+      .maybeSingle(),
+    admin.rpc('get_ai_provider_monitoring', { p_window_hours: 24 }),
+  ]);
+
+  if (
+    routingResult.error?.code === '42P01' ||
+    routingResult.error?.code === 'PGRST116'
+  ) {
+    throw new ApiError(
+      503,
+      'migration_required',
+      'طبّق ترحيل مركز تحكم الذكاء الاصطناعي ثم أعد المحاولة.',
+    );
+  }
+  if (routingResult.error || !routingResult.data || monitoringResult.error) {
+    console.error(
+      'Could not load AI control data',
+      routingResult.error?.code ?? monitoringResult.error?.code,
+    );
+    throw new ApiError(
+      503,
+      'service_unavailable',
+      'تعذر تحميل مركز تحكم الذكاء الاصطناعي.',
+    );
+  }
+
+  let statuses: Awaited<ReturnType<typeof providerCredentialStatuses>>;
+  try {
+    statuses = await providerCredentialStatuses(admin);
+  } catch (error) {
+    console.error(
+      'Could not load provider credential statuses',
+      error instanceof ProviderCredentialError ? error.code : 'unknown',
+    );
+    throw new ApiError(
+      503,
+      'service_unavailable',
+      'تعذر تحميل حالة مفاتيح المزوّدين بأمان.',
+    );
+  }
+  const statusByProvider = new Map(statuses.map(status => [status.id, status]));
+
+  return {
+    routing: parseAIRouting(routingResult.data.value),
+    updatedAt: routingResult.data.updated_at,
+    monitoring: monitoringResult.data || {},
+    providers: [
+      {
+        id: 'gemini',
+        label: AI_PROVIDER_LABELS.gemini,
+        configured: statusByProvider.get('gemini')?.configured ?? false,
+        supportsImages: true,
+      },
+      {
+        id: 'deepseek',
+        label: AI_PROVIDER_LABELS.deepseek,
+        configured: statusByProvider.get('deepseek')?.configured ?? false,
+        supportsImages: false,
+      },
+      {
+        id: 'openrouter',
+        label: AI_PROVIDER_LABELS.openrouter,
+        configured: statusByProvider.get('openrouter')?.configured ?? false,
+        supportsImages: false,
+      },
+      {
+        id: 'nvidia_nim',
+        label: AI_PROVIDER_LABELS.nvidia_nim,
+        configured: statusByProvider.get('nvidia_nim')?.configured ?? false,
+        supportsImages: false,
+      },
+    ],
+    modelCatalog: AI_MODEL_CATALOG,
+  };
+}
+
+function parseAIProvider(value: unknown): AIProviderId {
+  if (isAIProviderId(value)) return value;
+  throw new ApiError(
+    400,
+    'invalid_ai_provider',
+    'مزوّد الذكاء الاصطناعي غير صالح.',
+  );
+}
+
+async function testAIProvider(
+  admin: ReturnType<typeof createClient>,
+  provider: AIProviderId,
+): Promise<{ providerId: string; modelId: string; latencyMs: number }> {
+  let credential: Awaited<ReturnType<typeof resolveProviderApiKey>>;
+  try {
+    credential = await resolveProviderApiKey(admin, provider);
+  } catch (error) {
+    console.error(
+      'Could not resolve provider credential for test',
+      provider,
+      error instanceof ProviderCredentialError ? error.code : 'unknown',
+    );
+    throw new ApiError(
+      503,
+      'provider_key_unavailable',
+      'تعذر تحميل مفتاح المزوّد بأمان.',
+    );
+  }
+  if (!credential.apiKey) {
+    throw new ApiError(
+      400,
+      'provider_not_configured',
+      `مفتاح ${AI_PROVIDER_LABELS[provider]} غير مهيأ على الخادم.`,
+    );
+  }
+
+  try {
+    return await testProviderApiKey(provider, credential.apiKey);
+  } catch (error) {
+    console.error(
+      'AI provider connection test failed',
+      provider,
+      error instanceof ProviderCredentialError ? error.code : 'unknown',
+    );
+    if (error instanceof ProviderCredentialError) {
+      throw new ApiError(502, error.code, error.message);
+    }
+    throw new ApiError(
+      502,
+      'provider_test_failed',
+      'تعذر الاتصال بمزوّد الذكاء الاصطناعي. تحقق من المفتاح والحساب ثم أعد المحاولة.',
+    );
+  }
 }
 
 async function writeAudit(
@@ -782,8 +1099,15 @@ async function handleAdminAction(
     const subscriptionPlan = parseSubscriptionPlan(input);
     const expiresAt = subscriptionExpiry(subscriptionPlan, input.expiresOn);
     const planId = optionalString(input.planId, 32) || 'single_subject';
-    const maxSubjects = typeof input.maxSubjects === 'number' ? Math.max(1, Math.min(20, Math.floor(input.maxSubjects))) : (planId === 'two_subjects' ? 2 : 1);
-    const selectedSubjects = Array.isArray(input.selectedSubjects) ? input.selectedSubjects : [];
+    const maxSubjects =
+      typeof input.maxSubjects === 'number'
+        ? Math.max(1, Math.min(20, Math.floor(input.maxSubjects)))
+        : planId === 'two_subjects'
+        ? 2
+        : 1;
+    const selectedSubjects = Array.isArray(input.selectedSubjects)
+      ? input.selectedSubjects
+      : [];
     let created: Record<string, unknown> | null = null;
     let rawCode = '';
 
@@ -886,7 +1210,9 @@ async function handleAdminAction(
       updates.max_subjects = parseMaxDevices(input.maxSubjects);
     }
     if (Object.prototype.hasOwnProperty.call(input, 'selectedSubjects')) {
-      updates.selected_subjects = Array.isArray(input.selectedSubjects) ? input.selectedSubjects : [];
+      updates.selected_subjects = Array.isArray(input.selectedSubjects)
+        ? input.selectedSubjects
+        : [];
     }
     if (!Object.keys(updates).length) {
       throw new ApiError(400, 'invalid_input', 'لم يتم اختيار أي تعديل.');
@@ -945,25 +1271,145 @@ async function handleAdminAction(
   }
 
   if (action === 'admin-get-ai-analytics') {
-    const { data: overview } = await admin.rpc('get_ai_consumption_overview');
-    const { data: features } = await admin.rpc('get_ai_features_breakdown');
-    const { data: topConsumers } = await admin.rpc('get_ai_top_consumers', { p_limit: 25 });
+    const [overviewResult, featuresResult, topConsumersResult] =
+      await Promise.all([
+        admin.rpc('get_ai_consumption_overview'),
+        admin.rpc('get_ai_features_breakdown'),
+        admin.rpc('get_ai_top_consumers', { p_limit: 25 }),
+      ]);
+    if (
+      overviewResult.error ||
+      featuresResult.error ||
+      topConsumersResult.error
+    ) {
+      console.error(
+        'Could not load AI analytics',
+        overviewResult.error?.code ??
+          featuresResult.error?.code ??
+          topConsumersResult.error?.code,
+      );
+      throw new ApiError(
+        503,
+        'service_unavailable',
+        'تعذر تحميل إحصائيات الذكاء الاصطناعي.',
+      );
+    }
     return {
       ok: true,
-      overview: overview || {},
-      features: features || [],
-      topConsumers: topConsumers || [],
+      overview: overviewResult.data || {},
+      features: featuresResult.data || [],
+      topConsumers: topConsumersResult.data || [],
+    };
+  }
+
+  if (action === 'admin-get-ai-control') {
+    return { ok: true, ...(await readAIControl(admin)) };
+  }
+
+  if (action === 'admin-test-ai-provider') {
+    const provider = parseAIProvider(input.providerId);
+    try {
+      const result = await testAIProvider(admin, provider);
+      await writeAudit(admin, adminUser.id, 'ai_provider_tested', null, {
+        provider,
+        model: result.modelId,
+        latencyMs: result.latencyMs,
+        ok: true,
+      });
+      return { ok: true, ...result };
+    } catch (error) {
+      await writeAudit(admin, adminUser.id, 'ai_provider_tested', null, {
+        provider,
+        ok: false,
+      });
+      throw error;
+    }
+  }
+
+  if (action === 'admin-update-ai-routing') {
+    const routingInput = input.routing;
+    const routing = parseAIRouting(routingInput);
+    await requireConfiguredRoutingProviders(admin, routing);
+    const expectedUpdatedAt = requiredString(
+      input.expectedUpdatedAt,
+      'invalid_ai_routing_version',
+      'حمّل إعدادات توجيه الذكاء الاصطناعي مجدداً قبل الحفظ.',
+      64,
+    );
+    const { data: current, error: currentError } = await admin
+      .from('ai_system_config')
+      .select('value, updated_at')
+      .eq('key', 'provider_model_routing')
+      .maybeSingle();
+    if (currentError || !current) {
+      throw new ApiError(
+        503,
+        'migration_required',
+        'طبّق ترحيل مركز تحكم الذكاء الاصطناعي ثم أعد المحاولة.',
+      );
+    }
+    if (current.updated_at !== expectedUpdatedAt) {
+      throw new ApiError(
+        409,
+        'ai_routing_conflict',
+        'تم تعديل توجيه الذكاء الاصطناعي من جلسة أخرى. حدّث المركز ثم راجع تعديلاتك.',
+      );
+    }
+
+    const currentVersion = isRecord(current.value)
+      ? Number(current.value.version) || 1
+      : 1;
+    routing.version = currentVersion + 1;
+    const { data: saved, error: saveError } = await admin
+      .from('ai_system_config')
+      .update({ value: routing, updated_at: new Date().toISOString() })
+      .eq('key', 'provider_model_routing')
+      .eq('updated_at', expectedUpdatedAt)
+      .select('value, updated_at')
+      .single();
+    if (saveError || !saved) {
+      if (saveError?.code === 'PGRST116' || !saved) {
+        throw new ApiError(
+          409,
+          'ai_routing_conflict',
+          'تم تعديل توجيه الذكاء الاصطناعي من جلسة أخرى. حدّث المركز ثم راجع تعديلاتك.',
+        );
+      }
+      console.error('Could not update AI routing', saveError?.code);
+      throw new ApiError(
+        503,
+        'service_unavailable',
+        'تعذر حفظ إعدادات توجيه الذكاء الاصطناعي.',
+      );
+    }
+
+    await writeAudit(admin, adminUser.id, 'ai_routing_updated', null, {
+      previousVersion: currentVersion,
+      nextVersion: routing.version,
+      pausedProviders: routing.emergency?.pausedProviders || [],
+    });
+    return {
+      ok: true,
+      routing: saved.value,
+      updatedAt: saved.updated_at,
     };
   }
 
   if (action === 'admin-update-license-subjects') {
     const licenseId = parseLicenseId(input.licenseId);
-    const rawSubjects = Array.isArray(input.selectedSubjects) ? input.selectedSubjects : [];
-    const selectedSubjects = rawSubjects.filter(s => typeof s === 'string' && s.trim());
+    const rawSubjects = Array.isArray(input.selectedSubjects)
+      ? input.selectedSubjects
+      : [];
+    const selectedSubjects = rawSubjects.filter(
+      s => typeof s === 'string' && s.trim(),
+    );
 
     const { data, error } = await admin
       .from('licenses')
-      .update({ selected_subjects: selectedSubjects, updated_at: new Date().toISOString() })
+      .update({
+        selected_subjects: selectedSubjects,
+        updated_at: new Date().toISOString(),
+      })
       .eq('id', licenseId)
       .select(
         'id, code_hint, label, status, expires_at, max_devices, plan_id, max_subjects, selected_subjects, notes, created_at, updated_at',
@@ -973,8 +1419,30 @@ async function handleAdminAction(
     if (error || !data) {
       throw new ApiError(404, 'not_found', 'لم يتم العثور على هذا الترخيص.');
     }
-    await writeAudit(admin, adminUser.id, 'license_subjects_updated', licenseId, { selectedSubjects });
+    await writeAudit(
+      admin,
+      adminUser.id,
+      'license_subjects_updated',
+      licenseId,
+      { selectedSubjects },
+    );
     return { ok: true, license: adminLicense(data) };
+  }
+
+  if (action === 'admin-list-plans') {
+    const { data: plans, error } = await admin.rpc('admin_list_plans');
+    if (error) {
+      console.error('Could not load plans', error);
+      throw new ApiError(
+        503,
+        'service_unavailable',
+        'تعذر تحميل خطط الاشتراك حالياً.',
+      );
+    }
+    return {
+      ok: true,
+      plans: plans || [],
+    };
   }
 
   throw new ApiError(400, 'invalid_action', 'الطلب غير صالح.');

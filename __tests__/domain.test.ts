@@ -6,7 +6,7 @@ import { parseNames } from '../src/shared/utils/names';
 import { computeMonthlyDistribution, monthIndexOf } from '../src/shared/utils/monthlyDistribution';
 import { stableIndex, fnv1aHash } from '../src/shared/utils/hash';
 import { todayWeekdayIndex } from '../src/shared/utils/date';
-import { teacherRoleLabel } from '../src/shared/utils/teacherRole';
+import { teacherRoleLabel, stageFromClassName, roleLabelFromClassName } from '../src/shared/utils/teacherRole';
 import {
   dailyPlanTopicLabel,
   getDailyPlanTopics,
@@ -123,6 +123,21 @@ describe('مسمى الكادر التربوي', () => {
     expect(teacherRoleLabel('الابتدائية')).toBe('المعلم');
     expect(teacherRoleLabel('المتوسطة')).toBe('المدرس');
     expect(teacherRoleLabel('الإعدادية')).toBe('المدرس');
+  });
+
+  it('يستنبط المرحلة من اسم الصف', () => {
+    expect(stageFromClassName('الصف الخامس الابتدائي')).toBe('الابتدائية');
+    expect(stageFromClassName('الثاني المتوسط / شعبة أ')).toBe('المتوسطة');
+    expect(stageFromClassName('السادس الإعدادي')).toBe('الإعدادية');
+    expect(stageFromClassName('السادس الاعدادي')).toBe('الإعدادية');
+    expect(stageFromClassName('')).toBeNull();
+    expect(stageFromClassName(null)).toBeNull();
+  });
+
+  it('يحدد معلم/مدرس من اسم الصف مباشرة', () => {
+    expect(roleLabelFromClassName('الرابع الابتدائي')).toBe('المعلم');
+    expect(roleLabelFromClassName('الخامس العلمي')).toBe('المدرس');
+    expect(roleLabelFromClassName('الاول المتوسط')).toBe('المدرس');
   });
 });
 

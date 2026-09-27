@@ -1,16 +1,51 @@
 // @ts-nocheck
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import {
+  ProviderCredentialError,
+  resolveProviderApiKey,
+} from '../_shared/provider-credentials.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers':
-    'authorization, x-client-info, apikey, content-type',
+    'authorization, x-client-info, apikey, content-type, x-gemini-api-key',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
 const MAX_PROMPT_LENGTH = 35_000;
 const MAX_IMAGE_BYTES = 7 * 1024 * 1024;
-const MAX_REQUESTS_PER_MINUTE = 6;
+const DEFAULT_ESTIMATED_TOKENS = 2500;
+const GEMINI_MODELS = new Set([
+  'gemini-2.5-flash',
+  'gemini-2.5-flash-lite',
+  'gemini-2.5-pro',
+]);
+const OPENAI_COMPATIBLE_ENDPOINTS: Record<string, string> = {
+  deepseek: 'https://api.deepseek.com/chat/completions',
+  openrouter: 'https://openrouter.ai/api/v1/chat/completions',
+  nvidia_nim: 'https://integrate.api.nvidia.com/v1/chat/completions',
+};
+const PROVIDER_MODEL_SETS: Record<string, Set<string>> = {
+  gemini: GEMINI_MODELS,
+  deepseek: new Set(['deepseek-v4-pro']),
+  openrouter: new Set([
+    'openai/gpt-4o-mini',
+    'anthropic/claude-3.5-haiku',
+    'google/gemini-2.5-flash',
+    'meta-llama/llama-3.3-70b-instruct',
+    'qwen/qwen-2.5-72b-instruct',
+    'deepseek/deepseek-chat-v3-0324',
+  ]),
+  nvidia_nim: new Set([
+    'meta/llama-3.3-70b-instruct',
+    'meta/llama-3.1-8b-instruct',
+    'qwen/qwen2.5-72b-instruct',
+    'google/gemma-2-27b-it',
+    'deepseek-ai/deepseek-r1',
+  ]),
+};
+const UUID_PATTERN =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 interface GeminiUsageMetadata {
   promptTokenCount?: number;
@@ -26,6 +61,22 @@ interface GeminiResponse {
   error?: {
     code?: number;
     message?: string;
+    status?: string;
+  };
+}
+
+interface OpenAICompatibleResponse {
+  choices?: Array<{
+    message?: { content?: string };
+  }>;
+  usage?: {
+    prompt_tokens?: number;
+    completion_tokens?: number;
+    total_tokens?: number;
+  };
+  error?: {
+    code?: string | number;
+    message?: string;
   };
 }
 
@@ -36,73 +87,150 @@ function json(body: Record<string, unknown>, status = 200): Response {
   });
 }
 
-function normalizeBaseSubject(raw: string | null | undefined): string {
-  if (!raw || typeof raw !== 'string') return 'أخرى';
-  const cleaned = raw
-    .trim()
-    .replace(/[ـ\u0640]/g, '')
-    .replace(/[أإآ]/g, 'ا')
-    .replace(/ة\b/g, 'ه')
-    .toLowerCase();
-
-  if (/كيميا|chem/i.test(cleaned)) return 'الكيمياء';
-  if (/فيزيا|phys/i.test(cleaned)) return 'الفيزياء';
-  if (/احيا|علوم الحياة|بيولوج|bio/i.test(cleaned)) return 'الأحياء';
-  if (/رياضيات|حساب|جبر|math/i.test(cleaned)) return 'الرياضيات';
-  if (/انكليز|انجليز|english/i.test(cleaned)) return 'اللغة الإنكليزية';
-  if (/عرب|قواعد|ادب|نصوص|قراءه/i.test(cleaned)) return 'اللغة العربية';
-  if (/اسلام|دين|قران/i.test(cleaned)) return 'التربية الإسلامية';
-  if (/اجتماع|تاريخ|جغرافي/i.test(cleaned)) return 'الاجتماعيات';
-  if (/حاسوب|كمبيوتر|computer/i.test(cleaned)) return 'الحاسوب';
-  if (/علوم|science/i.test(cleaned)) return 'العلوم';
-  return raw.trim();
-}
-
-function isSubjectAllowed(target: string | null, allowedList: string[]): boolean {
-  if (!target || !target.trim()) return true;
-  if (!allowedList || allowedList.length === 0) return true;
-  if (allowedList.includes('*') || allowedList.includes('all')) return true;
-
-  const normTarget = normalizeBaseSubject(target);
-  return allowedList.some(allowed => {
-    const normAllowed = normalizeBaseSubject(allowed);
-    return normTarget === normAllowed || normTarget.includes(normAllowed) || normAllowed.includes(normTarget);
-  });
+function trialClaimError(
+  message: string | undefined,
+): { code: string; error: string } | null {
+  switch (message) {
+    case 'trial_daily_plan_limit':
+      return {
+        code: message,
+        error:
+          'استخدمت خطة اليوم في التجربة المجانية. تتجدد فرصتك لإنشاء خطة جديدة غداً.',
+      };
+    case 'trial_proofread_limit':
+      return {
+        code: message,
+        error:
+          'استخدمت التدقيق اللغوي المتاح اليوم في التجربة المجانية. يتجدد غداً.',
+      };
+    case 'trial_formatting_limit':
+      return {
+        code: message,
+        error:
+          'استخدمت التنسيق بالذكاء المتاح اليوم في التجربة المجانية. يتجدد غداً.',
+      };
+    case 'trial_feature_not_allowed':
+      return {
+        code: message,
+        error:
+          'هذه الميزة متاحة في الخطة المدفوعة، التي تفتح أدوات ذكاء إضافية ونتائج أعلى جودة.',
+      };
+    case 'trial_feature_limit':
+      return {
+        code: message,
+        error: 'اكتمل الحد اليومي لهذه الميزة في التجربة المجانية. يتجدد غداً.',
+      };
+    case 'trial_configuration_missing':
+      return {
+        code: message,
+        error: 'إعدادات التجربة المجانية غير مكتملة على الخادم. حاول لاحقاً.',
+      };
+    case 'ai_provider_paused':
+      return {
+        code: message,
+        error: 'مزود الذكاء الاصطناعي متوقف مؤقتاً للصيانة. حاول لاحقاً.',
+      };
+    case 'ai_request_id_conflict':
+      return {
+        code: message,
+        error: 'لا يمكن استخدام معرّف هذا الطلب من جهاز أو حساب آخر.',
+      };
+    case 'ai_entitlement_changed':
+      return {
+        code: message,
+        error: 'تغيرت حالة الترخيص أثناء تجهيز الطلب. أعد المحاولة.',
+      };
+    case 'ai_route_configuration_missing':
+    case 'ai_route_configuration_invalid':
+      return {
+        code: message,
+        error: 'إعدادات مزود الذكاء الاصطناعي غير مكتملة. حاول لاحقاً.',
+      };
+    default:
+      return null;
+  }
 }
 
 Deno.serve(async req => {
-  if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+  if (req.method === 'OPTIONS')
+    return new Response('ok', { headers: corsHeaders });
   if (req.method !== 'POST') return json({ error: 'الطريقة غير مدعومة' }, 405);
+
+  let admin: ReturnType<typeof createClient> | null = null;
+  let requestId: string = crypto.randomUUID();
+  let wasClaimed = false;
 
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-    const geminiKey = Deno.env.get('GEMINI_API_KEY');
-    if (!supabaseUrl || !serviceRoleKey || !geminiKey) {
-      return json({ error: 'خدمة الذكاء الاصطناعي غير مهيأة بعد' }, 503);
+
+    if (!supabaseUrl || !serviceRoleKey) {
+      return json(
+        { error: 'خدمة الذكاء الاصطناعي غير مهيأة بعد على الخادم.' },
+        503,
+      );
     }
 
-    const admin = createClient(supabaseUrl, serviceRoleKey, {
+    admin = createClient(supabaseUrl, serviceRoleKey, {
       auth: { autoRefreshToken: false, persistSession: false },
     });
 
-    const input = (await req.json().catch(() => ({}))) as Record<string, unknown>;
+    const input = (await req.json().catch(() => ({}))) as Record<
+      string,
+      unknown
+    >;
     const prompt = typeof input.prompt === 'string' ? input.prompt.trim() : '';
-    const imageBase64 = typeof input.imageBase64 === 'string' ? input.imageBase64 : undefined;
-    const featureType = typeof input.featureType === 'string' ? input.featureType : 'other_ai';
-    const subjectName = typeof input.subjectName === 'string' ? input.subjectName.trim() : null;
-    const subjectId = typeof input.subjectId === 'string' ? input.subjectId : null;
-    const installationId = typeof input.installationId === 'string' ? input.installationId : null;
-    const requestId = typeof input.requestId === 'string' && input.requestId ? input.requestId : crypto.randomUUID();
+    const imageBase64 =
+      typeof input.imageBase64 === 'string' ? input.imageBase64 : undefined;
+    const featureType =
+      typeof input.featureType === 'string' ? input.featureType : 'other_ai';
+    const subjectName =
+      typeof input.subjectName === 'string' ? input.subjectName.trim() : null;
+    const subjectId =
+      typeof input.subjectId === 'string' ? input.subjectId : null;
+    const installationId =
+      typeof input.installationId === 'string' ? input.installationId : null;
+    if (typeof input.requestId === 'string' && input.requestId) {
+      if (!UUID_PATTERN.test(input.requestId)) {
+        return json({ error: 'معرّف الطلب غير صالح.' }, 400);
+      }
+      requestId = input.requestId;
+    }
+
+    // دعم المفتاح الشخصي من الـ Headers أو الـ Body مع ضمان عدم تسجيله في السجلات
+    const headerPersonalKey = req.headers.get('x-gemini-api-key');
+    const bodyPersonalKey =
+      typeof input.personalApiKey === 'string' && input.personalApiKey.trim()
+        ? input.personalApiKey.trim()
+        : null;
+    const personalApiKey = headerPersonalKey || bodyPersonalKey || null;
+    const hasPersonalKey = Boolean(
+      personalApiKey && personalApiKey.length > 10,
+    );
+
+    if (!installationId) {
+      return json(
+        { error: 'تعذر التحقق من هوية الجهاز (Installation ID مفقود).' },
+        400,
+      );
+    }
 
     if (!prompt || prompt.length > MAX_PROMPT_LENGTH) {
-      return json({ error: 'النص المطلوب غير صالح أو طويل جداً' }, 400);
+      return json(
+        {
+          error: 'النص المطلوب غير صالح أو طويل جداً (الحد الأقصى 35,000 حرف).',
+        },
+        400,
+      );
     }
     if (imageBase64 && imageBase64.length * 0.75 > MAX_IMAGE_BYTES) {
-      return json({ error: 'حجم الصورة كبير جداً لاستخدام الذكاء الاصطناعي' }, 413);
+      return json(
+        { error: 'حجم الصورة كبير جداً (الحد الأقصى 7 ميجابايت).' },
+        413,
+      );
     }
 
-    // التحقق من المستخدم المسجل إن وجد
+    // استخراج معرّف المستخدم الموثق إن وجد
     let userId: string | null = null;
     const authorization = req.headers.get('Authorization');
     if (authorization?.startsWith('Bearer ')) {
@@ -111,176 +239,347 @@ Deno.serve(async req => {
       if (authData?.user) userId = authData.user.id;
     }
 
-    const deviceId = installationId || userId || 'unknown_device';
+    // تقدير مبدئي للتوكنات للحجز المسبق (Usage Reservation) لمنع التجاوز
+    const estimatedTokens = Math.max(
+      DEFAULT_ESTIMATED_TOKENS,
+      Math.ceil(prompt.length / 3.5),
+    );
 
-    // 1. منع تكرار نفس الطلب (Idempotency)
-    const { data: existingRecord } = await admin
-      .from('ai_usage_records')
-      .select('id, status')
-      .eq('request_id', requestId)
-      .maybeSingle();
-
-    if (existingRecord && existingRecord.status === 'success') {
-      return json({ error: 'تمت معالجة هذا الطلب مسبقاً.' }, 409);
-    }
-
-    // 2. التحقق من التزامن اللحظي (Burst Rate Limit)
-    const oneMinuteAgo = new Date(Date.now() - 60 * 1000).toISOString();
-    const { count: burstCount } = await admin
-      .from('ai_usage_records')
-      .select('id', { count: 'exact', head: true })
-      .eq('installation_id', deviceId)
-      .gte('created_at', oneMinuteAgo);
-
-    if ((burstCount ?? 0) >= MAX_REQUESTS_PER_MINUTE) {
-      return json({ error: 'يرجى الانتظار بضع ثوانٍ قبل إرسال طلب جديد.' }, 429);
-    }
-
-    // 3. التحقق من الترخيص والتجربة والمواد المسموحة
-    let isTrial = false;
-    let licenseId: string | null = null;
-    let allowedSubjects: string[] = [];
-    let isHardLimitReached = false;
-
-    // فحص التفعيل النشط للجهاز
-    const { data: activation } = await admin
-      .from('license_activations')
-      .select('license_id, licenses(id, status, expires_at, selected_subjects, max_subjects)')
-      .eq('installation_id', deviceId)
-      .eq('is_active', true)
-      .maybeSingle();
-
-    if (activation && activation.licenses && activation.licenses.status === 'active') {
-      const lic = activation.licenses;
-      const isExpired = lic.expires_at && new Date(lic.expires_at) <= new Date();
-      if (!isExpired) {
-        licenseId = lic.id;
-        allowedSubjects = Array.isArray(lic.selected_subjects) ? lic.selected_subjects : [];
-      }
-    }
-
-    // إذا لم يكن مرخصاً، نتحقق من التجربة المجانية
-    if (!licenseId) {
-      const { data: trial } = await admin
-        .from('license_trials')
-        .select('*')
-        .eq('installation_id', deviceId)
-        .maybeSingle();
-
-      if (trial) {
-        const isTrialTimeExpired = new Date(trial.ends_at) <= new Date();
-        const isBudgetExhausted = trial.is_budget_exhausted || (trial.total_tokens_used >= 40000);
-
-        if (isTrialTimeExpired || isBudgetExhausted) {
-          return json({
-            error: 'انتهت الفترة التجريبية لأدوات الذكاء الاصطناعي. فعّل ترخيصك للاستمرار باستخدام مريح ومفتوح.',
-          }, 403);
-        }
-        isTrial = true;
-        allowedSubjects = Array.isArray(trial.selected_subjects) ? trial.selected_subjects : [];
-      } else {
-        // إنشاء تجربة جديدة تلقائياً عند أول طلب
-        const endsAt = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString();
-        await admin.from('license_trials').insert({
-          installation_id: deviceId,
-          ends_at: endsAt,
-        });
-        isTrial = true;
-      }
-    }
-
-    // 4. فحص المادة المسموحة (Pre-flight Subject Verification)
-    if (subjectName && allowedSubjects.length > 0) {
-      if (!isSubjectAllowed(subjectName, allowedSubjects)) {
-        return json({
-          error: `المادة (${normalizeBaseSubject(subjectName)}) غير مشمولة في باقتك الحالية (${allowedSubjects.join('، ')}).`,
-        }, 403);
-      }
-    }
-
-    // 5. موجه النماذج (AI Model Router)
-    let selectedModel = 'gemini-2.5-flash';
-    if (featureType === 'question_formatting') {
-      selectedModel = 'gemini-2.5-flash-lite';
-    }
-
-    // 6. استدعاء Google Gemini API
-    const parts: Array<Record<string, unknown>> = [{ text: prompt }];
-    if (imageBase64) {
-      const cleanImg = imageBase64.includes(',') ? imageBase64.split(',')[1] : imageBase64;
-      parts.push({ inlineData: { mimeType: 'image/jpeg', data: cleanImg } });
-    }
-
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(selectedModel)}:generateContent`,
+    // 1. استدعاء الدالة الذرية المركزية في قاعدة البيانات (Claim AI Request)
+    const { data: claimData, error: claimError } = await admin.rpc(
+      'claim_ai_request_routed',
       {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-goog-api-key': geminiKey,
-        },
-        body: JSON.stringify({ contents: [{ parts }] }),
+        p_request_id: requestId,
+        p_installation_id: installationId,
+        p_user_id: userId,
+        p_feature_type: featureType,
+        p_subject_name: subjectName,
+        p_subject_id: subjectId,
+        p_estimated_tokens: estimatedTokens,
+        p_has_personal_key: hasPersonalKey,
+        p_requires_vision: Boolean(imageBase64),
       },
     );
 
-    const gemini = (await response.json().catch(() => null)) as GeminiResponse | null;
-    if (!response.ok) {
-      console.error('Gemini API call failed', response.status, gemini?.error?.message);
-      if (response.status === 429) {
-        return json({ error: 'الخادم مشغول حالياً بكثرة الطلبات. انتظر بضع ثوانٍ ثم حاول ثانية.' }, 429);
+    if (claimError || !claimData) {
+      const trialError = trialClaimError(claimError?.message);
+      if (trialError) {
+        return json(
+          { error: trialError.error, code: trialError.code },
+          [
+            'trial_configuration_missing',
+            'ai_route_configuration_missing',
+            'ai_route_configuration_invalid',
+          ].includes(trialError.code)
+            ? 503
+            : ['ai_request_id_conflict', 'ai_entitlement_changed'].includes(
+                trialError.code,
+              )
+            ? 409
+            : 403,
+        );
       }
-      return json({ error: gemini?.error?.message || 'تعذر إكمال طلب الذكاء الاصطناعي حالياً.' }, 502);
+      console.error('Error claiming AI request RPC', claimError);
+      return json(
+        {
+          error:
+            'تعذر التحقق من صلاحيات الذكاء الاصطناعي. يرجى المحاولة لاحقاً.',
+        },
+        500,
+      );
     }
 
-    const text = gemini?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+    // إذا كان الطلب مسجلاً مسبقاً بنجاح (Idempotent Cache Replay)
+    if (claimData.is_duplicate && claimData.status === 'success') {
+      return json({
+        text: claimData.response_cache || '',
+        usage: claimData.usage || {},
+        cached: true,
+      });
+    }
+
+    // إذا رفضت الخطة أو الصلاحيات الطلب
+    if (!claimData.allowed) {
+      const errorCode = claimData.error_code || 'forbidden';
+      const statusMap: Record<string, number> = {
+        concurrency_in_flight: 409,
+        rate_limit_burst: 429,
+        rate_limit_hourly: 429,
+        trial_expired: 403,
+        trial_usage_limit: 403,
+        trial_daily_limit: 403,
+        daily_hard_limit: 403,
+        monthly_hard_limit: 403,
+        subject_not_allowed: 403,
+        feature_not_allowed: 403,
+        license_inactive: 403,
+        license_expired: 403,
+        request_expired: 409,
+        request_not_reusable: 409,
+      };
+      const httpStatus = statusMap[errorCode] || 403;
+      return json(
+        {
+          error: claimData.error || 'طلب الذكاء الاصطناعي غير مصرح به.',
+          code: errorCode,
+        },
+        httpStatus,
+      );
+    }
+
+    wasClaimed = true;
+    const selectedProvider =
+      typeof claimData.provider_id === 'string' ? claimData.provider_id : '';
+    const selectedModel =
+      typeof claimData.model_id === 'string' ? claimData.model_id : '';
+    const isValidRoute =
+      PROVIDER_MODEL_SETS[selectedProvider]?.has(selectedModel) ?? false;
+    if (!isValidRoute) {
+      await admin.rpc('complete_ai_request', {
+        p_request_id: requestId,
+        p_status: 'failed',
+        p_failure_reason: 'إعدادات مزود الذكاء الاصطناعي غير صالحة.',
+        p_provider_error_type: 'invalid_route',
+      });
+      return json({ error: 'إعدادات مزود الذكاء الاصطناعي غير صالحة.' }, 503);
+    }
+
+    let activeApiKey = selectedProvider === 'gemini' ? personalApiKey : null;
+    if (!activeApiKey) {
+      try {
+        activeApiKey = (
+          await resolveProviderApiKey(admin, selectedProvider)
+        ).apiKey;
+      } catch (error) {
+        console.error(
+          'AI provider credential unavailable',
+          selectedProvider,
+          error instanceof ProviderCredentialError ? error.code : 'unknown',
+        );
+        await admin.rpc('complete_ai_request', {
+          p_request_id: requestId,
+          p_status: 'failed',
+          p_failure_reason: `تعذر تحميل مفتاح ${selectedProvider} بأمان.`,
+          p_provider_error_type: 'provider_credential_unavailable',
+        });
+        return json(
+          { error: `مزود ${selectedProvider} غير مهيأ على الخادم.` },
+          503,
+        );
+      }
+    }
+    if (!activeApiKey) {
+      await admin.rpc('complete_ai_request', {
+        p_request_id: requestId,
+        p_status: 'failed',
+        p_failure_reason: `مفتاح ${selectedProvider} غير مهيأ على الخادم.`,
+        p_provider_error_type: 'missing_provider_key',
+      });
+      return json(
+        { error: `مزود ${selectedProvider} غير مهيأ على الخادم.` },
+        503,
+      );
+    }
+
+    if (selectedProvider !== 'gemini' && imageBase64) {
+      await admin.rpc('complete_ai_request', {
+        p_request_id: requestId,
+        p_status: 'failed',
+        p_failure_reason: 'هذا النموذج لا يدعم معالجة الصور.',
+        p_provider_error_type: 'vision_not_supported',
+      });
+      return json({ error: 'النموذج المختار لا يدعم معالجة الصور.' }, 422);
+    }
+
+    const trialProofreadingRestriction =
+      claimData.is_trial && featureType === 'question_improvement'
+        ? '\n\nقيد التجربة المجانية: اقتصر حصراً على التدقيق الإملائي والنحوي والأسلوبي. لا تقترح تصحيحات علمية أو صيغاً كيميائية أو رموزاً رياضية أو تعديلات في محتوى الأسئلة.'
+        : '';
+
+    // 2. استدعاء المزود المحدد من خادم التوجيه فقط.
+    const providerPrompt = `${prompt}${trialProofreadingRestriction}`;
+    const openAICompatibleEndpoint =
+      selectedProvider === 'gemini'
+        ? null
+        : OPENAI_COMPATIBLE_ENDPOINTS[selectedProvider];
+    let response: Response;
+    try {
+      if (selectedProvider === 'gemini') {
+        const parts: Array<Record<string, unknown>> = [
+          { text: providerPrompt },
+        ];
+        if (imageBase64) {
+          const cleanImg = imageBase64.includes(',')
+            ? imageBase64.split(',')[1]
+            : imageBase64;
+          parts.push({
+            inlineData: { mimeType: 'image/jpeg', data: cleanImg },
+          });
+        }
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+          selectedModel,
+        )}:generateContent`;
+        response = await fetch(geminiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-goog-api-key': activeApiKey,
+          },
+          body: JSON.stringify({ contents: [{ parts }] }),
+        });
+      } else if (openAICompatibleEndpoint) {
+        response = await fetch(openAICompatibleEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${activeApiKey}`,
+          },
+          body: JSON.stringify({
+            model: selectedModel,
+            messages: [{ role: 'user', content: providerPrompt }],
+            stream: false,
+          }),
+        });
+      } else {
+        throw new Error('Unsupported provider endpoint');
+      }
+    } catch {
+      await admin.rpc('complete_ai_request', {
+        p_request_id: requestId,
+        p_status: 'failed',
+        p_failure_reason: 'فشل الاتصال بمزود خدمة الذكاء الاصطناعي.',
+        p_provider_error_type: `${selectedProvider}_network_error`,
+      });
+      return json(
+        {
+          error:
+            'تعذر الاتصال بمزود الذكاء الاصطناعي. تأكد من اتصال الإنترنت وحاول ثانية.',
+        },
+        502,
+      );
+    }
+
+    const payload = await response.json().catch(() => null);
+    const gemini =
+      selectedProvider === 'gemini' ? (payload as GeminiResponse | null) : null;
+    const openai =
+      selectedProvider !== 'gemini'
+        ? (payload as OpenAICompatibleResponse | null)
+        : null;
+
+    if (!response.ok) {
+      console.error('AI provider request failed', {
+        provider: selectedProvider,
+        status: response.status,
+      });
+      const isRateLimit = response.status === 429;
+      const errorMsg = isRateLimit
+        ? 'الخادم مشغول حالياً بكثرة الطلبات المتزامنة. يرجى الانتظار بضع ثوانٍ.'
+        : 'تعذر إكمال طلب الذكاء الاصطناعي حالياً.';
+
+      await admin.rpc('complete_ai_request', {
+        p_request_id: requestId,
+        p_status: 'failed',
+        p_failure_reason: errorMsg,
+        p_provider_error_type: `${selectedProvider}_http_${response.status}`,
+      });
+
+      return json(
+        {
+          error: errorMsg,
+          code: isRateLimit ? 'provider_busy' : 'provider_error',
+        },
+        response.status === 429 ? 429 : 502,
+      );
+    }
+
+    const text =
+      selectedProvider === 'gemini'
+        ? gemini?.candidates?.[0]?.content?.parts?.[0]?.text?.trim()
+        : openai?.choices?.[0]?.message?.content?.trim();
     if (!text) {
-      return json({ error: 'عاد الذكاء الاصطناعي باستجابة فارغة' }, 502);
+      await admin.rpc('complete_ai_request', {
+        p_request_id: requestId,
+        p_status: 'failed',
+        p_failure_reason: 'عاد الذكاء الاصطناعي باستجابة فارغة.',
+        p_provider_error_type: `${selectedProvider}_empty_response`,
+      });
+      return json(
+        {
+          error:
+            'عاد الذكاء الاصطناعي باستجابة فارغة. حاول إعادة صياغة السؤال أو الطلب.',
+        },
+        502,
+      );
     }
 
-    // 7. استخراج التوكنات الفعلية وحساب التكلفة
-    const inputTokens = gemini?.usageMetadata?.promptTokenCount ?? Math.ceil(prompt.length / 4);
-    const outputTokens = gemini?.usageMetadata?.candidatesTokenCount ?? Math.ceil(text.length / 4);
-    const totalTokens = gemini?.usageMetadata?.totalTokenCount ?? (inputTokens + outputTokens);
+    // 3. استخراج التوكنات الفعلية وحساب التكلفة الدقيقة
+    const inputTokens =
+      (selectedProvider === 'gemini'
+        ? gemini?.usageMetadata?.promptTokenCount
+        : openai?.usage?.prompt_tokens) ??
+      Math.ceil(providerPrompt.length / 4);
+    const outputTokens =
+      (selectedProvider === 'gemini'
+        ? gemini?.usageMetadata?.candidatesTokenCount
+        : openai?.usage?.completion_tokens) ?? Math.ceil(text.length / 4);
+    const totalTokens =
+      (selectedProvider === 'gemini'
+        ? gemini?.usageMetadata?.totalTokenCount
+        : openai?.usage?.total_tokens) ?? inputTokens + outputTokens;
 
-    // حساب التكلفة ($0.075 input / $0.30 output لكل مليون توكن في flash)
-    const inputRate = selectedModel.includes('flash-lite') ? 0.0375 : 0.075;
-    const outputRate = selectedModel.includes('flash-lite') ? 0.15 : 0.30;
-    const estimatedCost = (inputTokens * inputRate + outputTokens * outputRate) / 1_000_000;
+    const inputRate = Number(claimData.input_rate_per_million);
+    const outputRate = Number(claimData.output_rate_per_million);
+    if (
+      !Number.isFinite(inputRate) ||
+      !Number.isFinite(outputRate) ||
+      inputRate < 0 ||
+      outputRate < 0
+    ) {
+      await admin.rpc('complete_ai_request', {
+        p_request_id: requestId,
+        p_status: 'failed',
+        p_failure_reason: 'لم يتم تثبيت تسعير النموذج قبل التنفيذ.',
+        p_provider_error_type: 'missing_pricing_snapshot',
+      });
+      return json({ error: 'إعدادات تسعير النموذج غير صالحة.' }, 503);
+    }
+    const providerCost =
+      (inputTokens * inputRate + outputTokens * outputRate) / 1_000_000;
+    // المفتاح الشخصي مدعوم لـ Gemini فقط؛ بقية المزوّدين يستخدمون مفتاح المشروع دائماً.
+    const estimatedCost = claimData.uses_personal_key ? 0.0 : providerCost;
 
-    // 8. تسجيل السجل المفصل في قاعدة البيانات
-    await admin.from('ai_usage_records').insert({
-      request_id: requestId,
-      user_id: userId,
-      installation_id: deviceId,
-      license_id: licenseId,
-      is_trial: isTrial,
-      feature_type: featureType,
-      subject_id: subjectId,
-      subject_name: subjectName ? normalizeBaseSubject(subjectName) : null,
-      model_id: selectedModel,
-      input_tokens: inputTokens,
-      output_tokens: outputTokens,
-      total_tokens: totalTokens,
-      estimated_cost: estimatedCost,
-      status: 'success',
-      pricing_version: '2026-v1',
-    });
-
-    // إذا كان تجريبياً، نقوم بتحديث عدادات التجربة
-    if (isTrial) {
-      const { data: currentTrial } = await admin
-        .from('license_trials')
-        .select('total_tokens_used, total_cost')
-        .eq('installation_id', deviceId)
-        .maybeSingle();
-
-      const newTokens = (currentTrial?.total_tokens_used || 0) + totalTokens;
-      const newCost = (Number(currentTrial?.total_cost) || 0) + estimatedCost;
-      await admin.from('license_trials').update({
-        total_tokens_used: newTokens,
-        total_cost: newCost,
-        is_budget_exhausted: newTokens >= 40000,
-      }).eq('installation_id', deviceId);
+    // 4. إكمال الطلب وتثبيت الاستهلاك وتحرير الحجز الذري
+    const { data: completionData, error: completionError } = await admin.rpc(
+      'complete_ai_request',
+      {
+        p_request_id: requestId,
+        p_status: 'success',
+        p_input_tokens: inputTokens,
+        p_output_tokens: outputTokens,
+        p_total_tokens: totalTokens,
+        p_estimated_cost: estimatedCost,
+        p_provider_cost: providerCost,
+        p_response_text: text,
+      },
+    );
+    if (
+      completionError ||
+      !completionData?.ok ||
+      completionData.status !== 'success' ||
+      completionData.replayed
+    ) {
+      console.error('Could not finalize AI request', {
+        code: completionError?.code,
+        status: completionData?.status,
+      });
+      return json(
+        {
+          error:
+            'تعذر تثبيت نتيجة الطلب بأمان. أرسل طلباً جديداً بدلاً من إعادة المحاولة تلقائياً.',
+        },
+        completionData?.replayed ? 409 : 503,
+      );
     }
 
     return json({
@@ -290,16 +589,36 @@ Deno.serve(async req => {
         outputTokens,
         totalTokens,
         estimatedCost: Math.round(estimatedCost * 1_000_000) / 1_000_000,
+        providerId: selectedProvider,
         modelId: selectedModel,
       },
       quotaStatus: {
-        isTrial,
-        isLicensed: Boolean(licenseId),
-        allowedSubjects,
+        isTrial: Boolean(claimData.is_trial),
+        isLicensed: Boolean(claimData.license_id),
+        allowedSubjects: claimData.allowed_subjects || [],
       },
     });
   } catch (error) {
     console.error('Gemini Edge Function unexpected error', error);
-    return json({ error: 'تعذر معالجة الطلب حالياً. تأكد من اتصال الإنترنت.' }, 500);
+    if (admin && wasClaimed) {
+      try {
+        await admin.rpc('complete_ai_request', {
+          p_request_id: requestId,
+          p_status: 'failed',
+          p_failure_reason:
+            error instanceof Error ? error.message : 'Unknown server error',
+          p_provider_error_type: 'uncaught_exception',
+        });
+      } catch (e) {
+        console.error('Failed to cleanup claimed request', e);
+      }
+    }
+    return json(
+      {
+        error:
+          'تعذر معالجة الطلب حالياً. يرجى التحقق من اتصال الإنترنت والمحاولة لاحقاً.',
+      },
+      500,
+    );
   }
 });

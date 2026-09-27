@@ -29,9 +29,12 @@ import {
   parseDailyPlanTopics,
 } from '../../shared/types/domain';
 import type { DailyPlan } from '../../shared/types/domain';
-import { generateFallbackDailyPlan, getAIService } from '../../services/aiService';
-import { generateDailyPlanPdf } from '../../services/pdfService';
-import { printPdf } from '../../services/printService';
+import {
+  generateFallbackDailyPlan,
+  getAIService,
+  sanitizeAndDistributeDailyPlanSections,
+} from '../../services/aiService';
+import { printDailyPlan } from '../../services/printService';
 import { getChaptersList } from '../../services/curriculumRegistry';
 import { extractPagesContent } from '../../services/curriculumTextExtractor';
 
@@ -41,9 +44,9 @@ interface SectionDef {
   key: keyof Pick<
     DailyPlan,
     | 'objectives'
+    | 'activities'
     | 'introduction'
     | 'presentation'
-    | 'activities'
     | 'evaluation'
     | 'homework'
   >;
@@ -60,6 +63,12 @@ const PLAN_SECTIONS: SectionDef[] = [
     icon: 'flag',
   },
   {
+    key: 'activities',
+    title: strings.dailyPlan.planSections.activities,
+    color: '#9C27B0',
+    icon: 'build-circle',
+  },
+  {
     key: 'introduction',
     title: strings.dailyPlan.planSections.introduction,
     color: '#FF9800',
@@ -70,12 +79,6 @@ const PLAN_SECTIONS: SectionDef[] = [
     title: strings.dailyPlan.planSections.presentation,
     color: '#2196F3',
     icon: 'menu-book',
-  },
-  {
-    key: 'activities',
-    title: strings.dailyPlan.planSections.activities,
-    color: '#9C27B0',
-    icon: 'build-circle',
   },
   {
     key: 'evaluation',
@@ -153,14 +156,15 @@ export function DailyPlanEditor() {
       if (existing) {
         setSubjectId(existing.subjectId);
         setClassName(existing.className);
-        setPlan(existing);
+        const distributed = sanitizeAndDistributeDailyPlanSections(existing);
+        setPlan({ ...existing, ...distributed });
         setSections({
-          objectives: existing.objectives,
-          introduction: existing.introduction,
-          presentation: existing.presentation,
-          activities: existing.activities,
-          evaluation: existing.evaluation,
-          homework: existing.homework,
+          objectives: distributed.objectives,
+          activities: distributed.activities,
+          introduction: distributed.introduction,
+          presentation: distributed.presentation,
+          evaluation: distributed.evaluation,
+          homework: distributed.homework,
         });
         setMode('editor');
       }
@@ -229,20 +233,25 @@ export function DailyPlanEditor() {
       pageRange,
       textbookExcerpt,
       className: className || subject.grade || 'المرحلة الدراسية',
+      stage: subject.stage,
       duration,
       teachingMethod: method,
     };
   };
 
   const applyPlan = (generated: DailyPlan, error: string | null) => {
-    setPlan(generated);
+    const distributed = sanitizeAndDistributeDailyPlanSections(generated);
+    setPlan({
+      ...generated,
+      ...distributed,
+    });
     setSections({
-      objectives: generated.objectives,
-      introduction: generated.introduction,
-      presentation: generated.presentation,
-      activities: generated.activities,
-      evaluation: generated.evaluation,
-      homework: generated.homework,
+      objectives: distributed.objectives,
+      activities: distributed.activities,
+      introduction: distributed.introduction,
+      presentation: distributed.presentation,
+      evaluation: distributed.evaluation,
+      homework: distributed.homework,
     });
     setAiError(error);
     setMode('editor');
@@ -277,9 +286,9 @@ export function DailyPlanEditor() {
     const updated: DailyPlan = {
       ...plan,
       objectives: sections.objectives ?? '',
+      activities: sections.activities ?? '',
       introduction: sections.introduction ?? '',
       presentation: sections.presentation ?? '',
-      activities: sections.activities ?? '',
       evaluation: sections.evaluation ?? '',
       homework: sections.homework ?? '',
       isEdited: true,
@@ -292,8 +301,16 @@ export function DailyPlanEditor() {
   const handlePrint = async () => {
     if (!plan) return;
     try {
-      const path = await generateDailyPlanPdf(plan, selectedSubject);
-      await printPdf(path);
+      const currentPlan: DailyPlan = {
+        ...plan,
+        objectives: sections.objectives ?? plan.objectives,
+        activities: sections.activities ?? plan.activities,
+        introduction: sections.introduction ?? plan.introduction,
+        presentation: sections.presentation ?? plan.presentation,
+        evaluation: sections.evaluation ?? plan.evaluation,
+        homework: sections.homework ?? plan.homework,
+      };
+      await printDailyPlan(currentPlan, selectedSubject);
     } catch (e) {
       showError(strings.dailyPlan.printError.replace('{error}', String(e)));
     }

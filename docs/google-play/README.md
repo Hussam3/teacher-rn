@@ -3,7 +3,7 @@
 ## Release identity
 
 - Package: `com.teacherbag`
-- Version: `1.0.8` (`versionCode 8`)
+- Version: `1.1.19` (`versionCode 9`)
 - Minimum SDK: 24
 - Compile and target SDK: 36
 - AAB path: `android/app/build/outputs/bundle/release/app-release.aab`
@@ -82,7 +82,6 @@ Before testing Google or Facebook login from the signed AAB:
 
 - `INTERNET`: Supabase, curriculum resources, and optional AI features.
 - `POST_NOTIFICATIONS`: lesson reminder notifications.
-- `RECORD_AUDIO`: optional speech-to-text only when the user starts dictation.
 - `RECEIVE_BOOT_COMPLETED`, `VIBRATE`, `WAKE_LOCK`, and `ACCESS_NETWORK_STATE` are transitive support permissions needed for notifications or downloads.
 
 The Play build removes unused legacy storage, foreground-service, notification-policy, Wi-Fi-state, and exact-alarm permissions. Lesson reminders use inexact `AlarmManager.set` scheduling to avoid the restricted exact-alarm declaration.

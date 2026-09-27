@@ -53,11 +53,12 @@ const STORAGE_KEYS = {
 };
 
 export const BASE_APP_VERSION = APP_VERSION;
-export const BASE_VERSION_CODE = 8;
+export const BASE_VERSION_CODE = 9;
 
 type UpdateManagerModule = {
   documentDir?: string;
   otaEnabled?: boolean;
+  isLicenseAdmin?: boolean;
   confirmUpdate?: () => void;
   restartApp?: () => Promise<boolean>;
 };
@@ -73,6 +74,10 @@ export function isOtaEnabled(): boolean {
   return (
     Platform.OS === 'android' && nativeUpdateManager()?.otaEnabled === true
   );
+}
+
+export function isLicenseAdminApp(): boolean {
+  return nativeUpdateManager()?.isLicenseAdmin === true;
 }
 
 /**
@@ -157,7 +162,9 @@ export async function getCurrentAppVersion(): Promise<{
 }
 
 /** التحقق من وجود تحديث فوري جديد من Supabase */
-export async function checkForAppUpdate(): Promise<CheckUpdateResult> {
+export async function checkForAppUpdate(
+  preferredPlatform?: string,
+): Promise<CheckUpdateResult> {
   const now = new Date().toISOString();
   const current = await getCurrentAppVersion();
   if (!isOtaEnabled()) {
@@ -172,19 +179,46 @@ export async function checkForAppUpdate(): Promise<CheckUpdateResult> {
 
   const platform =
     Platform.OS === 'ios' ? 'ios' : Platform.OS === 'web' ? 'web' : 'android';
+  const targetPlatform =
+    preferredPlatform ||
+    (platform === 'android' && isLicenseAdminApp()
+      ? 'android-admin'
+      : undefined);
 
   try {
-    const { data: updateRow, error } = await supabase
-      .from('app_updates')
-      .select('*')
-      .eq('platform', platform)
-      .eq('is_active', true)
-      .order('version_code', { ascending: false })
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .maybeSingle();
+    let updateRow = null;
 
-    if (error) throw error;
+    if (targetPlatform) {
+      const { data: specificRow, error: specificError } = await supabase
+        .from('app_updates')
+        .select('*')
+        .eq('platform', targetPlatform)
+        .eq('is_active', true)
+        .order('version_code', { ascending: false })
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (!specificError && specificRow) {
+        updateRow = specificRow;
+      }
+    }
+
+    if (!updateRow) {
+      const { data, error } = await supabase
+        .from('app_updates')
+        .select('*')
+        .eq('platform', platform)
+        .eq('is_active', true)
+        .order('version_code', { ascending: false })
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (error) throw error;
+      updateRow = data;
+    }
+
     if (!updateRow) {
       return {
         hasUpdate: false,

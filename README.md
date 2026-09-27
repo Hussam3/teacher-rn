@@ -125,24 +125,78 @@ src/
 ### الذكاء الاصطناعي المشترك
 
 لا تضع مفتاح Gemini في `src/` أو في ملف APK أو بناء الويب: سيتمكن أي مستخدم من
-استخراجه. يستدعي التطبيق `supabase/functions/gemini`، وتحفظ الدالة المفتاح كسراً
-في Supabase وتطلب حساباً مسجلاً للحد من إساءة الاستخدام.
+استخراجه. تستدعي كل أدوات الذكاء الاصطناعي `supabase/functions/gemini` فقط، وتحفظ
+الدالة المفتاح كسراً في Supabase وتفرض حدود الخطة على الخادم.
 
 1. ألغِ أي مفتاح تمّت مشاركته، وأنشئ مفتاح Gemini جديداً من Google AI Studio.
-2. من سطر الأوامر، سجّل الدخول إلى Supabase ثم خزّن المفتاح الجديد محلياً في
-   الأمر التالي، دون إضافته إلى Git أو إلى أي ملف بالمشروع:
+2. سجّل الدخول واربط المشروع ثم طبّق migrations، ومنها
+   `20260912_free_trial_ai_feature_limits.sql` و
+   `20260913_ai_provider_routing_observability.sql`:
    ```bash
    npx supabase login
-   npx supabase secrets set GEMINI_API_KEY="ضع-المفتاح-الجديد-هنا" GEMINI_MODEL="gemini-2.5-flash" --project-ref yqqedfjadgyktiohkuwg
+   npx supabase link --project-ref yqqedfjadgyktiohkuwg
+   npx supabase db push
    ```
-3. انشر الدالة:
+3. خزّن مفتاح Gemini دون إضافته إلى Git أو إلى أي ملف بالمشروع. أضف مفاتيح
+   المزوّدين الآخرين قبل اختيار مساراتهم من مركز التحكم:
    ```bash
-   npx supabase functions deploy gemini --project-ref yqqedfjadgyktiohkuwg
+   npx supabase secrets set GEMINI_API_KEY="ضع-المفتاح-الجديد-هنا" --project-ref yqqedfjadgyktiohkuwg
+   npx supabase secrets set DEEPSEEK_API_KEY="ضع-مفتاح-DeepSeek-هنا" --project-ref yqqedfjadgyktiohkuwg
+   npx supabase secrets set OPENROUTER_API_KEY="ضع-مفتاح-OpenRouter-هنا" --project-ref yqqedfjadgyktiohkuwg
+   npx supabase secrets set NVIDIA_NIM_API_KEY="nvapi-ضع-مفتاح-NVIDIA-هنا" --project-ref yqqedfjadgyktiohkuwg
+     npx supabase functions deploy gemini --use-api --project-ref yqqedfjadgyktiohkuwg
+     npx supabase functions deploy licenses --no-verify-jwt --use-api --project-ref yqqedfjadgyktiohkuwg
+    ```
+
+### تدوير مفاتيح مزوّدي AI من لوحة المالك
+
+تستخدم المرحلة الثانية مساراً منفصلاً عن دالة التراخيص العامة. يبقى مفتاح
+التشفير الجذري في Supabase Secrets، بينما لا يُخزَّن مفتاح Gemini أو DeepSeek
+المدخل من اللوحة إلا مشفراً بـ AES-GCM. لا يمكن عرض المفتاح بعد حفظه.
+
+1. طبّق migration المرحلة الثانية وانشر الدوال:
+
+   ```bash
+   npx supabase db push
+   npx supabase functions deploy provider-keys --use-api --project-ref yqqedfjadgyktiohkuwg
+   npx supabase functions deploy gemini --use-api --project-ref yqqedfjadgyktiohkuwg
+   npx supabase functions deploy licenses --no-verify-jwt --use-api --project-ref yqqedfjadgyktiohkuwg
    ```
 
-الدالة تفرض حالياً 30 طلباً لكل حساب مسجّل في الساعة، ولا تخزّن نصوص الطلبات أو
-الصور. يمكن تغيير النموذج من السر `GEMINI_MODEL` أو الحد من `MAX_REQUESTS_PER_HOUR`
-داخل الدالة.
+2. أنشئ مفتاح تشفير عشوائياً بطول 32 بايت بصيغة Base64URL، ثم خزّنه مرة واحدة
+   فقط. لا تغيّره ما دامت هناك مفاتيح مزودين مدارة من اللوحة:
+
+   ```bash
+   npx supabase secrets set AI_PROVIDER_KEY_ENCRYPTION_KEY="BASE64URL_32_BYTE_SECRET" --project-ref yqqedfjadgyktiohkuwg
+   ```
+
+3. افتح **مركز تحكم AI → تدوير مفاتيح API**، فعّل TOTP لحساب المالك، ثم أدخل
+   المفتاح الجديد. تختبره الدالة قبل الحفظ، وتشترط MFA حديثاً خلال خمس دقائق،
+   وتسجل النتيجة دون تخزين السر أو إرجاعه.
+
+4. تبقى `GEMINI_API_KEY` و`DEEPSEEK_API_KEY` و`OPENROUTER_API_KEY` و
+   `NVIDIA_NIM_API_KEY` في Supabase Secrets كحل احتياطي قبل أول تدوير من اللوحة.
+   بعد تدوير ناجح، ألغِ المفتاح السابق من حساب المزوّد نفسه.
+
+تستخدم التجربة المجانية Flash وFlash-Lite للميزات الثلاث المحددة، بينما تستخدم
+الخطة المفعلة `gemini-2.5-pro` فعلياً. تأكد من تفعيل Billing وتوفر Pro للمفتاح قبل
+النشر. لم يعد السر `GEMINI_MODEL` مستخدماً في دالة Edge.
+
+يوفر **مركز تحكم AI** في لوحة المالك توجيه المزوّد والنموذج، إيقاف المزوّد،
+fallback مدفوع، اختبار اتصال آمن، ومراقبة التوكنات والتكلفة والأخطاء. لا يمكن حفظ
+مسار لمزوّد لا يملك Secret مهيأً، ولا تظهر مفاتيح API في الواجهة. المزوّدون
+المدعومون: Gemini (نص + صور)، DeepSeek (`deepseek-v4-pro`)، OpenRouter
+(نص عبر `openai/gpt-4o-mini` و`anthropic/claude-3.5-haiku` وغيرها)، وNVIDIA NIM
+(نص عبر `meta/llama-3.1-8b-instruct` و`meta/llama-3.3-70b-instruct` وغيرها).
+تحقق من أسماء النماذج والتسعير المتاحين في حساب كل مزوّد قبل اختياره في الإنتاج،
+وراجع أسعار OpenRouter/أرصدة NVIDIA في لوحاتهما لأن التسعير متغير ويبقى مالك
+التسعير داخل `ai_system_config`/صفحة الاشتراكات. طبّق migration أولاً ثم انشر
+دالتي `gemini` و`licenses` قبل تفعيل أي Route لمزوّد جديد.
+
+تحذير تشغيلي: تجربة الضيف مرتبطة حالياً بـ `installationId`. لا تعامل التحقق
+الافتراضي في Gateway وحده كهوية مؤكدة لمعلّم، لأن المفتاح العام للمشروع متاح داخل
+التطبيق. قبل نشر الدالة بـ `--no-verify-jwt` أو التوسع في التجارب العامة، أضف
+مصادقة مستخدم/ضيف مجهول حقيقية أو طبقة منع إساءة استخدام مستقلة.
 
 ### كيف تعمل المزامنة السحابية؟
 
@@ -172,6 +226,26 @@ src/
 - **Supabase**: يتطلب الجدول من `supabase/schema.sql` + تفعيل مزوّد Google أو Facebook + إضافة روابط العودة كما هو موضح أعلاه (بدونها يعمل الوضع المحلي فقط).
 - **الويب**: يعمل Google وFacebook على `localhost:5174` بعد إضافة `http://localhost:5174/auth/callback` إلى قائمة Redirect URLs في Supabase.
 - معرّفات Google Drive للمناهج متاحة حالياً للصف السادس (علمي/أدبي) فقط؛ باقي الصفوف فارغة.
+
+## نشر الويب والتحديثات الفورية
+
+الويب ينشر من جذر المستودع على Vercel: `npm run web:build` (مضبوط في `vercel.json`)
+ويخرج إلى `dist-web/`. بعد كل `push` على `main` يُبنى الموقع وينشر تلقائياً.
+
+آلية التحديث على الويب مكافئة لآلية تطبيق الهاتف (`src/services/otaUpdateService.ts`):
+
+1. بناء Vite يكتب `version.json` (`version` + `buildId` = commit المنشور) ويحقن
+   نفس `buildId` داخل الحزمة باسم `__WEB_BUILD_ID__`.
+2. التطبيق يفحص `version.json` بلا تخزين مؤقت عند الإقلاع، وعند عودة الصفحة،
+   وكل خمس دقائق أثناء بقائها مفتوحة.
+3. إذا اختلف `buildId` المنشور عن المعرّف الذي تعمل عليه الحزمة الحالية، يظهر
+   زر التحديث العائم نفسه (نفس نافذة تطبيق الهاتف).
+4. عند التطبيق: يُلغى تسجيل الـ service workers، وتُحذف كل ذاكرات التخزين المؤقت،
+   ثم تُعاد تحميل الصفحة فيعمل المتصفح على آخر بناء.
+
+`web/public/sw.js` يخدم `index.html` بشبكة أولاً (network-first) ولا يخزّنه مسبقاً،
+واسم ذاكرة التخزين يحمل `buildId` فتحذف أصول النشر السابق تلقائياً؛ لذلك لا يبقى
+المتصفح على نسخة قديمة بعد النشر.
 
 ## الاختبارات
 

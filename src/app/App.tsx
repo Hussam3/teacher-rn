@@ -2,17 +2,17 @@
  * جذر التطبيق — مزوّدات الخدمات والتنقل.
  */
 import React, { useEffect } from 'react';
-import { StatusBar, I18nManager } from 'react-native';
+import { StatusBar, I18nManager, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer, DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider, useTheme } from '../shared/theme/ThemeProvider';
 import { queryClient } from '../shared/lib/queryClient';
-import { showInfo, ToastHost } from '../shared/ui/toast';
+import { ToastHost } from '../shared/ui/toast';
 import { RootNavigator } from './navigation/RootNavigator';
+import { UpdateBanner } from './UpdateBanner';
 import {
-  checkForAppUpdate,
   confirmUpdateInstalled,
   isOtaEnabled,
 } from '../services/otaUpdateService';
@@ -34,7 +34,10 @@ function AppShell() {
   return (
     <NavigationContainer theme={navTheme}>
       <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
-      <RootNavigator />
+      <View style={styles.root}>
+        <RootNavigator />
+        <UpdateBanner />
+      </View>
       <ToastHost />
     </NavigationContainer>
   );
@@ -43,20 +46,8 @@ function AppShell() {
 export function App() {
   useEffect(() => {
     if (!isOtaEnabled()) return;
-
-    let active = true;
+    // فحص التحديثات الفورية ومتابعة تطبيقها يتولاها الزر العائم (UpdateBanner).
     confirmUpdateInstalled();
-    checkForAppUpdate().then(result => {
-      if (active && result.hasUpdate && result.update) {
-        showInfo(
-          `يوجد تحديث فوري متاح (${result.update.versionName}). افتح الإعدادات لتطبيقه.`,
-        );
-      }
-    });
-
-    return () => {
-      active = false;
-    };
   }, []);
 
   return (
@@ -71,3 +62,7 @@ export function App() {
     </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  root: { flex: 1 },
+});

@@ -7,7 +7,6 @@ import com.facebook.react.ReactHost
 import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.common.build.ReactBuildConfig
-import com.wenkesj.voice.VoicePackage
 
 class MainApplication : Application(), ReactApplication {
 
@@ -28,14 +27,6 @@ class MainApplication : Application(), ReactApplication {
           // Packages that cannot be autolinked yet can be added manually here:
           if (BuildConfig.IS_LICENSE_ADMIN && none { it is ClipboardPackage }) {
             add(ClipboardPackage())
-          }
-          if (!BuildConfig.IS_LICENSE_ADMIN) {
-            if (none { it is VoicePackage }) {
-              add(VoicePackage())
-            }
-            if (none { it is SpeechRecognitionPackage }) {
-              add(SpeechRecognitionPackage())
-            }
           }
           if (BuildConfig.ENABLE_OTA && none { it is UpdateManagerPackage }) {
             add(UpdateManagerPackage())

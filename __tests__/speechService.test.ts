@@ -25,10 +25,14 @@ jest.mock('react-native', () => {
   };
 });
 
-jest.mock('@react-native-voice/voice', () => ({
-  __esModule: true,
-  default: {},
-}));
+jest.mock(
+  '@react-native-voice/voice',
+  () => ({
+    __esModule: true,
+    default: {},
+  }),
+  { virtual: true },
+);
 
 import { startDictation, stopDictation } from '../src/services/speechService';
 

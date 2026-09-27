@@ -24,7 +24,11 @@ import {
 import { NOTO_KUFI_BOLD_BASE64, NOTO_KUFI_REGULAR_BASE64 } from '../../services/pdfFonts';
 import { subjectRepo } from '../../data/repositories';
 import { teacherRoleLabel } from '../../shared/utils/teacherRole';
-import { stripBranchPrefix, stripQuestionPrefix } from './examTextParser';
+import {
+  stripBranchPrefix,
+  stripQuestionPrefix,
+  stripSubItemPrefix,
+} from './examTextParser';
 
 /* ------------------------------------------------------------------ */
 /* أدوات مساعدة                                                        */
@@ -470,28 +474,35 @@ function buildCss(
       margin: 0 0 1.5mm;
     }
     .q {
-      margin-bottom: ${settings.questionSpacing}pt;
+      margin-bottom: ${Math.max(settings.questionSpacing, 6)}pt;
       break-inside: avoid;
     }
     .q-head {
       text-align: justify;
       font-weight: bold;
+      clear: both;
     }
     .question-label, .branch-label {
       white-space: nowrap;
+      margin-inline-end: 1.5mm;
+      direction: rtl;
+      unicode-bidi: isolate;
     }
     .question-text, .branch-text, .sub-item {
       unicode-bidi: plaintext;
     }
     .score {
+      float: left;
       color: #b71c1c;
       font-weight: bold;
       white-space: nowrap;
       margin-inline-start: 2mm;
+      direction: rtl;
     }
     .branch {
       text-align: justify;
       margin: 1mm 0 1mm 4mm;
+      clear: both;
     }
     .branch-label {
       font-weight: bold;
@@ -499,6 +510,7 @@ function buildCss(
     .sub-items {
       margin: 0.5mm 7mm 0 0;
       width: 100%;
+      clear: both;
     }
     .sub-item {
       margin: 0.5mm 0;
@@ -655,11 +667,12 @@ function renderQuestion(b: QuestionBlock, questionNumber: number): string {
   const showStem = shouldShowQuestionStem(b) || !branches.length;
   const questionText = stripQuestionPrefix(b.text);
   const hasBranchScores = branches.some(br => ((br.score ?? '').trim() !== ''));
+  const qScoreBadge = b.score && !hasBranchScores ? `<span class="score">(${esc(b.score)} درجة)</span>` : '';
   const head = showStem
     ? `
     <div class="q">
       <div class="q-head">
-        <span class="question-label">س${questionNumber}/</span>${questionText ? `<span class="question-text">${escWithBidi(questionText)}</span>` : ''}${b.score && !hasBranchScores ? `<span class="score">(${esc(b.score)} درجة)</span>` : ''}
+        ${qScoreBadge}<span class="question-label">س${questionNumber}/</span>${questionText ? `<span class="question-text">${escWithBidi(questionText)}</span>` : ''}
       </div>`
     : '<div class="q">';
 
@@ -667,20 +680,25 @@ function renderQuestion(b: QuestionBlock, questionNumber: number): string {
 
   const renderedBranches = branches
     .map(
-      (br, i) => `
+      (br, i) => {
+        const brScoreBadge = br.score
+          ? `<span class="score">(${esc(br.score)} د)</span>`
+          : (i === 0 && !showStem && b.score && !hasBranchScores ? `<span class="score">(${esc(b.score)} درجة)</span>` : '');
+        const branchLabel = showStem
+          ? `${BRANCH_LABELS[i] ?? i + 1}/`
+          : `س${questionNumber}/ ${BRANCH_LABELS[i] ?? i + 1}/`;
+        return `
       <div class="branch">
-        <span class="branch-label">${showStem ? `${BRANCH_LABELS[i] ?? i + 1}/` : `س${questionNumber}/${BRANCH_LABELS[i] ?? i + 1}/`}</span>
-        <span class="branch-text">${escWithBidi(stripBranchPrefix(br.text))}</span>
-        ${i === 0 && !showStem && b.score && !hasBranchScores ? `<span class="score">(${esc(b.score)} درجة)</span>` : ''}
-        ${br.score ? `<span class="score">(${esc(br.score)} د)</span>` : ''}
+        ${brScoreBadge}<span class="branch-label">${branchLabel}</span><span class="branch-text">${escWithBidi(stripBranchPrefix(br.text))}</span>
         ${getBranchSubItems(br).length ? `<div class="sub-items">${getBranchSubItems(br)
           .map(
             (item, itemIndex) =>
-              `<div class="sub-item">${itemIndex + 1}. ${escWithBidi(item.text)}</div>`,
+              `<div class="sub-item">${itemIndex + 1}. ${escWithBidi(stripSubItemPrefix(item.text))}</div>`,
           )
           .join('')}</div>` : ''}
       </div>
-    `,
+    `;
+      },
     )
     .join('');
   return `${head}${renderedBranches}</div>`;

@@ -15,38 +15,37 @@ import { FONT_FAMILY, radius } from '../../shared/theme/tokens';
 import { Button } from '../../shared/ui/Button';
 import { Icon } from '../../shared/ui/Icon';
 import { showError, showSuccess } from '../../shared/ui/toast';
-import {
-  CANONICAL_BASE_SUBJECTS,
-  type CanonicalBaseSubject,
-} from '../../shared/types/aiUsage';
+import { CANONICAL_BASE_SUBJECTS } from '../../shared/types/aiUsage';
 import { useLicenseStore } from './licenseStore';
 
 interface SubjectSelectionDialogProps {
   visible: boolean;
   onClose: () => void;
   onSuccess?: () => void;
+  /** يمنع متابعة التطبيق حتى تُحفظ أول مجموعة مواد. */
+  required?: boolean;
 }
 
 export function SubjectSelectionDialog({
   visible,
   onClose,
   onSuccess,
+  required = false,
 }: SubjectSelectionDialogProps) {
   const { colors } = useTheme();
   const access = useLicenseStore(s => s.access);
   const updateSubjects = useLicenseStore(s => s.updateSubjects);
 
   const maxAllowed = access.maxSubjects || 1;
-  const initialSubjects = access.selectedSubjects || [];
 
   const [selected, setSelected] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (visible) {
-      setSelected(initialSubjects);
+      setSelected(access.selectedSubjects || []);
     }
-  }, [visible, initialSubjects]);
+  }, [visible, access.selectedSubjects]);
 
   const toggleSubject = (subject: string) => {
     if (selected.includes(subject)) {
@@ -83,23 +82,37 @@ export function SubjectSelectionDialog({
       visible={visible}
       transparent
       animationType="fade"
-      onRequestClose={onClose}
+      onRequestClose={required ? () => {} : onClose}
     >
       <View style={styles.overlay}>
         <View style={[styles.dialog, { backgroundColor: colors.surface }]}>
           <View style={styles.header}>
-            <View style={[styles.iconWrap, { backgroundColor: `${colors.primary}18` }]}>
+            <View
+              style={[
+                styles.iconWrap,
+                { backgroundColor: `${colors.primary}18` },
+              ]}
+            >
               <Icon name="book" size={24} color={colors.primary} />
             </View>
             <Text style={[styles.title, { color: colors.textPrimary }]}>
               تحديد المواد المشمولة بالترخيص
             </Text>
             <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-              تسمح باقتك باختيار ({maxAllowed}) {maxAllowed > 1 ? 'مواد أساسية' : 'مادة أساسية'}. تشمل المادة جميع الصفوف والمراحل الدراسية الخاصة بها.
+              {required
+                ? `اختر مادة واحدة على الأقل للبدء. تسمح باقتك باختيار ${maxAllowed} ${
+                    maxAllowed > 1 ? 'مواد أساسية' : 'مادة أساسية'
+                  }. بعد الحفظ يمكنك تغيير الاختيار مرتين فقط في كل شهر.`
+                : `تسمح باقتك باختيار ${maxAllowed} ${
+                    maxAllowed > 1 ? 'مواد أساسية' : 'مادة أساسية'
+                  }. يمكن تغيير الاختيار مرتين فقط في كل شهر.`}
             </Text>
           </View>
 
-          <ScrollView style={styles.list} contentContainerStyle={styles.listContent}>
+          <ScrollView
+            style={styles.list}
+            contentContainerStyle={styles.listContent}
+          >
             <View style={styles.grid}>
               {CANONICAL_BASE_SUBJECTS.map(subj => {
                 const isSelected = selected.includes(subj);
@@ -110,8 +123,12 @@ export function SubjectSelectionDialog({
                     style={[
                       styles.chip,
                       {
-                        backgroundColor: isSelected ? `${colors.primary}20` : colors.background,
-                        borderColor: isSelected ? colors.primary : colors.border,
+                        backgroundColor: isSelected
+                          ? `${colors.primary}20`
+                          : colors.background,
+                        borderColor: isSelected
+                          ? colors.primary
+                          : colors.border,
                       },
                     ]}
                   >
@@ -124,7 +141,9 @@ export function SubjectSelectionDialog({
                       style={[
                         styles.chipText,
                         {
-                          color: isSelected ? colors.primary : colors.textPrimary,
+                          color: isSelected
+                            ? colors.primary
+                            : colors.textPrimary,
                           fontWeight: isSelected ? '700' : '500',
                         },
                       ]}
@@ -138,14 +157,18 @@ export function SubjectSelectionDialog({
           </ScrollView>
 
           <View style={styles.actions}>
+            {!required ? (
+              <Button
+                label="إلغاء"
+                variant="ghost"
+                onPress={onClose}
+                disabled={loading}
+              />
+            ) : null}
             <Button
-              label="إلغاء"
-              variant="ghost"
-              onPress={onClose}
-              disabled={loading}
-            />
-            <Button
-              label={`تثبيت (${selected.length}/${maxAllowed})`}
+              label={`${required ? 'بدء الاستخدام' : 'تثبيت'} (${
+                selected.length
+              }/${maxAllowed})`}
               onPress={handleSave}
               loading={loading}
               disabled={selected.length === 0}

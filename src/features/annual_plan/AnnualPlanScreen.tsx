@@ -18,15 +18,22 @@ import { Button } from '../../shared/ui/Button';
 import { annualPlanRepo, subjectRepo } from '../../data/repositories';
 import type { AnnualPlan } from '../../shared/types/domain';
 import { showSuccess } from '../../shared/ui/toast';
+import { useLicenseStore } from '../license/licenseStore';
 
 export function AnnualPlanScreen() {
   const { colors } = useTheme();
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const access = useLicenseStore(s => s.access);
   const [plans, setPlans] = useState<AnnualPlan[]>([]);
   const [deleteTarget, setDeleteTarget] = useState<AnnualPlan | null>(null);
 
   const reload = useCallback(() => {
-    setPlans(annualPlanRepo.list().sort((a, b) => b.createdAt.localeCompare(a.createdAt)));
+    setPlans(
+      annualPlanRepo
+        .list()
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+    );
   }, []);
 
   useFocusEffect(reload);
@@ -39,10 +46,29 @@ export function AnnualPlanScreen() {
     showSuccess(strings.annualPlan.deleted);
   };
 
+  if (access.kind === 'trial') {
+    return (
+      <AppScreen edges={['top']}>
+        <View style={styles.header}>
+          <Text style={[styles.title, { color: colors.textPrimary }]}>
+            {strings.annualPlan.title}
+          </Text>
+        </View>
+        <EmptyState
+          icon={{ name: 'lock-outline' }}
+          title="الخطة السنوية متاحة في الخطة المدفوعة"
+          hint="تمنحك الخطة المدفوعة إنشاء الخطط السنوية ونتائج ذكاء أعلى جودة للمهام المعقدة."
+        />
+      </AppScreen>
+    );
+  }
+
   return (
     <AppScreen edges={['top']}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: colors.textPrimary }]}>{strings.annualPlan.title}</Text>
+        <Text style={[styles.title, { color: colors.textPrimary }]}>
+          {strings.annualPlan.title}
+        </Text>
       </View>
 
       <FlatList
@@ -58,26 +84,46 @@ export function AnnualPlanScreen() {
         }
         renderItem={({ item }) => {
           const subject = subjectRepo.get(item.subjectId);
-          const academicYear = `${new Date(item.startDate).getFullYear()}-${new Date(item.endDate).getFullYear()}`;
+          const academicYear = `${new Date(
+            item.startDate,
+          ).getFullYear()}-${new Date(item.endDate).getFullYear()}`;
           return (
             <PressableScale
-              onPress={() => navigation.navigate('AnnualPlanEditor', { planId: item.id })}
+              onPress={() =>
+                navigation.navigate('AnnualPlanEditor', { planId: item.id })
+              }
               haptic
               style={styles.cardWrap}
             >
               <View style={[styles.card, { backgroundColor: colors.surface }]}>
-                <View style={[styles.iconBadge, { backgroundColor: `${colors.success}18` }]}>
-                  <Icon name="calendar-month" size={24} color={colors.success} />
+                <View
+                  style={[
+                    styles.iconBadge,
+                    { backgroundColor: `${colors.success}18` },
+                  ]}
+                >
+                  <Icon
+                    name="calendar-month"
+                    size={24}
+                    color={colors.success}
+                  />
                 </View>
                 <View style={{ flex: 1, gap: 4 }}>
-                  <Text style={[styles.topic, { color: colors.textPrimary }]} numberOfLines={1}>
+                  <Text
+                    style={[styles.topic, { color: colors.textPrimary }]}
+                    numberOfLines={1}
+                  >
                     {subject?.name ?? strings.common.unknown}
                   </Text>
                   <Text style={[styles.meta, { color: colors.textSecondary }]}>
                     {item.className} • السنة: {academicYear}
                   </Text>
                 </View>
-                <PressableScale onPress={() => setDeleteTarget(item)} animated={false} style={styles.moreBtn}>
+                <PressableScale
+                  onPress={() => setDeleteTarget(item)}
+                  animated={false}
+                  style={styles.moreBtn}
+                >
                   <Icon name="delete-outline" size={22} color={colors.error} />
                 </PressableScale>
               </View>
@@ -100,8 +146,16 @@ export function AnnualPlanScreen() {
         onClose={() => setDeleteTarget(null)}
         actions={
           <View style={styles.dialogActions}>
-            <Button label={strings.common.cancel} variant="ghost" onPress={() => setDeleteTarget(null)} />
-            <Button label={strings.common.delete} variant="danger" onPress={confirmDelete} />
+            <Button
+              label={strings.common.cancel}
+              variant="ghost"
+              onPress={() => setDeleteTarget(null)}
+            />
+            <Button
+              label={strings.common.delete}
+              variant="danger"
+              onPress={confirmDelete}
+            />
           </View>
         }
       >
@@ -129,7 +183,13 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOffset: { width: 0, height: 1 },
   },
-  iconBadge: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
+  iconBadge: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   topic: { fontFamily: FONT_FAMILY, fontSize: 15, fontWeight: '700' },
   meta: { fontFamily: FONT_FAMILY, fontSize: 12 },
   moreBtn: { padding: 8 },

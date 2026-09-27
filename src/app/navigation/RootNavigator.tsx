@@ -8,6 +8,7 @@ import type { RootStackParamList } from './types';
 import { useAuthStore } from '../../features/auth/authStore';
 import { LoginScreen } from '../../features/auth/LoginScreen';
 import { LicenseScreen } from '../../features/license/LicenseScreen';
+import { SubjectSelectionDialog } from '../../features/license/SubjectSelectionDialog';
 import {
   initLicense,
   useLicenseStore,
@@ -44,6 +45,10 @@ export function RootNavigator() {
   const licenseInitializing = useLicenseStore(s => s.initializing);
   const licenseAccess = useLicenseStore(s => s.access);
   const licenseAllowed = isLicenseAccessAllowed(licenseAccess);
+  const requiresSubjectSelection =
+    licenseAllowed &&
+    user !== null &&
+    (licenseAccess.selectedSubjects?.length ?? 0) === 0;
   const licenseExpiresAt = licenseAccess.expiresAt;
   const licenseRefreshDeadline = getLicenseRefreshDeadline(licenseExpiresAt);
   const { colors } = useTheme();
@@ -127,36 +132,44 @@ export function RootNavigator() {
   }
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {!licenseAllowed ? (
-        <Stack.Screen name="License" component={LicenseScreen} />
-      ) : user ? (
-        <>
-          <Stack.Screen name="Main" component={MainTabs} />
-          <Stack.Screen
-            name="Settings"
-            component={SettingsScreen}
-            options={{
-              headerShown: true,
-              title: 'الإعدادات',
-              headerBackTitle: 'رجوع',
-            }}
-          />
-          <Stack.Screen
-            name="DailyPlanEditor"
-            component={DailyPlanEditor}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="AnnualPlanEditor"
-            component={AnnualPlanEditor}
-            options={{ headerShown: false }}
-          />
-        </>
-      ) : (
-        <Stack.Screen name="Auth" component={LoginScreen} />
-      )}
-    </Stack.Navigator>
+    <>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {!licenseAllowed ? (
+          <Stack.Screen name="License" component={LicenseScreen} />
+        ) : user ? (
+          <>
+            <Stack.Screen name="Main" component={MainTabs} />
+            <Stack.Screen
+              name="Settings"
+              component={SettingsScreen}
+              options={{
+                headerShown: true,
+                title: 'الإعدادات',
+                headerBackTitle: 'رجوع',
+              }}
+            />
+            <Stack.Screen
+              name="DailyPlanEditor"
+              component={DailyPlanEditor}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="AnnualPlanEditor"
+              component={AnnualPlanEditor}
+              options={{ headerShown: false }}
+            />
+          </>
+        ) : (
+          <Stack.Screen name="Auth" component={LoginScreen} />
+        )}
+      </Stack.Navigator>
+
+      <SubjectSelectionDialog
+        visible={requiresSubjectSelection}
+        onClose={() => {}}
+        required
+      />
+    </>
   );
 }
 

@@ -10,7 +10,7 @@ function processDir(dir) {
       if (entry.name !== 'node_modules' && entry.name !== '.git' && entry.name !== 'build') {
         processDir(fullPath);
       }
-    } else if (entry.name === 'build.gradle') {
+    } else if (entry.name === 'build.gradle' || entry.name.endsWith('+autolinking.gradle')) {
       patchBuildGradle(fullPath);
     }
   }
@@ -61,58 +61,23 @@ function patchBuildGradle(filePath) {
     changed = true;
   }
 
+  if (!content.includes('kotlin.srcDirs +=')) {
+    const withKotlinSourceDirs = content.replace(
+      /([ \t]*)java\.srcDirs \+= (\[[\s\S]*?\])/g,
+      (block, indent, dirs) => {
+        if (!/newarch|oldarch|kotlin/i.test(dirs)) return block;
+        return `${block}\n${indent}kotlin.srcDirs += ${dirs}`;
+      },
+    );
+    if (withKotlinSourceDirs !== content) {
+      content = withKotlinSourceDirs;
+      changed = true;
+    }
+  }
+
   if (changed) {
     fs.writeFileSync(filePath, content, 'utf8');
     console.log('✅ Patched:', filePath);
-  }
-}
-
-function patchVoiceModule() {
-  const distFile = path.join(__dirname, '../node_modules/@react-native-voice/voice/dist/index.js');
-  if (fs.existsSync(distFile)) {
-    let content = fs.readFileSync(distFile, 'utf8');
-    if (!content.includes('NativeModules.RCTVoice')) {
-      content = content.replace(
-        /const Voice = react_native_1\.NativeModules\.Voice;/g,
-        'const Voice = react_native_1.NativeModules.Voice || react_native_1.NativeModules.RCTVoice;'
-      );
-      content = content.replace(
-        /const voiceEmitter = react_native_1\.Platform\.OS !== ['"]web['"] \? new react_native_1\.NativeEventEmitter\(Voice\) : null;/g,
-        'const voiceEmitter = react_native_1.Platform.OS !== "web" && Voice ? new react_native_1.NativeEventEmitter(Voice) : null;'
-      );
-      fs.writeFileSync(distFile, content, 'utf8');
-      console.log('✅ Patched @react-native-voice/voice dist/index.js');
-    }
-  }
-
-  const srcFile = path.join(__dirname, '../node_modules/@react-native-voice/voice/src/index.ts');
-  if (fs.existsSync(srcFile)) {
-    let content = fs.readFileSync(srcFile, 'utf8');
-    if (!content.includes('NativeModules.RCTVoice')) {
-      content = content.replace(
-        /const Voice = NativeModules\.Voice as VoiceModule;/g,
-        'const Voice = (NativeModules.Voice || NativeModules.RCTVoice) as VoiceModule;'
-      );
-      content = content.replace(
-        /const voiceEmitter =\s*Platform\.OS !== ['"]web['"] \? new NativeEventEmitter\(Voice\) : null;/g,
-        'const voiceEmitter = Platform.OS !== "web" && Voice ? new NativeEventEmitter(Voice) : null;'
-      );
-      fs.writeFileSync(srcFile, content, 'utf8');
-      console.log('✅ Patched @react-native-voice/voice src/index.ts');
-    }
-  }
-
-  const javaFile = path.join(__dirname, '../node_modules/@react-native-voice/voice/android/src/main/java/com/wenkesj/voice/VoiceModule.java');
-  if (fs.existsSync(javaFile)) {
-    let content = fs.readFileSync(javaFile, 'utf8');
-    if (!content.includes('@ReactModule')) {
-      content = content.replace(
-        'public class VoiceModule extends ReactContextBaseJavaModule implements RecognitionListener {',
-        'import com.facebook.react.module.annotations.ReactModule;\n\n@ReactModule(name = "RCTVoice")\npublic class VoiceModule extends ReactContextBaseJavaModule implements RecognitionListener {'
-      );
-      fs.writeFileSync(javaFile, content, 'utf8');
-      console.log('✅ Patched VoiceModule.java with @ReactModule annotation');
-    }
   }
 }
 
@@ -140,8 +105,52 @@ function patchBlobUtilDownload() {
   console.log('✅ Patched react-native-blob-util Android file download response');
 }
 
+function patchPrintAndroidSdk() {
+  const gradleFile = path.join(
+    __dirname,
+    '../node_modules/react-native-print/android/build.gradle',
+  );
+  if (!fs.existsSync(gradleFile)) return;
+
+  const original = fs.readFileSync(gradleFile, 'utf8');
+  const content = original
+    .replace(/buildToolsVersion\s*=\s*["']31\.0\.0["']/, 'buildToolsVersion = "36.0.0"')
+    .replace(/compileSdkVersion\s*=\s*31\b/, 'compileSdkVersion = 36');
+
+  if (content !== original) {
+    fs.writeFileSync(gradleFile, content, 'utf8');
+    console.log('✅ Patched react-native-print Android SDK versions');
+  }
+}
+
+function patchMmkvPrefabOrdering() {
+  const gradleFile = path.join(
+    __dirname,
+    '../node_modules/react-native-mmkv/android/build.gradle',
+  );
+  if (!fs.existsSync(gradleFile)) return;
+
+  const original = fs.readFileSync(gradleFile, 'utf8');
+  const marker = 'task.dependsOn(":react-native-nitro-modules:prefab${variantName}Package")';
+  if (original.includes(marker)) return;
+
+  const dependencyBlock = [
+    '',
+    'tasks.configureEach { task ->',
+    '  if (task.name.startsWith("configureCMake")) {',
+    '    def variantName = task.name.contains("Debug") ? "Debug" : "Release"',
+    `    ${marker}`,
+    '  }',
+    '}',
+    '',
+  ].join('\n');
+  fs.writeFileSync(gradleFile, `${original.trimEnd()}\n${dependencyBlock}`, 'utf8');
+  console.log('✅ Patched react-native-mmkv Prefab task ordering');
+}
+
 const nodeModulesDir = path.join(__dirname, '../node_modules');
 processDir(nodeModulesDir);
-patchVoiceModule();
 patchBlobUtilDownload();
+patchPrintAndroidSdk();
+patchMmkvPrefabOrdering();
 console.log('Finished scanning and patching node_modules.');

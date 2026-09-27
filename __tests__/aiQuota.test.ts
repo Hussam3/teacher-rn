@@ -18,10 +18,14 @@ jest.mock('react-native-mmkv', () => ({
 }));
 
 import { aiQuotaService } from '../src/services/aiQuotaService';
+import { aiUsageManager } from '../src/services/aiUsageManager';
 
 describe('خدمة كوتة وتوزيع الذكاء الاصطناعي', () => {
   beforeEach(async () => {
     // تصفير المفتاح الشخصي للبدء بالحالة الافتراضية
+    mockStorage.clear();
+    (aiUsageManager as any).memorySummary = null;
+    (aiUsageManager as any).isLoaded = false;
     await aiQuotaService.setPersonalApiKey(null);
   });
 
@@ -42,7 +46,9 @@ describe('خدمة كوتة وتوزيع الذكاء الاصطناعي', () =>
 
     const updated = await aiQuotaService.getQuotaStatus();
     expect(updated.usedToday).toBe(initial.usedToday + 1);
-    expect(updated.estimatedTokensUsed).toBe(initial.estimatedTokensUsed + 2500);
+    expect(updated.estimatedTokensUsed).toBe(
+      initial.estimatedTokensUsed + 2500,
+    );
   });
 
   it('تدعم المفتاح الشخصي وتمنح استخداماً غير محدود (isUnlimited = true)', async () => {

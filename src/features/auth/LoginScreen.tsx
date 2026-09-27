@@ -12,6 +12,7 @@ import { strings } from '../../shared/i18n/ar';
 import { Button } from '../../shared/ui/Button';
 import { PressableScale } from '../../shared/ui/PressableScale';
 import { Icon } from '../../shared/ui/Icon';
+import { ContactLinks } from '../../shared/ui/ContactLinks';
 import { useAuthStore } from './authStore';
 import { showError, showSuccess } from '../../shared/ui/toast';
 import { AppScreen } from '../../shared/ui/AppScreen';
@@ -123,6 +124,8 @@ export function LoginScreen() {
         <Text style={[styles.footer, { color: colors.textSecondary }]}>
           {strings.auth.footer}
         </Text>
+
+        <ContactLinks style={styles.contact} />
       </View>
     </AppScreen>
   );
@@ -224,5 +227,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
     marginTop: 28,
+  },
+  contact: {
+    marginTop: 16,
   },
 });

@@ -62,6 +62,7 @@ h1 { font-size: 20pt; text-align: center; margin: 0 0 12pt; }
 table { width: 100%; border-collapse: collapse; }
 th, td { border: 1px solid #bbb; padding: 6pt; text-align: right; font-size: 9pt; }
 th { background: #f0f4f7; font-weight: bold; }
+.annual-plan-table tr { break-inside: avoid; page-break-inside: avoid; }
 .section { margin-top: 12pt; }
 .section h2 { font-size: 13pt; color: #1A81B0; border-right: 4px solid #24A1DE; padding-right: 8pt; margin: 0 0 6pt; }
 .info-row { display: flex; gap: 10pt; margin-bottom: 6pt; }
@@ -74,14 +75,27 @@ th { background: #f0f4f7; font-weight: bold; }
 </html>`;
 }
 
+/** تعقيم اسم ملف الـ PDF لمنع أخطاء نظام التشغيل ورموز المسارات المرفوضة مثل / و \ */
+export function sanitizePdfFileName(fileName: string): string {
+  return (
+    fileName
+      .replace(/[<>:"/\\|?*\u0000-\u001F]/g, '-')
+      .replace(/\s+/g, ' ')
+      .replace(/-+/g, '-')
+      .replace(/^[.\s-]+|[.\s-]+$/g, '')
+      .slice(0, 80) || 'document'
+  );
+}
+
 async function convert(
   html: string,
   fileName: string,
   options: PdfPageOptions = {},
 ): Promise<string> {
+  const safeFileName = sanitizePdfFileName(fileName);
   const res = await generatePDF({
     html,
-    fileName,
+    fileName: safeFileName,
     directory: 'Documents',
     width: options.landscape ? A4_HEIGHT_POINTS : A4_WIDTH_POINTS,
     height: options.landscape ? A4_WIDTH_POINTS : A4_HEIGHT_POINTS,
@@ -178,7 +192,7 @@ export function buildAnnualPlanHtml(plan: AnnualPlan, subject?: Subject): string
 ${plan.generalObjectives ? `<div class="section"><h2>الأهداف العامة</h2>${multiline(plan.generalObjectives)}</div>` : ''}
 <div class="section">
   <h2>توزيع المنهج على الأشهر</h2>
-  <table>
+  <table class="annual-plan-table">
     <thead><tr>
       <th>الشهر (من - إلى)</th><th>عنوان الفصل</th><th>المفردات</th><th>الحصص</th><th>الأنشطة والوسائل</th>
     </tr></thead>
@@ -314,7 +328,8 @@ export function buildStudentReportHtml(
 /* ------------------------------- واجهة التوليد ------------------------------- */
 
 export async function generateDailyPlanPdf(plan: DailyPlan, subject?: Subject): Promise<string> {
-  return convert(buildDailyPlanHtml(plan, subject), `DailyPlan_${formatDate(plan.date)}`);
+  const safeDate = (plan.date || '').slice(0, 10).replace(/[/\\:]/g, '-') || 'today';
+  return convert(buildDailyPlanHtml(plan, subject), `DailyPlan_${safeDate}`);
 }
 
 export async function generateAnnualPlanPdf(plan: AnnualPlan, subject?: Subject): Promise<string> {

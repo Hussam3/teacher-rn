@@ -16,6 +16,12 @@ export const AI_FEATURE_TYPES = [
 
 export type FeatureType = (typeof AI_FEATURE_TYPES)[number];
 
+export type AIProviderId =
+  | 'gemini'
+  | 'deepseek'
+  | 'openrouter'
+  | 'nvidia_nim';
+
 export const FEATURE_TYPE_LABELS: Record<FeatureType, string> = {
   daily_plan: 'خطة يومية',
   annual_plan: 'خطة سنوية',
@@ -99,7 +105,31 @@ export interface AIPlan {
   dailyHardLimit: number;
   monthlyHardLimit: number;
   allowedFeatures: FeatureType[];
+  featureDailyLimits?: Partial<Record<FeatureType, number>>;
 }
+
+export type AIErrorCode =
+  | 'trial_expired'
+  | 'trial_usage_limit'
+  | 'trial_daily_limit'
+  | 'trial_daily_plan_limit'
+  | 'trial_proofread_limit'
+  | 'trial_formatting_limit'
+  | 'trial_feature_not_allowed'
+  | 'trial_feature_limit'
+  | 'daily_hard_limit'
+  | 'monthly_hard_limit'
+  | 'subject_not_allowed'
+  | 'subject_cooldown_active'
+  | 'feature_not_allowed'
+  | 'concurrency_in_flight'
+  | 'rate_limit_burst'
+  | 'rate_limit_hourly'
+  | 'license_inactive'
+  | 'license_expired'
+  | 'max_subjects_exceeded'
+  | 'provider_busy'
+  | 'provider_error';
 
 export interface AIUsageRecord {
   id?: number;
@@ -111,15 +141,22 @@ export interface AIUsageRecord {
   featureType: FeatureType;
   subjectId?: string | null;
   subjectName?: string | null;
+  providerId?: AIProviderId;
   modelId: string;
   inputTokens: number;
   outputTokens: number;
   totalTokens: number;
   estimatedCost: number;
-  status: 'success' | 'failed' | 'cancelled';
+  providerCost?: number;
+  estimatedTokens?: number;
+  status: 'processing' | 'success' | 'failed' | 'cancelled';
   errorMessage?: string | null;
+  failureReason?: string | null;
+  providerErrorType?: string | null;
   pricingVersion?: string | null;
   createdAt: string;
+  completedAt?: string | null;
+  latencyMs?: number | null;
 }
 
 export interface FriendlyQuotaStatus {
@@ -136,6 +173,15 @@ export interface FriendlyQuotaStatus {
   reasonIfBlocked?: string;
   hasPersonalKey: boolean;
   daysRemaining?: number;
+  trialFeatureUsage?: TrialFeatureUsage[];
+}
+
+export interface TrialFeatureUsage {
+  featureType: 'daily_plan' | 'question_improvement' | 'question_formatting';
+  label: string;
+  used: number;
+  limit: number;
+  remaining: number;
 }
 
 export interface FeatureMetrics {
@@ -164,4 +210,3 @@ export interface AIConsumptionOverview {
   todayCost: number;
   thisMonthCost: number;
 }
-

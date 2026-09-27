@@ -48,6 +48,7 @@ import { printPdf } from '../../services/printService';
 import { getAIService } from '../../services/aiService';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { StudentEditor } from './StudentEditor';
+import { useLicenseStore } from '../license/licenseStore';
 
 const NAME_COL_WIDTH = 120;
 const COL_WIDTH = 64;
@@ -65,6 +66,7 @@ const SORT_LABELS: Record<SortMode, string> = {
 export function GradebookScreen() {
   const { colors } = useTheme();
   const subjects = useScheduleStore(s => s.subjects);
+  const isTrial = useLicenseStore(s => s.access.kind === 'trial');
 
   const [subjectId, setSubjectId] = useState<string | null>(null);
   const [gradebook, setGradebook] = useState<GradeBook | null>(null);
@@ -903,7 +905,6 @@ export function GradebookScreen() {
           onSaved={updated => {
             gradebookRepo.save(updated);
             setGradebook(updated);
-            setColumnEntry(null);
           }}
         />
       ) : null}
@@ -962,12 +963,14 @@ export function GradebookScreen() {
             setImportOpen(true);
           }}
         />
-        <MenuRow
-          icon="add-photo-alternate"
-          label={strings.gradebook.aiReadNames}
-          subtitle={strings.gradebook.aiReadNamesHint}
-          onPress={startImageFlow}
-        />
+        {!isTrial ? (
+          <MenuRow
+            icon="add-photo-alternate"
+            label={strings.gradebook.aiReadNames}
+            subtitle={strings.gradebook.aiReadNamesHint}
+            onPress={startImageFlow}
+          />
+        ) : null}
       </Sheet>
 
       {/* حوار الفرز */}
@@ -1530,9 +1533,9 @@ function ColumnGradeEntryDialog({
 }: ColumnGradeEntryDialogProps) {
   const { colors } = useTheme();
   const [values, setValues] = useState<Record<string, string>>({});
-  const inputRefs = useRef<Array<React.ElementRef<typeof TextInput> | null>>(
-    [],
-  );
+  const [orderedStudents, setOrderedStudents] = useState<Student[]>(students);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const inputRef = useRef<React.ElementRef<typeof TextInput>>(null);
 
   React.useEffect(() => {
     const initial: Record<string, string> = {};
@@ -1540,39 +1543,46 @@ function ColumnGradeEntryDialog({
       const score = student.grades[column.id];
       initial[student.id] = score == null ? '' : String(score);
     }
-    inputRefs.current = [];
     setValues(initial);
-  }, [column.id, gradebook.id, students]);
+    setOrderedStudents(students);
+    setCurrentIndex(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [column.id, gradebook.id]);
 
-  const save = () => {
-    const nextValues: Record<string, number | null> = {};
-    for (const student of students) {
-      const raw = (values[student.id] ?? '').trim();
-      if (raw === '') {
-        nextValues[student.id] = null;
-        continue;
-      }
-      const value = Number(raw);
-      if (Number.isNaN(value) || value < 0 || value > column.maxScore) {
+  const currentStudent = orderedStudents[currentIndex];
+  const isLast = currentIndex === orderedStudents.length - 1;
+
+  const saveCurrent = () => {
+    if (!currentStudent) return;
+    const raw = (values[currentStudent.id] ?? '').trim();
+    let parsed: number | null = null;
+    if (raw !== '') {
+      parsed = Number(raw);
+      if (Number.isNaN(parsed) || parsed < 0 || parsed > column.maxScore) {
         showError(
           strings.gradebook.gradeInvalid.replace(
             '{max}',
             String(column.maxScore),
           ),
         );
+        inputRef.current?.focus();
         return;
       }
-      nextValues[student.id] = value;
     }
-
     const nextStudents = gradebook.students.map(student => {
+      if (student.id !== currentStudent.id) return student;
       const grades = { ...student.grades };
-      const value = nextValues[student.id];
-      if (value == null) delete grades[column.id];
-      else grades[column.id] = value;
+      if (parsed == null) delete grades[column.id];
+      else grades[column.id] = parsed;
       return { ...student, grades };
     });
     onSaved({ ...gradebook, students: nextStudents });
+    if (isLast) {
+      onClose();
+    } else {
+      setCurrentIndex(i => i + 1);
+      requestAnimationFrame(() => inputRef.current?.focus());
+    }
   };
 
   return (
@@ -1592,37 +1602,52 @@ function ColumnGradeEntryDialog({
             variant="ghost"
             onPress={onClose}
           />
-          <Button label={strings.gradebook.saveColumnGrades} onPress={save} />
+          <Button
+            label={
+              isLast
+                ? strings.gradebook.saveAndFinish
+                : strings.gradebook.saveAndNext
+            }
+            onPress={saveCurrent}
+          />
         </View>
       }
     >
-      <Text style={[styles.columnEntryHint, { color: colors.textSecondary }]}>
-        {strings.gradebook.columnEntryHint} ({strings.gradebook.maxScore}:{' '}
-        {column.maxScore})
-      </Text>
-      {students.map((student, index) => (
-        <View
-          key={student.id}
-          style={[styles.columnEntryRow, { borderBottomColor: colors.divider }]}
-        >
+      {orderedStudents.length === 0 ? (
+        <EmptyState
+          icon={{ name: 'leaderboard' }}
+          title={strings.gradebook.noStudents}
+        />
+      ) : currentStudent ? (
+        <View key={currentStudent.id}>
           <Text
-            style={[styles.columnEntryName, { color: colors.textPrimary }]}
-            numberOfLines={1}
+            style={[styles.columnEntryCounter, { color: colors.textSecondary }]}
           >
-            {index + 1}. {student.name}
+            {strings.gradebook.studentProgress
+              .replace('{current}', String(currentIndex + 1))
+              .replace('{total}', String(orderedStudents.length))}
+            {' '}
+            — {strings.gradebook.maxScore}: {column.maxScore}
+          </Text>
+          <Text
+            style={[
+              styles.columnEntryStudentName,
+              { color: colors.textPrimary },
+            ]}
+            numberOfLines={2}
+          >
+            {currentStudent.name}
           </Text>
           <TextInput
-            ref={input => {
-              inputRefs.current[index] = input;
-            }}
-            value={values[student.id] ?? ''}
-            onChangeText={value =>
-              setValues(previous => ({ ...previous, [student.id]: value }))
+            ref={inputRef}
+            value={values[currentStudent.id] ?? ''}
+            onChangeText={t =>
+              setValues(prev => ({ ...prev, [currentStudent.id]: t }))
             }
             keyboardType="number-pad"
-            returnKeyType={index === students.length - 1 ? 'done' : 'next'}
-            onSubmitEditing={() => inputRefs.current[index + 1]?.focus()}
-            autoFocus={index === 0}
+            returnKeyType={isLast ? 'done' : 'next'}
+            onSubmitEditing={saveCurrent}
+            autoFocus
             selectTextOnFocus
             style={[
               styles.columnEntryInput,
@@ -1634,7 +1659,7 @@ function ColumnGradeEntryDialog({
             ]}
           />
         </View>
-      ))}
+      ) : null}
     </Dialog>
   );
 }
@@ -1749,28 +1774,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   reviewInput: { flex: 1 },
-  columnEntryHint: {
+  columnEntryCounter: {
     fontFamily: FONT_FAMILY,
     fontSize: 12,
-    lineHeight: 20,
     marginBottom: 8,
+    textAlign: 'center',
   },
-  columnEntryRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    minHeight: 50,
-    borderBottomWidth: 1,
+  columnEntryStudentName: {
+    fontFamily: FONT_FAMILY,
+    fontSize: 20,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 16,
   },
-  columnEntryName: { flex: 1, fontFamily: FONT_FAMILY, fontSize: 14 },
   columnEntryInput: {
-    width: 82,
-    height: 38,
+    width: 120,
+    height: 56,
+    alignSelf: 'center',
     borderWidth: 1,
-    borderRadius: radius.sm,
+    borderRadius: radius.md,
     paddingHorizontal: 8,
     fontFamily: FONT_FAMILY,
-    fontSize: 16,
+    fontSize: 22,
+    fontWeight: '700',
     textAlign: 'center',
   },
   nameFooterCell: {

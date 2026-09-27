@@ -7,7 +7,7 @@ export const strings = {
   app: {
     name: 'حقيبة المدرس العراقي',
     shortName: 'حقيبة المدرس',
-    version: 'الإصدار 1.0.8',
+    version: 'الإصدار 1.1.19',
     tagline: 'مساعد رقمي متكامل للمدرس العراقي',
     description:
       'يشمل إدارة المناهج والخطط اليومية والسنوية وجدول الحصص وسجل الدرجات',
@@ -94,6 +94,42 @@ export const strings = {
     footer: 'يمكنك تجربة التطبيق مجانًا قبل التفعيل.',
     activationUnavailable:
       'تعذر التحقق من الرمز مؤقتًا. احتفظنا بما كتبته، وتحقق من اتصالك ثم أعد المحاولة.',
+  },
+
+  contact: {
+    title: 'تواصل معنا',
+    telegram: 'تليغرام',
+    whatsapp: 'واتساب',
+    infoLabel: 'معلومات التواصل',
+    openError: 'تعذر فتح التطبيق المطلوب، تأكد من الاتصال بالإنترنت.',
+  },
+
+  update: {
+    available: 'يوجد تحديث جديد',
+    live: 'التحديثات الفورية (Live OTA Updates)',
+    liveSubtitle:
+      'تصلك التحديثات الفورية وإصلاحات المحرر مباشرة عبر السحابة',
+    liveWeb: 'تحديثات الويب الفورية',
+    liveWebSubtitle:
+      'عند نشر نسخة جديدة على الويب يُحمل التطبيق آخر إصدار تلقائياً',
+    check: 'فحص التحديثات',
+    dialogTitle: 'تحديث فوري متوفر',
+    currentVersion: 'الإصدار الحالي: {version}',
+    newVersion: 'الإصدار الجديد: {version}',
+    releaseNotes: 'ملاحظات الإصدار',
+    applyNow: 'تطبيق التحديث الآن',
+    downloading: 'جارٍ التنزيل {percent}٪',
+    reloading: 'جارٍ تحميل أحدث نسخة الآن…',
+    checkFailed: 'تعذر التحقق من التحديثات الفورية حالياً',
+    upToDate: 'تطبيقك يعمل بأحدث إصدار فوري',
+    foundToast: 'يوجد تحديث فوري متاح: الإصدار {version}',
+    applied: 'تم تطبيق التحديث {version} بنجاح!',
+    restartScheduled:
+      'تم تثبيت التحديث. إن لم يُعد التطبيق تشغيل نفسه خلال ثوانٍ، أغلقه وافتحه يدويًا.',
+    restartManual: 'تم تثبيت التحديث. أغلق التطبيق وافتحه يدويًا لتطبيقه.',
+    applyError: 'تعذر تطبيق التحديث: {error}',
+    applyFailed: 'تعذر تطبيق التحديث',
+    unexpectedError: 'خطأ غير متوقع',
   },
 
   schedule: {
@@ -289,6 +325,10 @@ export const strings = {
     columnEntryHint: 'اكتب الدرجة ثم اضغط إدخال للانتقال إلى الطالب التالي.',
     columnSettings: 'إعدادات العمود',
     saveColumnGrades: 'حفظ الدرجات',
+    saveAndNext: 'حفظ والانتقال إلى التالي',
+    saveAndFinish: 'حفظ وإنهاء',
+    studentProgress: 'الطالب {current} من {total}',
+    noStudents: 'لا يوجد طلاب في هذا السجل',
   },
 
   library: {
@@ -322,7 +362,6 @@ export const strings = {
     openDraft: 'فتح',
     preview: 'معاينة',
     backToEdit: 'العودة للتحرير',
-    voice: 'كتابة بالصوت',
     aiFormat: 'تنسيق بالذكاء الاصطناعي',
     saveDraft: 'حفظ مسودة',
     drafts: 'المسودات',
@@ -491,6 +530,7 @@ export const strings = {
     resetFinal: 'تأكد: جميع بياناتك ستُحذف بشكل نهائي. هل تريد المتابعة؟',
     resetFinalLabel: 'نعم، احذف كل شيء',
     storage: 'مساحة التخزين',
+    contact: 'تواصل معنا',
   },
 
   sync: {

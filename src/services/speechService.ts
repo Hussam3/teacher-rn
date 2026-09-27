@@ -9,7 +9,7 @@
  */
 import { DeviceEventEmitter, NativeModules, Platform } from 'react-native';
 import * as RN from 'react-native';
-import Voice from '@react-native-voice/voice';
+import Voice from '../web/shims/voice';
 
 export type DictationStatus = 'listening' | 'processing' | 'restarting' | 'idle';
 
