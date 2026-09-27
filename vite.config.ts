@@ -91,7 +91,7 @@ export default defineConfig({
       'react-native-html-to-pdf': shim('htmlToPdf.ts'),
       'react-native-webview': shim('webview.tsx'),
       'react-native-vector-icons/MaterialIcons': shim('MaterialIcons.tsx'),
-      'react-native-vector-icons/MaterialCommunityIcons': shim('MaterialIcons.tsx'),
+      'react-native-vector-icons/MaterialCommunityIcons': shim('MaterialCommunityIcons.tsx'),
       '@react-native/assets-registry/registry': shim('assetRegistry.ts'),
     },
   },

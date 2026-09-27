@@ -52,9 +52,10 @@ export function MainTabs() {
           tabBarInactiveTintColor: colors.textSecondary,
           tabBarActiveBackgroundColor: `${colors.primary}14`,
           tabBarItemStyle: {
-            borderRadius: radius.lg,
-            marginHorizontal: 3,
-            marginVertical: 4,
+            borderRadius: radius.md,
+            marginHorizontal: 1,
+            marginVertical: 3,
+            paddingHorizontal: 0,
             height: 52,
           },
           tabBarStyle: {
@@ -65,22 +66,23 @@ export function MainTabs() {
             shadowRadius: 8,
             shadowOffset: { width: 0, height: -2 },
             elevation: 10,
-            height: 62 + bottomInset,
-            paddingTop: 4,
-            paddingBottom: Math.max(bottomInset, 8),
+            height: 60 + bottomInset,
+            paddingTop: 3,
+            paddingBottom: Math.max(bottomInset, 6),
+            paddingHorizontal: 2,
           },
           tabBarLabelStyle: {
             fontFamily: FONT_FAMILY,
-            fontSize: 11,
+            fontSize: 10,
             fontWeight: '700',
           },
           tabBarHideOnKeyboard: true,
           // eslint-disable-next-line react/no-unstable-nested-components -- واجهة react-navigation الرسمية
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({ focused, color }) => (
             <Icon
               name={focused ? pair.active : pair.inactive}
               family="community"
-              size={size}
+              size={22}
               color={color}
             />
           ),

@@ -64,7 +64,7 @@ export const strings = {
     gradebookShort: 'الدرجات',
     editorShort: 'المحرر',
     libraryShort: 'المكتبة',
-    settingsShort: 'الإعدادات',
+    settingsShort: 'إعدادات',
   },
 
   auth: {

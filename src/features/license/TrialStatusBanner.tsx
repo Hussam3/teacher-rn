@@ -54,6 +54,7 @@ export function TrialStatusBanner({ showContact = true }: { showContact?: boolea
       <View style={styles.headerRow}>
         <Icon
           name={isNearLimit ? 'alert-circle-outline' : 'timer-outline'}
+          family="community"
           size={18}
           color={bannerColor}
         />
@@ -126,8 +127,11 @@ const styles = StyleSheet.create({
   },
   quotaRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
   quotaItem: {
+    flexGrow: 1,
     borderRadius: radius.sm,
     borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 8,
     paddingVertical: 5,
   },

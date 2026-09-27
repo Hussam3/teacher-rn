@@ -35,6 +35,7 @@ import { useScheduleStore } from './scheduleStore';
 import { CellEditDialog } from './CellEditDialog';
 import { haptics } from '../../shared/lib/haptics';
 import { TrialStatusBanner } from '../license/TrialStatusBanner';
+import { PwaInstallBanner } from '../../shared/ui/PwaInstallBanner';
 
 export function ScheduleScreen() {
   const { colors } = useTheme();
@@ -123,6 +124,7 @@ export function ScheduleScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
+        <PwaInstallBanner />
         <TrialStatusBanner />
         <LessonStrip
           title={strings.schedule.todaysLessons}
@@ -428,13 +430,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingVertical: 10,
     borderBottomWidth: 1,
   },
   headerTitle: {
     fontFamily: FONT_FAMILY,
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 18,
+    fontWeight: '800',
   },
   content: {
     paddingBottom: 32,
@@ -499,14 +501,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   todaySection: {
-    marginBottom: 12,
+    marginBottom: 8,
   },
   toggleRow: {
     paddingHorizontal: 16,
-    marginBottom: 12,
+    marginBottom: 10,
   },
   toggleBtn: {
-    height: 46,
+    height: 44,
   },
   emptyPill: {
     flexDirection: 'row',
@@ -514,20 +516,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 8,
     marginHorizontal: 16,
-    paddingVertical: 14,
+    paddingVertical: 9,
     borderRadius: radius.md,
     borderWidth: 1,
   },
   emptyText: {
     fontFamily: FONT_FAMILY,
-    fontSize: 13,
+    fontSize: 12,
   },
   todayTitle: {
     fontFamily: FONT_FAMILY,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '700',
     paddingHorizontal: 16,
-    marginBottom: 8,
+    marginBottom: 6,
   },
   todayCard: {
     width: 160,

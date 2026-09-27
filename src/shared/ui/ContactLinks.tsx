@@ -132,7 +132,7 @@ export function ContactLinks({
         <ContactChip
           backgroundColor={`${TELEGRAM_COLOR}14`}
           borderColor={`${TELEGRAM_COLOR}3D`}
-          label={`${strings.contact.infoLabel}: ${CONTACT.TELEGRAM_DISPLAY}`}
+          label={`${strings.contact.telegram}: @Masar02`}
           logo={<TelegramLogo size={13} color={TELEGRAM_COLOR} />}
           onPress={telegram}
         />
@@ -193,18 +193,21 @@ const styles = StyleSheet.create({
   compactRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 6,
+    gap: 8,
   },
   chip: {
+    flex: 1,
+    minWidth: 135,
     borderRadius: radius.sm,
     borderWidth: 1,
-    paddingHorizontal: 8,
-    paddingVertical: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
   },
   chipContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 5,
+    justifyContent: 'center',
+    gap: 6,
   },
   chipText: {
     fontFamily: FONT_FAMILY,

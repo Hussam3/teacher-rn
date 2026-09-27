@@ -2,12 +2,14 @@
  * شاشة الإعدادات — المظهر والمفاتيح والحساب والبيانات وحول.
  */
 import React, { useEffect, useState } from 'react';
-import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../app/navigation/types';
 import { useTheme } from '../../shared/theme/ThemeProvider';
 import { FONT_FAMILY } from '../../shared/theme/tokens';
+import { usePwaInstall } from '../../shared/hooks/usePwaInstall';
+import { IosInstallGuideSheet } from '../../shared/ui/PwaInstallBanner';
 import { strings } from '../../shared/i18n/ar';
 import { AppScreen } from '../../shared/ui/AppScreen';
 import { Card } from '../../shared/ui/Card';
@@ -79,6 +81,13 @@ export function SettingsScreen() {
     check: checkForUpdate,
     apply: applyUpdate,
   } = useAppUpdate();
+
+  const {
+    isInstalled: isPwaInstalled,
+    promptInstall: promptPwaInstall,
+    showIosGuide: showPwaIosGuide,
+    setShowIosGuide: setShowPwaIosGuide,
+  } = usePwaInstall();
 
   const access = useLicenseStore(s => s.access);
   const [aiQuota, setAiQuota] = useState<AIQuotaStatus | null>(null);
@@ -892,6 +901,51 @@ export function SettingsScreen() {
           </>
         ) : null}
 
+        {/* تثبيت التطبيق على الشاشة الرئيسية (PWA) */}
+        {Platform.OS === 'web' && (
+          <>
+            <SectionHeader
+              title="تثبيت التطبيق على جهازك (PWA)"
+              icon={{ name: 'cellphone-arrow-down', family: 'community' }}
+            />
+            <Card>
+              <View style={styles.syncRow}>
+                <Icon
+                  name={isPwaInstalled ? 'check-circle' : 'cellphone-arrow-down'}
+                  family={isPwaInstalled ? 'material' : 'community'}
+                  size={24}
+                  color={isPwaInstalled ? colors.success : colors.primary}
+                />
+                <View style={{ flex: 1 }}>
+                  <Text
+                    style={[styles.syncStatus, { color: colors.textPrimary }]}
+                  >
+                    {isPwaInstalled
+                      ? 'التطبيق مثبت على جهازك'
+                      : 'تثبيت التطبيق على الشاشة الرئيسية'}
+                  </Text>
+                  <Text
+                    style={[styles.syncMeta, { color: colors.textSecondary }]}
+                  >
+                    {isPwaInstalled
+                      ? 'أنت تعمل بوضع التطبيق المستقل للوصول الأسرع'
+                      : 'أضف التطبيق لشاشتك للعمل السريع ودون إطار المتصفح'}
+                  </Text>
+                </View>
+              </View>
+              {!isPwaInstalled && (
+                <Button
+                  label="تثبيت التطبيق الآن"
+                  icon={{ name: 'download', size: 16 }}
+                  variant="primary"
+                  onPress={promptPwaInstall}
+                  style={{ marginTop: 8 }}
+                />
+              )}
+            </Card>
+          </>
+        )}
+
         {/* حول */}
         <SectionHeader title={strings.settings.about} icon={{ name: 'info' }} />
         <Card>
@@ -948,6 +1002,11 @@ export function SettingsScreen() {
         onSuccess={() => {
           aiUsageManager.getFriendlyQuotaStatus().then(setFriendlyQuota);
         }}
+      />
+
+      <IosInstallGuideSheet
+        visible={showPwaIosGuide}
+        onClose={() => setShowPwaIosGuide(false)}
       />
     </AppScreen>
   );

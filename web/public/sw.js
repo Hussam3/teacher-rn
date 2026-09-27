@@ -17,8 +17,14 @@ const BUILD_ID = '__BUILD_ID__';
 const CACHE_PREFIX = 'teacher-bag-';
 const CACHE_NAME = `${CACHE_PREFIX}${BUILD_ID}`;
 
-/** أصول ثابتة فقط؛ index.html ليس منها لأنه يُخدم من الشبكة أولاً. */
-const PRECACHE_ASSETS = ['/favicon.png', '/logo.png', '/manifest.json'];
+const PRECACHE_ASSETS = [
+  '/favicon.png',
+  '/logo.png',
+  '/manifest.json',
+  '/fonts.css',
+  '/fonts/MaterialCommunityIcons.ttf',
+  '/fonts/MaterialIcons.ttf',
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

@@ -162,7 +162,7 @@ export function LicenseScreen() {
                   <Button
                     label={strings.license.freeTrial}
                     variant="outline"
-                    icon={{ name: 'timer-outline' }}
+                    icon={{ name: 'timer-outline', family: 'community' }}
                     onPress={handleTrial}
                     loading={loading === 'trial'}
                     disabled={loading !== null}
