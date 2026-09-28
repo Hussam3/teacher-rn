@@ -19,6 +19,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@400;600;700;800;900&family=Noto+Naskh+Arabic:wght@400;600;700&family=Tajawal:wght@400;500;700;800&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons&display=block" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" />
+    <style>
+      html, body, #root {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+      }
+      #root {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
@@ -26,9 +38,9 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          // updateViaCache: 'none' يمنع المتصفح من خدمة service worker
-          // من ذاكرته، فيصل أحدث sw.js (سياسة الشبكة أولاً) في أول زيارة.
-          navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' });
+          navigator.serviceWorker
+            .register('/sw.js', { updateViaCache: 'none' })
+            .catch(function () {});
         });
       }
     </script>
