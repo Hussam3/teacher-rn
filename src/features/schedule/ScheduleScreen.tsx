@@ -5,7 +5,7 @@
  * لإظهار/إخفاء شبكة 5 أيام × 7 حصص.
  */
 import React, { memo, useCallback, useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../app/navigation/types';
@@ -36,6 +36,12 @@ import { CellEditDialog } from './CellEditDialog';
 import { haptics } from '../../shared/lib/haptics';
 import { TrialStatusBanner } from '../license/TrialStatusBanner';
 import { PwaInstallBanner } from '../../shared/ui/PwaInstallBanner';
+import {
+  CONTACT,
+  TELEGRAM_COLOR,
+  WHATSAPP_COLOR,
+} from '../../shared/constants/contact';
+import { TelegramLogo, WhatsAppLogo } from '../../shared/ui/ContactLinks';
 
 export function ScheduleScreen() {
   const { colors } = useTheme();
@@ -121,29 +127,122 @@ export function ScheduleScreen() {
         <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
           {strings.app.shortName}
         </Text>
+        <View style={styles.headerContactRow}>
+          <PressableScale
+            onPress={() => Linking.openURL(CONTACT.TELEGRAM_URL)}
+            style={[
+              styles.headerBubble,
+              { backgroundColor: `${TELEGRAM_COLOR}15` },
+            ]}
+            accessibilityLabel="تليغرام"
+          >
+            <TelegramLogo size={15} color={TELEGRAM_COLOR} />
+          </PressableScale>
+          <PressableScale
+            onPress={() => Linking.openURL(CONTACT.WHATSAPP_URL)}
+            style={[
+              styles.headerBubble,
+              { backgroundColor: `${WHATSAPP_COLOR}15` },
+            ]}
+            accessibilityLabel="واتساب"
+          >
+            <WhatsAppLogo size={15} color={WHATSAPP_COLOR} />
+          </PressableScale>
+        </View>
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
         <PwaInstallBanner />
         <TrialStatusBanner />
-        <LessonStrip
-          title={strings.schedule.todaysLessons}
-          lessons={todayLessons}
-          emptyText={strings.schedule.noLessonsToday}
-          tint={colors.primary}
-          onPressLesson={subject =>
-            navigation.navigate('DailyPlanEditor', { subjectId: subject.id })
-          }
-        />
-        <LessonStrip
-          title={strings.schedule.tomorrowsLessons}
-          lessons={tomorrowLessons}
-          emptyText={strings.schedule.noLessonsTomorrow}
-          tint={colors.success}
-          onPressLesson={subject =>
-            navigation.navigate('DailyPlanEditor', { subjectId: subject.id })
-          }
-        />
+
+        {todayLessons.length === 0 && tomorrowLessons.length === 0 ? (
+          <View style={styles.dualEmptyContainer}>
+            <View
+              style={[
+                styles.dualEmptyBox,
+                { backgroundColor: colors.surface, borderColor: colors.border },
+              ]}
+            >
+              <View style={styles.dualEmptyCol}>
+                <View style={styles.dualEmptyHeader}>
+                  <Icon
+                    name="calendar-today"
+                    size={14}
+                    color={colors.primary}
+                  />
+                  <Text
+                    style={[
+                      styles.dualEmptyTitle,
+                      { color: colors.textPrimary },
+                    ]}
+                  >
+                    {strings.schedule.todaysLessons}
+                  </Text>
+                </View>
+                <Text
+                  style={[
+                    styles.dualEmptySub,
+                    { color: colors.textSecondary },
+                  ]}
+                >
+                  {strings.schedule.noLessonsToday}
+                </Text>
+              </View>
+
+              <View
+                style={[styles.dualDivider, { backgroundColor: colors.border }]}
+              />
+
+              <View style={styles.dualEmptyCol}>
+                <View style={styles.dualEmptyHeader}>
+                  <Icon
+                    name="calendar-range"
+                    family="community"
+                    size={14}
+                    color={colors.success}
+                  />
+                  <Text
+                    style={[
+                      styles.dualEmptyTitle,
+                      { color: colors.textPrimary },
+                    ]}
+                  >
+                    {strings.schedule.tomorrowsLessons}
+                  </Text>
+                </View>
+                <Text
+                  style={[
+                    styles.dualEmptySub,
+                    { color: colors.textSecondary },
+                  ]}
+                >
+                  {strings.schedule.noLessonsTomorrow}
+                </Text>
+              </View>
+            </View>
+          </View>
+        ) : (
+          <>
+            <LessonStrip
+              title={strings.schedule.todaysLessons}
+              lessons={todayLessons}
+              emptyText={strings.schedule.noLessonsToday}
+              tint={colors.primary}
+              onPressLesson={subject =>
+                navigation.navigate('DailyPlanEditor', { subjectId: subject.id })
+              }
+            />
+            <LessonStrip
+              title={strings.schedule.tomorrowsLessons}
+              lessons={tomorrowLessons}
+              emptyText={strings.schedule.noLessonsTomorrow}
+              tint={colors.success}
+              onPressLesson={subject =>
+                navigation.navigate('DailyPlanEditor', { subjectId: subject.id })
+              }
+            />
+          </>
+        )}
 
         <View style={styles.toggleRow}>
           <Button
@@ -438,8 +537,56 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '800',
   },
+  headerContactRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  headerBubble: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   content: {
     paddingBottom: 32,
+  },
+  dualEmptyContainer: {
+    marginHorizontal: 16,
+    marginBottom: 8,
+  },
+  dualEmptyBox: {
+    flexDirection: 'row',
+    borderRadius: radius.md,
+    borderWidth: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+    alignItems: 'center',
+  },
+  dualEmptyCol: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 3,
+  },
+  dualEmptyHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
+  dualEmptyTitle: {
+    fontFamily: FONT_FAMILY,
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  dualEmptySub: {
+    fontFamily: FONT_FAMILY,
+    fontSize: 11,
+  },
+  dualDivider: {
+    width: 1,
+    height: 28,
   },
   gridHeader: {
     flexDirection: 'row',
