@@ -1,2 +1,2 @@
 /** معلومات الإصدار التي تحتاجها الخدمات دون تحميل وحدات أصلية. */
-export const APP_VERSION = '1.1.19';
+export const APP_VERSION = '1.1.20';
